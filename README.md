@@ -2,3 +2,13 @@
 A robot that utilizes onboard IMU and single-point lidar to navigate the world
 
 <img src="./twerk-lidar-robot-concept.JPG" width="500" />
+
+### Development environment
+
+This was developed using Teensyduino so all of the libraries need to be installed there in order for the code to compile.
+
+### Libraries used
+* IMU MPU9250 (Bolderflight set, check Readme in case more added)
+  * MPU9250
+  * Eigen
+  * Units
