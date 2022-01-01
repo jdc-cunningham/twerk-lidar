@@ -23,7 +23,7 @@
 * IN THE SOFTWARE.
 */
 
-#include "/Users/jacob/projects/twerk-lidar-robot/libraries/mpu9250/src/mpu9250.h"
+#include "mpu9250.h"
 
 /* Mpu9250 object, I2C bus,  0x68 address */
 bfs::Mpu9250 imu(&Wire, 0x68);
