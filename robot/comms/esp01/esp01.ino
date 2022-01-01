@@ -27,18 +27,26 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("poll");
+  // Serial.println("poll");
 
   auto client = socketServer.accept();
-  if(client.available()) {
+
+  if (client.available()) {
     auto msg = client.readBlocking();
 
+    // ping Teensy
+    Serial.print(msg.data());
+
+    if (Serial.available()) {
+      client.send(Serial.readString());
+    }
+
     // log
-    Serial.print("Got Message: ");
-    Serial.println(msg.data());
+    // Serial.print("Got Message: ");
+    // Serial.println(msg.data());
 
     // return echo
-    client.send("Echo: " + msg.data());
+    // client.send("Echo: " + msg.data());
 
     // close the connection
     client.close();

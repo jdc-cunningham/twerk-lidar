@@ -1,16 +1,16 @@
-
 #include "mpu9250.h"
 #include <Wire.h>
 #include <VL53L0X.h>
 
 VL53L0X sensor;
-bfs::Mpu9250 imu(&Wire, 0x68);
+bfs::Mpu9250 imu(&Wire1, 0x68);
 
 void setupEsp() {
 
 }
 
 void setupTof() {
+  Wire.begin();
   sensor.setTimeout(500);
 
   if (!sensor.init())
@@ -19,7 +19,7 @@ void setupTof() {
     while (1) {}
   }
 
-  // sensor.startContinuous();
+  sensor.startContinuous();
 }
 
 float getTofSample() {
@@ -30,6 +30,10 @@ float getTofSample() {
 }
 
 void setupImu() {
+  Serial.begin(115200);
+  while(!Serial) {}
+  Wire1.begin();
+  Wire1.setClock(400000);
   /* Initialize and configure IMU */
   if (!imu.Begin()) {
     Serial.println("Error initializing communication with IMU");
@@ -42,38 +46,33 @@ void setupImu() {
   }
 }
 
-void setupBus() {
-  Wire.begin();
-  // Wire.setClock(400000);
+void checkEspSerialMsg() {
+  if (Serial5.available()) {
+    Serial.print(Serial5.readString());
+  }
 }
 
-void setupTofSingle() {
-
-  #if defined LONG_RANGE
-    // lower the return signal rate limit (default is 0.25 MCPS)
-    sensor.setSignalRateLimit(0.1);
-    // increase laser pulse periods (defaults are 14 and 10 PCLKs)
-    sensor.setVcselPulsePeriod(VL53L0X::VcselPeriodPreRange, 18);
-    sensor.setVcselPulsePeriod(VL53L0X::VcselPeriodFinalRange, 14);
-  #endif
-
-  sensor.setMeasurementTimingBudget(200000);
+void setupSerial() {
+  Serial5.begin(115200);
 }
 
 void setup() {
-  setupBus();
-  // setupImu();
+  setupSerial();
+  setupImu();
   setupTof();
-  // setupTofSingle();
 }
 
 void loop() {
-  // Serial.print("imu z");
-  // Serial.print(imu.accel_z_mps2());
-  // Serial.println("");
+  if (imu.Read()) {
+    Serial.print("imu z ");
+    Serial.print(imu.accel_z_mps2());
+    Serial.print("\t");
+  }
+
   Serial.print("tof in ");
-  Serial.print(getTofSample());
-  // Serial.print(sensor.readRangeSingleMillimeters() * 0.0393701);
+  Serial.print(sensor.readRangeSingleMillimeters() * 0.0393701);
   Serial.println("");
+  checkEspSerialMsg();
+  Serial5.print("yo");
   delay(1000);
 }
