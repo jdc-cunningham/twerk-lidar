@@ -9,7 +9,7 @@ bool clientActive = false;
 int serverPollDelay = 250;
 
 void connectToWiFi() {
-  WiFi.begin("SSID", "SSIDPASS");
+  WiFi.begin("SSID", "PASS");
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(250);
@@ -29,24 +29,20 @@ void setup() {
 void loop() {
   Serial.println("poll");
 
-  if (!clientActive) {
-    auto client = socketServer.accept();
-    clientActive = true;
- 
-    if (client.available()) {
-      for (int i = 0; i < 60000; i++) { // 1 minute poll for messages
-        if (client.available()) {
-          auto msg = client.readBlocking();
-          if (msg.data().length() > 0) {
-            Serial.println(msg.data());
-          }
-          // client.send(msg.data()); // to mobile controller
-        } else {
-          break;
-        }
-        delay(1);
-      }
-      clientActive = false;
-    }
+  auto client = socketServer.accept();
+  if(client.available()) {
+    auto msg = client.readBlocking();
+
+    // log
+    Serial.print("Got Message: ");
+    Serial.println(msg.data());
+
+    // return echo
+    client.send("Echo: " + msg.data());
+
+    // close the connection
+    client.close();
   }
+  
+  delay(1000);
 }
