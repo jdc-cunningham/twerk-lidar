@@ -12,7 +12,7 @@ void connectToWiFi() {
   WiFi.begin("SSID", "PASS");
 
   while (WiFi.status() != WL_CONNECTED) {
-    delay(250);
+    delay(500);
     Serial.println("Waiting for connection");
   }
 
