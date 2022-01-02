@@ -53,7 +53,7 @@ void checkEspSerialMsg() {
 }
 
 void setupSerial() {
-  Serial5.begin(115200);
+  // Serial5.begin(115200);
 }
 
 void setup() {
@@ -72,7 +72,7 @@ void loop() {
   Serial.print("tof in ");
   Serial.print(sensor.readRangeSingleMillimeters() * 0.0393701);
   Serial.println("");
-  checkEspSerialMsg();
-  Serial5.print("yo");
+  // checkEspSerialMsg();
+  // Serial5.print("yo");
   delay(1000);
 }
