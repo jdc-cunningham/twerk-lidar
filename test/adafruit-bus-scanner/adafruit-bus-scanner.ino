@@ -7,7 +7,7 @@
 #include <Wire.h>
 
 // Set I2C bus to use: Wire, Wire1, etc.
-#define WIRE Wire
+#define WIRE Wire1
 
 void setup() {
   WIRE.begin();
