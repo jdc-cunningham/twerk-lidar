@@ -10,7 +10,7 @@ int pos = 0;    // variable to store the servo position
 
 void setup()
 {
-  myservo.attach(0);  // attaches the servo on pin 20
+  myservo.attach(10);  // attaches the servo on pin
 }
 
 void loop()
