@@ -7,8 +7,9 @@ A robot that utilizes onboard IMU and single-point lidar to navigate the world
 
 This was developed using Teensyduino so all of the libraries need to be installed there in order for the code to compile.
 
-### Libraries used
+### Libraries used through Teensyduino IDE library search
 * IMU MPU9250 (Bolderflight set, check Readme in case more added)
   * MPU9250
   * Eigen
   * Units
+* ToF vl53l0x by Pololu
