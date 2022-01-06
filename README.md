@@ -13,3 +13,10 @@ This was developed using Teensyduino so all of the libraries need to be installe
   * Eigen
   * Units
 * ToF vl53l0x by Pololu
+
+### Related software for this project
+* Google SketchUp for the 3D modeling
+* Cura for the slicer
+
+### Related hardware
+* Ender 3 Pro for the 3D printer
