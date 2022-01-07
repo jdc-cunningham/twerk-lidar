@@ -53,7 +53,7 @@ void checkEspSerialMsg() {
 }
 
 void setupSerial() {
-  // Serial5.begin(115200);
+  Serial5.begin(115200);
 }
 
 void setup() {
@@ -73,6 +73,8 @@ void loop() {
   Serial.print(sensor.readRangeSingleMillimeters() * 0.0393701);
   Serial.println("");
   // checkEspSerialMsg();
-  // Serial5.print("yo");
-  delay(1000);
+  Serial5.print(imu.accel_z_mps2());
+  Serial5.print(",");
+  Serial5.print(sensor.readRangeSingleMillimeters() * 0.0393701);
+  delay(100);
 }
