@@ -6,9 +6,9 @@ using namespace websockets;
 WebsocketsServer socketServer;
 
 bool clientActive = false;
-int serverPollDelay = 250;
 
-void connectToWiFi() {
+void connectToWiFi()
+{
   WiFi.begin("SSID", "PASS");
 
   while (WiFi.status() != WL_CONNECTED) {

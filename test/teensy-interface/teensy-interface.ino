@@ -64,23 +64,23 @@ void setup() {
 
 void loop()
 {
-  // if (imu.Read()) {
-    // Serial.print("imu z ");
-    // Serial.print(imu.accel_z_mps2());
-    // Serial.print("\t");
-  // }
-
-  // Serial.print("tof in ");
-  // Serial.print(sensor.readRangeSingleMillimeters() * 0.0393701);
-  // Serial.println("");
-
-  if (imu.Read())
-  {
-    checkEspSerialMsg();
-    Serial5.print(imu.accel_z_mps2());
-    Serial5.print(",");
-    Serial5.print(sensor.readRangeSingleMillimeters() * 0.0393701);
+  if (imu.Read()) {
+    Serial.print("imu y ");
+    Serial.print(imu.accel_y_mps2());
+    Serial.print("\t");
+    Serial.print("tof in ");
+    Serial.print(sensor.readRangeSingleMillimeters() * 0.0393701);
+    Serial.println("");
   }
+
+  // send/receive test ws socket
+  // if (imu.Read())
+  // {
+  //   checkEspSerialMsg();
+  //   Serial5.print(imu.accel_z_mps2());
+  //   Serial5.print(",");
+  //   Serial5.print(sensor.readRangeSingleMillimeters() * 0.0393701);
+  // }
 
   delay(100);
 }
