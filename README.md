@@ -33,3 +33,6 @@ This was developed using Teensyduino so all of the libraries need to be installe
 The infill of prints are either 20% or 30%. I have sorted them in folders.
 
 Pretty much anything brittle/small will be 30% or a major structural piece like the main chasis.
+
+### Misc
+This project borrows from my [first robot](https://github.com/jdc-cunningham/not-quite-an-ant-robot) with regard to how code is written.
