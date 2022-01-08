@@ -62,19 +62,25 @@ void setup() {
   setupTof();
 }
 
-void loop() {
-  if (imu.Read()) {
-    Serial.print("imu z ");
-    Serial.print(imu.accel_z_mps2());
-    Serial.print("\t");
+void loop()
+{
+  // if (imu.Read()) {
+    // Serial.print("imu z ");
+    // Serial.print(imu.accel_z_mps2());
+    // Serial.print("\t");
+  // }
+
+  // Serial.print("tof in ");
+  // Serial.print(sensor.readRangeSingleMillimeters() * 0.0393701);
+  // Serial.println("");
+
+  if (imu.Read())
+  {
+    checkEspSerialMsg();
+    Serial5.print(imu.accel_z_mps2());
+    Serial5.print(",");
+    Serial5.print(sensor.readRangeSingleMillimeters() * 0.0393701);
   }
 
-  Serial.print("tof in ");
-  Serial.print(sensor.readRangeSingleMillimeters() * 0.0393701);
-  Serial.println("");
-  // checkEspSerialMsg();
-  Serial5.print(imu.accel_z_mps2());
-  Serial5.print(",");
-  Serial5.print(sensor.readRangeSingleMillimeters() * 0.0393701);
   delay(100);
 }
