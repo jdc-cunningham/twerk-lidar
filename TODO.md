@@ -7,8 +7,8 @@
 ### Design
 - [x] mathematically determine ideal max weight of robot
   - went off dimensions and estimate of 10oz, trying to stay near 2" max moment arm length which should be 5oz/in torque
-- [ ] design body for servo placement
-- [ ] placement of parts based on size/wiring
+- [x] design body for servo placement
+- [x] placement of parts based on size/wiring
 
 ### Modeling
 - [ ] create 3D world/mockup of robot

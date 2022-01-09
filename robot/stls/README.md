@@ -8,7 +8,7 @@
   * ToF sensor mount - 21 mins
   * Servo boot - 27 mins (need 8)
   * IMU sensor mount - 27 mins
-* 20% infill
+* 20% infill (all together takes 2.5 hrs)
   * outer arm
   * middle arm
   * inner arm

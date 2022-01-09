@@ -18,6 +18,7 @@
   <script src="js/GetCoordinates.js"></script>
   <script>
     // https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
+    THREE.Object3D.DefaultUp.set(0, 0, 1);
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
@@ -40,6 +41,8 @@
     const size = 10;
     const divisions = 10;
     const gridHelper = new THREE.GridHelper(size, divisions);
+    const zVector = new THREE.Vector3(1, 0, 0);
+    gridHelper.lookAt(zVector);
     scene.add(gridHelper);
 
     controls.update();
@@ -65,19 +68,19 @@
     let points = [];
 
     // plot lines from points
-    coordinates.map((row, index) => {
-      row.map((measurement, rowIndex) => {
-        points.push(new THREE.Vector3( measurement[0], measurement[1], measurement[2] ));
-      })
+    // coordinates.map((row, index) => {
+    //   row.map((measurement, rowIndex) => {
+    //     points.push(new THREE.Vector3( measurement[0], measurement[1], measurement[2] ));
+    //   })
 
-      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+    //   const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
-      const line = new THREE.Line( geometry, material );
+    //   const line = new THREE.Line( geometry, material );
 
-      scene.add(line);
+    //   scene.add(line);
 
-      points = [];
-    });
+    //   points = [];
+    // });
 
 
     // loop over physical coordinates globally accessed by previusly included script
