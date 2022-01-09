@@ -58,6 +58,9 @@ void setAndCenterServos()
   frontLeftInnerServo.write(80);
   frontLeftMiddleServo.write(90);
   frontLeftOuterServo.write(90);
+  backLeftInnerServo.write(90);
+  backLeftMiddleServo.write(90);
+  backLeftOuterServo.write(90);
 }
 
 void setup()
