@@ -13,3 +13,5 @@
   * middle arm
   * inner arm
 
+### Assemby notes
+For the outer-most arm, it is easier to pull it over the servo boot peg first, then over the servo arm. For the the middle arm it's easier to do the opposite, connect the servo arm first then pull it over the boot. Be careful with the boot peg as the printing is done in shear so it can snap easily.

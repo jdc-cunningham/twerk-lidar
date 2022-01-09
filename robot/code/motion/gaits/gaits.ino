@@ -52,6 +52,9 @@ void setAndCenterServos()
   frontRightInnerServo.write(90); // base throw in either direction is 35 deg
   frontRightMiddleServo.write(90);
   frontRightOuterServo.write(90);
+  backRightInnerServo.write(90);
+  backRightMiddleServo.write(90);
+  backRightOuterServo.write(90);
   frontLeftInnerServo.write(80);
   frontLeftMiddleServo.write(90);
   frontLeftOuterServo.write(90);

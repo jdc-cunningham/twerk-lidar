@@ -9,4 +9,3 @@ Ha fancy name. The premise of this robot is it can track itself using the onboar
 Since I'm working with servos this robot is crude but I'm also crude myself with regard to my current knowledge of this space.
 
 I am aware moving all joints to take measurements vs. say a pan/tilt (2) servo system is not a great design in terms of saving energy but this whole project aside from being a gimmick is a learning experience for me.
-
