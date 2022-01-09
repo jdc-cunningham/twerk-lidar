@@ -49,7 +49,9 @@ void setAndCenterServos()
   // convention is 0-90 clockwise, 90+ is counter clockwise
 
   // centered as in ]-[ shape vs. x
-  // frontRightInnerServo.write(80); // base throw in either direction is 35 deg
+  frontRightInnerServo.write(90); // base throw in either direction is 35 deg
+  frontRightMiddleServo.write(90);
+  frontRightOuterServo.write(90);
   frontLeftInnerServo.write(80);
   frontLeftMiddleServo.write(90);
   frontLeftOuterServo.write(90);
