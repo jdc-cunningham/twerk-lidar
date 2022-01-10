@@ -49,18 +49,32 @@ void setAndCenterServos()
   // convention is 0-90 clockwise, 90+ is counter clockwise
 
   // centered as in ]-[ shape vs. x
-  frontRightInnerServo.write(90); // base throw in either direction is 35 deg
-  frontRightMiddleServo.write(90);
-  frontRightOuterServo.write(90);
-  backRightInnerServo.write(90);
-  backRightMiddleServo.write(90);
-  backRightOuterServo.write(90);
-  frontLeftInnerServo.write(80);
-  frontLeftMiddleServo.write(90);
-  frontLeftOuterServo.write(90);
-  backLeftInnerServo.write(90);
-  backLeftMiddleServo.write(90);
-  backLeftOuterServo.write(90);
+  // frontRightInnerServo.write(90); // base throw in either direction is 35 deg
+  // frontRightMiddleServo.write(90);
+  // frontRightOuterServo.write(90);
+  // backRightInnerServo.write(90);
+  // backRightMiddleServo.write(90);
+  // backRightOuterServo.write(90);
+  // frontLeftInnerServo.write(80);
+  // frontLeftMiddleServo.write(90);
+  // frontLeftOuterServo.write(90);
+  // backLeftInnerServo.write(90);
+  // backLeftMiddleServo.write(90);
+  // backLeftOuterServo.write(90);
+
+  // neutral stance
+  frontRightInnerServo.write(130);
+  frontRightMiddleServo.write(80);
+  frontRightOuterServo.write(95);
+  backRightInnerServo.write(60);
+  backRightMiddleServo.write(100);
+  backRightOuterServo.write(75);
+  frontLeftInnerServo.write(50);
+  frontLeftMiddleServo.write(100);
+  frontLeftOuterServo.write(85);
+  backLeftInnerServo.write(120);
+  backLeftMiddleServo.write(80);
+  backLeftOuterServo.write(95);
 }
 
 void setup()
