@@ -1,7 +1,15 @@
 ### Twerk Lidar Robot
 A robot that utilizes onboard IMU and single-point lidar to navigate the world
 
-<img src="./devlog/media/01-09-2022--twerk-lidar-robot.JPG" width="500">
+<img src="./devlog/media/01-09-2022--better.JPG" width="800">
+
+### Sensors
+
+<img src="./devlog/media/01-09-2022--imu-and-sensor.png" width="800">
+
+### Schematic
+
+<img src="./misc/crayon-circuit-3.png" width="800">
 
 ### Disclaimer
 While I have provided everything you need to make this robot, it is not intended to be rebuilt. It is too much of a pain, particularly the board soldering. Also arguable it is a waste of a Teensy 4.0 but I wanted to use one.
