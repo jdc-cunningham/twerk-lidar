@@ -63,18 +63,23 @@ void setAndCenterServos()
   // backLeftOuterServo.write(90);
 
   // neutral stance
-  frontRightInnerServo.write(130);
-  frontRightMiddleServo.write(80);
-  frontRightOuterServo.write(95);
-  backRightInnerServo.write(60);
-  backRightMiddleServo.write(100);
-  backRightOuterServo.write(75);
-  frontLeftInnerServo.write(50);
-  frontLeftMiddleServo.write(100);
-  frontLeftOuterServo.write(85);
-  backLeftInnerServo.write(120);
-  backLeftMiddleServo.write(80);
-  backLeftOuterServo.write(95);
+  frontRightInnerServo.write(130); // +40
+  frontRightMiddleServo.write(80); // -10
+  frontRightOuterServo.write(95); // +5
+  backRightInnerServo.write(60); // -30
+  backRightMiddleServo.write(100); // +10
+  backRightOuterServo.write(75); // -15
+  frontLeftInnerServo.write(50); // -30
+  frontLeftMiddleServo.write(100); // +10
+  frontLeftOuterServo.write(85); // -5
+  backLeftInnerServo.write(120); // +30
+  backLeftMiddleServo.write(80); // -10
+  backLeftOuterServo.write(95); // +5
+}
+
+void moveForward()
+{
+
 }
 
 void setup()
