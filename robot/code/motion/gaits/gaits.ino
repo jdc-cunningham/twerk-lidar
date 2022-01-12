@@ -184,21 +184,59 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
 
 void moveForward()
 {
+  // move front-right leg up
   int servoGroupArr[][3] = {
-    {4, 100, 75},
+    // {4, 100, 75},
     {1, 80, 40},
-    {0, 150, 170}
+    // {0, 150, 170}
   };
 
-  moveServos(servoGroupArr, 3, 6);
+  moveServos(servoGroupArr, 1, 6);
 
+  // move back-left leg forward
   int servoGroupArr2[][3] = { // lol
-    {1, 40, 80},
-    {4, 75, 100},
+    {9, 130, 100},
+    // {4, 75, 100},
 
   };
 
-  moveServos(servoGroupArr2, 2, 6);
+  moveServos(servoGroupArr2, 1, 6);
+
+  // move front-right leg down
+   int servoGroupArr3[][3] = {
+    // {4, 100, 75},
+    {1, 40, 80},
+    // {0, 150, 170}
+  };
+
+  moveServos(servoGroupArr3, 1, 6);
+
+  // move front-left leg up
+  int servoGroupArr4[][3] = {
+    // {4, 100, 75},
+    {6, 40, 70},
+    // {0, 150, 170}
+  };
+
+  moveServos(servoGroupArr4, 1, 6);
+
+  // move back-right leg forward
+  int servoGroupArr5[][3] = {
+    // {4, 100, 75},
+    {3, 50, 80},
+    // {0, 150, 170}
+  };
+
+  moveServos(servoGroupArr5, 1, 6);
+
+  // move front-left leg down
+  int servoGroupArr6[][3] = {
+    // {4, 100, 75},
+    {6, 70, 40},
+    // {0, 150, 170}
+  };
+
+  moveServos(servoGroupArr6, 1, 6);
 }
 
 void level()
@@ -210,8 +248,8 @@ void setup()
 {
   setAndCenterServos();
   delay(5000);
-  // moveForward();
-  // delay(1000);
+  moveForward();
+  delay(1000);
   // level();
 }
 
