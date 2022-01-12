@@ -27,6 +27,7 @@ Servo backLeftMiddleServo;
 Servo backLeftInnerServo;
 
 bool motionInProgress = false;
+int servoMotionDelay = 6; // ms
 
 Servo getServoByPin(int digitalPin)
 {
@@ -105,11 +106,11 @@ void setAndCenterServos()
   // backLeftOuterServo.write(90);
 
   // neutral stance
-  frontRightInnerServo.write(130); // +40
+  frontRightInnerServo.write(150); // +40
   frontRightMiddleServo.write(80); // -10 // motion 40
   frontRightOuterServo.write(95); // +5
   backRightInnerServo.write(50); // -30
-  backRightMiddleServo.write(100); // +10 // motion 75
+  backRightMiddleServo.write(95); // +10 // motion 70
   backRightOuterServo.write(75); // -15
   frontLeftInnerServo.write(40); // -30
   frontLeftMiddleServo.write(100); // +10
@@ -132,7 +133,7 @@ void setAndCenterServos()
  * there is a "bias" where the shortest motion will end first
  * @param {int} - array of arrays with the following: servo enum, start pos, end pos
  * @param {int} - array length
- * @param {int} - duration of motion
+ * @param {int} - duration of motion in ms
  */
 void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration) {
   /**
@@ -183,15 +184,35 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
 
 void moveForward()
 {
-  // int servoGroupArr[][3] = {
+  int servoGroupArr[][3] = {
+    {4, 100, 75},
+    {1, 80, 40},
+    {0, 150, 170}
+  };
 
-  // }
+  moveServos(servoGroupArr, 3, 6);
+
+  int servoGroupArr2[][3] = { // lol
+    {1, 40, 80},
+    {4, 75, 100},
+
+  };
+
+  moveServos(servoGroupArr2, 2, 6);
+}
+
+void level()
+{
+
 }
 
 void setup()
 {
   setAndCenterServos();
-  // moveForward();
+  delay(5000);
+  moveForward();
+  // delay(1000);
+  // level();
 }
 
 void loop()
