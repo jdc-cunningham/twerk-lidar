@@ -106,7 +106,7 @@ void setAndCenterServos()
   // backLeftOuterServo.write(90);
 
   // neutral stance
-  frontRightInnerServo.write(150); // +40
+  frontRightInnerServo.write(105); // +40
   frontRightMiddleServo.write(80); // -10
   frontRightOuterServo.write(95); // +5
   backRightInnerServo.write(50); // -30
@@ -247,7 +247,7 @@ void moveForward()
 
   // move front-right leg forward
   int servoGroupArr8[][3] = {
-    {0, 150, 180},
+    {0, 105, 135},
   };
 
   moveServos(servoGroupArr8, 1, 6);
@@ -283,7 +283,7 @@ void moveForward()
   // move all four legs back
   int servoGroupArr13[][3] = {
     {6, 20, 40},
-    {0, 180, 150},
+    {0, 135, 105},
     {9, 100, 130},
     {3, 80, 50}
   };
