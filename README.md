@@ -38,3 +38,6 @@ Pretty much anything brittle/small will be 30% or a major structural piece like 
 
 ### Misc
 This project borrows from my [first robot](https://github.com/jdc-cunningham/not-quite-an-ant-robot) with regard to how code is written.
+
+### Note
+This repo is pretty big due to the media, I will look into not tracking them by default so when you clone it, you only pull down code.

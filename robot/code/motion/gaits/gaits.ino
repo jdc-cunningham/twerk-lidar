@@ -107,10 +107,10 @@ void setAndCenterServos()
 
   // neutral stance
   frontRightInnerServo.write(150); // +40
-  frontRightMiddleServo.write(80); // -10 // motion 40
+  frontRightMiddleServo.write(80); // -10
   frontRightOuterServo.write(95); // +5
   backRightInnerServo.write(50); // -30
-  backRightMiddleServo.write(95); // +10 // motion 70
+  backRightMiddleServo.write(95); // +10
   backRightOuterServo.write(75); // -15
   frontLeftInnerServo.write(40); // -30
   frontLeftMiddleServo.write(100); // +10
@@ -214,7 +214,7 @@ void moveForward()
   // move front-left leg up
   int servoGroupArr4[][3] = {
     // {4, 100, 75},
-    {6, 40, 70},
+    {7, 100, 140},
     // {0, 150, 170}
   };
 
@@ -232,11 +232,64 @@ void moveForward()
   // move front-left leg down
   int servoGroupArr6[][3] = {
     // {4, 100, 75},
-    {6, 70, 40},
+    {7, 140, 100},
     // {0, 150, 170}
   };
 
   moveServos(servoGroupArr6, 1, 6);
+
+  // move back-left leg up
+    int servoGroupArr7[][3] = {
+    {10, 80, 40}
+  };
+
+  moveServos(servoGroupArr7, 1, 6);
+
+  // move front-right leg forward
+  int servoGroupArr8[][3] = {
+    {0, 150, 180},
+  };
+
+  moveServos(servoGroupArr8, 1, 6);
+
+  // move back-left leg down
+  int servoGroupArr9[][3] = {
+    {10, 40, 80}
+  };
+
+  moveServos(servoGroupArr9, 1, 6);
+
+  // move back-right leg up
+  int servoGroupArr10[][3] = {
+    {4, 95, 125}
+  };
+
+  moveServos(servoGroupArr10, 1, 6);
+
+  // move front-left leg forward
+  int servoGroupArr11[][3] = {
+    {6, 40, 20}
+  };
+
+  moveServos(servoGroupArr11, 1, 6);
+
+  // move back-right leg down
+  int servoGroupArr12[][3] = {
+    {4, 125, 95}
+  };
+
+  moveServos(servoGroupArr12, 1, 6);
+
+  // move all four legs back
+  int servoGroupArr13[][3] = {
+    {6, 20, 40},
+    {0, 180, 150},
+    {9, 100, 130},
+    {3, 80, 50}
+  };
+
+  moveServos(servoGroupArr13, 4, 6);
+  
 }
 
 void level()
@@ -248,12 +301,12 @@ void setup()
 {
   setAndCenterServos();
   delay(5000);
-  moveForward();
-  delay(1000);
+  // moveForward();
+  // delay(1000);
   // level();
 }
 
 void loop()
 {
-
+  // moveForward();
 }
