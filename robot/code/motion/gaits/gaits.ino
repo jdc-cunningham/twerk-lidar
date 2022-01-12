@@ -210,7 +210,7 @@ void setup()
 {
   setAndCenterServos();
   delay(5000);
-  moveForward();
+  // moveForward();
   // delay(1000);
   // level();
 }
