@@ -14,7 +14,7 @@ Servo backLeftMiddleServo;
 Servo backLeftInnerServo;
 
 bool motionInProgress = false;
-int servoMotionDelay = 6; // ms
+int servoMotionDelay = 4; // ms
 int stepDelay = 0; // ms usually a second or more
 
 /**
@@ -119,6 +119,22 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
   delay(stepDelay);
 }
 
+void centerAllLegs()
+{
+  frontRightInnerServo.write(105); // +40
+  frontRightMiddleServo.write(80); // -10
+  frontRightOuterServo.write(95); // +5
+  backRightInnerServo.write(50); // -30
+  backRightMiddleServo.write(95); // +10
+  backRightOuterServo.write(75); // -15
+  frontLeftInnerServo.write(40); // -30
+  frontLeftMiddleServo.write(100); // +10
+  frontLeftOuterServo.write(85); // -5
+  backLeftInnerServo.write(130); // +30
+  backLeftMiddleServo.write(80); // -10
+  backLeftOuterServo.write(95); // +5
+}
+
 /**
  * these are attached with regard to the board's design
  * where the right half of the robot pins are on the right side, etc...
@@ -139,35 +155,8 @@ void setAndCenterServos()
   backLeftMiddleServo.attach(10);
   backLeftOuterServo.attach(11);
 
-  // convention is 0-90 clockwise, 90+ is counter clockwise
-
-  // centered as in ]-[ shape vs. x
-  // frontRightInnerServo.write(90); // base throw in either direction is 35 deg
-  // frontRightMiddleServo.write(90);
-  // frontRightOuterServo.write(90);
-  // backRightInnerServo.write(90);
-  // backRightMiddleServo.write(90);
-  // backRightOuterServo.write(90);
-  // frontLeftInnerServo.write(80);
-  // frontLeftMiddleServo.write(90);
-  // frontLeftOuterServo.write(90);
-  // backLeftInnerServo.write(90);
-  // backLeftMiddleServo.write(90);
-  // backLeftOuterServo.write(90);
-
   // neutral stance
-  frontRightInnerServo.write(105); // +40
-  frontRightMiddleServo.write(80); // -10
-  frontRightOuterServo.write(95); // +5
-  backRightInnerServo.write(50); // -30
-  backRightMiddleServo.write(95); // +10
-  backRightOuterServo.write(75); // -15
-  frontLeftInnerServo.write(40); // -30
-  frontLeftMiddleServo.write(100); // +10
-  frontLeftOuterServo.write(85); // -5
-  backLeftInnerServo.write(130); // +30
-  backLeftMiddleServo.write(80); // -10
-  backLeftOuterServo.write(95); // +5
+  centerAllLegs();
 }
 
 void moveBackLeftLegUp()
@@ -181,67 +170,65 @@ void moveBackLeftLegUp()
 
 void moveFrontRightLegUp()
 {
-  int servoGroupArr1[][3] = {
+  int servoGroupArr[][3] = {
     {1, 80, 40},
   };
 
-  moveServos(servoGroupArr1, 1, servoMotionDelay);
+  moveServos(servoGroupArr, 1, servoMotionDelay);
 }
 
 void moveBackLeftLegForward()
 {
-  int servoGroupArr2[][3] = { // lol
+  int servoGroupArr[][3] = { // lol
     {9, 130, 100},
   };
 
-  moveServos(servoGroupArr2, 1, servoMotionDelay);
+  moveServos(servoGroupArr, 1, servoMotionDelay);
 }
 
 void moveFrontRightLegDown()
 {
-  int servoGroupArr3[][3] = {
+  int servoGroupArr[][3] = {
     {1, 40, 80},
   };
 
-  moveServos(servoGroupArr3, 1, servoMotionDelay);
+  moveServos(servoGroupArr, 1, servoMotionDelay);
 }
 
 void moveFrontLeftLegUp()
 {
-  int servoGroupArr4[][3] = {
+  int servoGroupArr[][3] = {
     {7, 100, 140},
   };
 
-  moveServos(servoGroupArr4, 1, servoMotionDelay);
+  moveServos(servoGroupArr, 1, servoMotionDelay);
 }
 
 void moveBackRightLegForward()
 {
-  int servoGroupArr5[][3] = {
-    // {4, 100, 75},
+  int servoGroupArr[][3] = {
     {3, 50, 80},
-    // {0, 150, 170}
   };
 
-  moveServos(servoGroupArr5, 1, servoMotionDelay);
+  moveServos(servoGroupArr, 1, servoMotionDelay);
 }
 
 void moveFrontLeftLegDown()
 {
-  int servoGroupArr6[][3] = {
+  int servoGroupArr[][3] = {
     {7, 140, 100},
   };
 
-  moveServos(servoGroupArr6, 1, servoMotionDelay);
+  moveServos(servoGroupArr, 1, servoMotionDelay);
 }
 
 void moveFrontRightLegForward()
 {
-  int servoGroupArr8[][3] = {
+  int servoGroupArr[][3] = {
     {0, 105, 135},
   };
 
-  moveServos(servoGroupArr8, 1, servoMotionDelay);
+  moveServos(servoGroupArr, 1, servoMotionDelay);
 }
 
 void moveBackLeftLegDown()
@@ -264,38 +251,56 @@ void moveBackRightLegUp()
 
 void moveFrontLeftLegForward()
 {
-  int servoGroupArr11[][3] = {
+  int servoGroupArr[][3] = {
     {6, 40, 20}
   };
 
-  moveServos(servoGroupArr11, 1, servoMotionDelay);
+  moveServos(servoGroupArr, 1, servoMotionDelay);
 }
 
 void moveBackRightLegDown()
 {
-  int servoGroupArr12[][3] = {
+  int servoGroupArr[][3] = {
     {4, 125, 95}
   };
 
-  moveServos(servoGroupArr12, 1, servoMotionDelay);
+  moveServos(servoGroupArr, 1, servoMotionDelay);
 }
 
 void moveAllFourLegsBack()
 {
-  int servoGroupArr13[][3] = {
+  int servoGroupArr[][3] = {
     {6, 20, 40},
     {0, 135, 105},
     {9, 100, 130},
     {3, 80, 50}
   };
 
-  moveServos(servoGroupArr13, 4, servoMotionDelay);
+  moveServos(servoGroupArr, 4, servoMotionDelay);
 }
 
 void moveFrontRightLegBack()
 {
   int servoGroupArr[][3] = {
     {0, 105, 95}
+  };
+
+  moveServos(servoGroupArr, 1, servoMotionDelay);
+}
+
+void moveFrontLeftLegBack()
+{
+  int servoGroupArr[][3] = {
+    {6, 40, 70}
+  };
+
+  moveServos(servoGroupArr, 1, servoMotionDelay);
+}
+
+void moveBackLeftLegBack()
+{
+  int servoGroupArr[][3] = { // lol
+    {9, 130, 160},
   };
 
   moveServos(servoGroupArr, 1, servoMotionDelay);
@@ -321,63 +326,26 @@ void moveForward()
 
 void moveForward2()
 {
-  // // move front-right leg up
-  // int servoGroupArr1[][3] = {
-  //   // {4, 100, 75},
-  //   {1, 80, 40},
-  //   // {0, 150, 170}
-  // };
 
-  // moveServos(servoGroupArr1, 1, servoMotionDelay);
-
-  // // move front-right leg forward
-  // int servoGroupArr2[][3] = {
-  //   {0, 105, 135},
-  // };
-
-  // moveServos(servoGroupArr2, 1, servoMotionDelay);
-
-  // // move front-right leg down
-  // int servoGroupArr3[][3] = {
-  //   // {4, 100, 75},
-  //   {1, 40, 80},
-  //   // {0, 150, 170}
-  // };
-
-  // moveServos(servoGroupArr3, 1, servoMotionDelay);
-
-  // move front-left leg up
-  // int servoGroupArr4[][3] = {
-  //   // {4, 100, 75},
-  //   {7, 100, 140},
-  //   // {0, 150, 170}
-  // };
-
-  // moveServos(servoGroupArr4, 1, servoMotionDelay);
-
-  // // move back-left leg down
-  // int servoGroupArr9[][3] = {
-  //   {10, 80, 90}
-  // };
-
-  // moveServos(servoGroupArr9, 1, servoMotionDelay);
-
-  // // move front-right leg down
-  // int servoGroupArr3[][3] = {
-  //   // {4, 100, 75},
-  //   {1, 80, 90},
-  //   // {0, 150, 170}
-  // };
-
-  // moveServos(servoGroupArr3, 1, servoMotionDelay);
 }
 
 void turnLeft()
 {
-  // moveBackLeftLegUp();
-  // moveFrontRightLegBack();
-  // moveBackLeftLegDown();
-  // moveBackRightLegUp();
-  // moveFrontLeftLegForward();
-  // moveBackRightLegDown();
+  moveBackLeftLegUp();
+  moveFrontRightLegForward();
+  moveBackLeftLegDown();
+
+  moveBackRightLegUp();
+  moveFrontLeftLegBack();
+  moveBackRightLegDown();
+
+  moveFrontRightLegUp();
+  moveBackLeftLegBack();
+  moveFrontRightLegDown();
+
+  moveFrontLeftLegUp();
+  moveBackRightLegForward();
+  moveFrontLeftLegDown();
+
+  centerAllLegs();
 }
