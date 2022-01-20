@@ -32,8 +32,8 @@ void setup()
 
 void loop()
 {
-  // performScan();
-  // delay(1000);
+  performScan();
+  delay(1000);
   // moveForward();
   // turnLeft();
   // Serial.println(getBatteryVoltage());

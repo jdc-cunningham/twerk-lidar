@@ -14,7 +14,7 @@ Servo backLeftMiddleServo;
 Servo backLeftInnerServo;
 
 bool motionInProgress = false;
-int servoMotionDelay = 4; // ms
+int servoMotionDelay = 8; // ms
 int stepDelay = 0; // ms usually a second or more
 
 /**
@@ -482,10 +482,16 @@ void sweep(int runCount)
 void performScan()
 {
   tiltUp();
+  delay(1000);
   sweep(1);
+  delay(1000);
   tiltCenterFromUp();
+  delay(1000);
   sweep(2);
+  delay(1000);
   tiltDown();
+  delay(1000);
   sweep(3);
+  delay(1000);
   tiltCenterFromDown();
 }
