@@ -495,3 +495,32 @@ void performScan()
   delay(1000);
   tiltCenterFromDown();
 }
+
+void rollFrontLeft()
+{
+  int servoGroupArr[][3] = {
+    {8, 85, 65},
+    {5, 75, 95}
+  };
+
+  moveServos(servoGroupArr, 2, servoMotionDelay);
+}
+
+void centerFromRollFrontLeft()
+{
+  int servoGroupArr[][3] = {
+    {8, 65, 85},
+    {5, 95, 75}
+  };
+
+  moveServos(servoGroupArr, 2, servoMotionDelay);
+}
+
+void moveForward3()
+{
+  rollFrontLeft();
+  moveFrontLeftLegUp();
+  moveFrontLeftLegForward();
+  moveFrontLeftLegDown();
+  centerFromRollFrontLeft();
+}
