@@ -15,9 +15,11 @@
  */
 
 #include "ServoMovements.h"
+#include "Misc.h"
 
 void setup()
 {
+  // Serial.println(getBatteryVoltage());
   setAndCenterServos();
   delay(5000);
   // turnLeft();
@@ -31,4 +33,6 @@ void loop()
 {
   // moveForward();
   // turnLeft();
+  // Serial.println(getBatteryVoltage());
+  // delay(500);
 }
