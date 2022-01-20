@@ -14,7 +14,7 @@ Servo backLeftMiddleServo;
 Servo backLeftInnerServo;
 
 bool motionInProgress = false;
-int servoMotionDelay = 8; // ms
+int servoMotionDelay = 4; // ms
 int stepDelay = 0; // ms usually a second or more
 
 /**
@@ -447,22 +447,34 @@ void tiltCenterFromDown()
 }
 
 /**
- * @brief the returning parameter determines where the servos should be
- * normal (true) means the robot should be pointing left
- * (follows right to left scan), so if opposite, servos continue
- * the other way... this is to avoid the second center call
- * to follow an S pattern
+ * @brief runCount is referring to which sweep is running
+ * there are three: top, middle, bottom
+ * the count determines where the robot is pointing (left/right)
+ * and this is important to not jump positions and not scan the same place
+ * if you were to return to the middle everytime
  * 
- * @param returning
+ * @param runCount 
  */
-void sweep(bool returning)
+void sweep(int runCount)
 {
-  pivotRight();
-  pivotCenterFromRight();
-  pivotLeft();
-
-  if (returning)
+  if (runCount == 1)
   {
+    pivotRight();
+    // start sample
+    pivotCenterFromRight();
+    pivotLeft();
+    // end sample
+  } else if (runCount == 2)
+  {
+    // start sample
+    pivotCenterFromLeft();
+    pivotRight();
+    // end sample
+  } else {
+    // start sample
+    pivotCenterFromRight();
+    pivotLeft();
+    // end sample
     pivotCenterFromLeft();
   }
 }
@@ -470,10 +482,10 @@ void sweep(bool returning)
 void performScan()
 {
   tiltUp();
-  sweep();
+  sweep(1);
   tiltCenterFromUp();
-  sweep();
+  sweep(2);
   tiltDown();
-  sweep();
+  sweep(3);
   tiltCenterFromDown();
 }
