@@ -19,8 +19,9 @@
 
 void setup()
 {
-  // Serial.println(getBatteryVoltage());
+  Serial.println(getBatteryVoltage());
   setAndCenterServos();
+  moveFrontRightLegUp();
   delay(10000);
   // moveForward3();
   // performScan();
@@ -38,5 +39,5 @@ void loop()
   // moveForward();
   // turnLeft();
   // Serial.println(getBatteryVoltage());
-  // delay(500);
+  // delay(1000);
 }

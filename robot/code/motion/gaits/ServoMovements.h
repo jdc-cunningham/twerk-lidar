@@ -121,17 +121,17 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
 
 void centerAllLegs()
 {
-  frontRightInnerServo.write(105); // +40
+  frontRightInnerServo.write(85); // +40
   frontRightMiddleServo.write(80); // -10
   frontRightOuterServo.write(95); // +5
-  backRightInnerServo.write(50); // -30
-  backRightMiddleServo.write(95); // +10
-  backRightOuterServo.write(75); // -15
-  frontLeftInnerServo.write(40); // -30
+  backRightInnerServo.write(80); // -30
+  backRightMiddleServo.write(105); // +10
+  backRightOuterServo.write(70); // -15
+  frontLeftInnerServo.write(50); // -30
   frontLeftMiddleServo.write(100); // +10
-  frontLeftOuterServo.write(85); // -5
+  frontLeftOuterServo.write(75); // -5
   backLeftInnerServo.write(130); // +30
-  backLeftMiddleServo.write(80); // -10
+  backLeftMiddleServo.write(70); // -10
   backLeftOuterServo.write(95); // +5
 }
 
