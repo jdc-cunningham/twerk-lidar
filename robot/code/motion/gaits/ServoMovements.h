@@ -14,7 +14,7 @@ Servo backLeftMiddleServo;
 Servo backLeftInnerServo;
 
 bool motionInProgress = false;
-int servoMotionDelay = 4; // ms
+int servoMotionDelay = 8; // ms
 int stepDelay = 0; // ms usually a second or more
 
 /**
@@ -348,4 +348,132 @@ void turnLeft()
   moveFrontLeftLegDown();
 
   centerAllLegs();
+}
+
+void pivotLeft()
+{
+  int servoGroupArr[][3] = {
+    {6, 40, 10},
+    {9, 130, 100},
+    {0, 105, 70},
+    {3, 50, 20}
+  };
+
+  moveServos(servoGroupArr, 4, servoMotionDelay);
+}
+
+void pivotCenterFromLeft()
+{
+  int servoGroupArr[][3] = {
+    {6, 10, 40},
+    {9, 100, 130},
+    {0, 70, 105},
+    {3, 20, 50}
+  };
+
+  moveServos(servoGroupArr, 4, servoMotionDelay);
+}
+
+void pivotRight()
+{
+  int servoGroupArr[][3] = {
+    {6, 40, 70},
+    {9, 130, 160},
+    {0, 105, 135},
+    {3, 50, 80}
+  };
+
+  moveServos(servoGroupArr, 4, servoMotionDelay);
+}
+
+void pivotCenterFromRight()
+{
+  int servoGroupArr[][3] = {
+    {6, 70, 40},
+    {9, 160, 130},
+    {0, 135, 105},
+    {3, 80, 50}
+  };
+
+  moveServos(servoGroupArr, 4, servoMotionDelay);
+}
+
+void tiltUp()
+{
+  int servoGroupArr[][3] = {
+    {10, 80, 60},
+    {4, 95, 110},
+    {7, 100, 80},
+    {1, 80, 100}
+  };
+
+  moveServos(servoGroupArr, 4, servoMotionDelay);
+}
+
+void tiltCenterFromUp()
+{
+  int servoGroupArr[][3] = {
+    {10, 60, 80},
+    {4, 110, 95},
+    {7, 80, 100},
+    {1, 100, 80}
+  };
+
+  moveServos(servoGroupArr, 4, servoMotionDelay);
+}
+
+void tiltDown()
+{
+  int servoGroupArr[][3] = {
+    {10, 80, 100},
+    {4, 95, 80},
+    {7, 100, 120},
+    {1, 80, 60}
+  };
+
+  moveServos(servoGroupArr, 4, servoMotionDelay);
+}
+
+void tiltCenterFromDown()
+{
+  int servoGroupArr[][3] = {
+    {10, 100, 80},
+    {4, 80, 95},
+    {7, 120, 100},
+    {1, 60, 80}
+  };
+
+  moveServos(servoGroupArr, 4, servoMotionDelay);
+}
+
+/**
+ * @brief the returning parameter determines where the servos should be
+ * normal (true) means the robot should be pointing left
+ * (follows right to left scan), so if opposite, servos continue
+ * the other way... this is to avoid the second center call
+ * to follow an S pattern
+ * 
+ * @param returning
+ */
+void sweep(bool returning)
+{
+  pivotRight();
+  pivotCenterFromRight();
+  pivotLeft();
+
+  if (returning)
+  {
+    pivotCenterFromLeft();
+  }
+}
+
+void performScan()
+{
+  tiltUp();
+  sweep();
+  tiltCenterFromUp();
+  sweep();
+  tiltDown();
+  sweep();
+  tiltCenterFromDown();
 }
