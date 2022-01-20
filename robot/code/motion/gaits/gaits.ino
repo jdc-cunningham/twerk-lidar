@@ -22,7 +22,7 @@ void setup()
   // Serial.println(getBatteryVoltage());
   setAndCenterServos();
   delay(10000);
-  moveForward3();
+  // moveForward3();
   // performScan();
   // turnLeft();
   // moveForward();

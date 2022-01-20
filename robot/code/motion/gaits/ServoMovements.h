@@ -496,31 +496,37 @@ void performScan()
   tiltCenterFromDown();
 }
 
-void rollFrontLeft()
+void cgShiftBackRight()
 {
   int servoGroupArr[][3] = {
-    {8, 85, 65},
-    {5, 75, 95}
+    // {8, 85, 65},
+    {9, 130, 110},
+    {0, 105, 125},
+    // {5, 75, 95}
   };
 
-  moveServos(servoGroupArr, 2, servoMotionDelay);
+  int servoCount = sizeof(servoGroupArr) / sizeof(servoGroupArr[0]);
+  moveServos(servoGroupArr, servoCount, servoMotionDelay);
 }
 
-void centerFromRollFrontLeft()
+void centerFromCgShiftBackRight()
 {
   int servoGroupArr[][3] = {
-    {8, 65, 85},
-    {5, 95, 75}
+    // {8, 65, 85},
+    {9, 110, 130},
+    {0, 125, 105},
+    // {5, 95, 75}
   };
 
-  moveServos(servoGroupArr, 2, servoMotionDelay);
+  int servoCount = sizeof(servoGroupArr) / sizeof(servoGroupArr[0]);
+  moveServos(servoGroupArr, servoCount, servoMotionDelay);
 }
 
 void moveForward3()
 {
-  rollFrontLeft();
+  cgShiftBackRight();
   moveFrontLeftLegUp();
   moveFrontLeftLegForward();
   moveFrontLeftLegDown();
-  centerFromRollFrontLeft();
+  centerFromCgShiftBackRight();
 }
