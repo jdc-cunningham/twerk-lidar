@@ -22,6 +22,7 @@ void setup()
   Serial.println(getBatteryVoltage());
   setAndCenterServos();
   delay(5000);
+  // moveForward3();
   // performScan();
   // turnLeft();
   // moveForward();
@@ -30,13 +31,15 @@ void setup()
   // level();
 }
 
+// frf - 0, 85, 105, starts at 50
+
 void loop()
 {
   // moveForward3();
   // performScan();
   // delay(1000);
   // moveForward();
-  // turnLeft();
+  turnLeft();
   // Serial.println(getBatteryVoltage());
   // delay(1000);
 }

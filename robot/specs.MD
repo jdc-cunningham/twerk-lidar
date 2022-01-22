@@ -5,3 +5,6 @@
 - 0.3oz - esp01 + boost converter + mpu9250 + tof sensor
 - 0.2oz - battery holder
 - 0.2oz - proto board
+
+### Total weight
+9.8oz
