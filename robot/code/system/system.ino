@@ -1,5 +1,6 @@
 /**
- * top view of servos
+ * top view of robot and servo names
+ * FLO = front-left-outer
  * 
  *    FLO                          FRO
  *         FLM                 FRM
@@ -22,24 +23,11 @@ void setup()
   Serial.println(getBatteryVoltage());
   setAndCenterServos();
   delay(5000);
-  // moveForward3();
-  performScan();
-  // turnLeft();
+  // performScan();
   // moveForward();
-  // moveForward2();
-  // delay(1000);
-  // level();
 }
-
-// frf - 0, 85, 105, starts at 50
 
 void loop()
 {
-  // moveForward3();
-  // performScan();
-  // delay(1000);
-  // moveForward();
-  // turnLeft();
-  // Serial.println(getBatteryVoltage());
-  // delay(1000);
+
 }
