@@ -14,7 +14,7 @@ Servo backLeftMiddleServo;
 Servo backLeftInnerServo;
 
 bool motionInProgress = false;
-int servoMotionDelay = 8; // ms
+int servoMotionDelay = 4; // ms
 int stepDelay = 0; // ms usually a second or more
 
 /**
@@ -180,7 +180,7 @@ void moveFrontRightLegUp()
 void moveBackLeftLegForward()
 {
   int servoGroupArr[][3] = { // lol
-    {9, 130, 100},
+    {9, 150, 100},
   };
 
   moveServos(servoGroupArr, 1, servoMotionDelay);
@@ -207,7 +207,7 @@ void moveFrontLeftLegUp()
 void moveBackRightLegForward()
 {
   int servoGroupArr[][3] = {
-    {3, 50, 80},
+    {3, 60, 80}
   };
 
   moveServos(servoGroupArr, 1, servoMotionDelay);
@@ -225,7 +225,7 @@ void moveFrontLeftLegDown()
 void moveFrontRightLegForward()
 {
   int servoGroupArr[][3] = {
-    {0, 105, 135},
+    {0, 85, 115},
   };
 
   moveServos(servoGroupArr, 1, servoMotionDelay);
@@ -252,7 +252,7 @@ void moveBackRightLegUp()
 void moveFrontLeftLegForward()
 {
   int servoGroupArr[][3] = {
-    {6, 40, 20}
+    {6, 50, 30}
   };
 
   moveServos(servoGroupArr, 1, servoMotionDelay);
@@ -522,11 +522,32 @@ void centerFromCgShiftBackRight()
   moveServos(servoGroupArr, servoCount, servoMotionDelay);
 }
 
+void pullForward()
+{
+  int servoGroupArr[][3] = {
+    {6, 30, 50},
+    {0, 115, 85},
+    {9, 130, 150},
+    {3, 80, 60}
+  };
+
+  int servoCount = sizeof(servoGroupArr) / sizeof(servoGroupArr[0]);
+  moveServos(servoGroupArr, servoCount, servoMotionDelay);
+}
+
 void moveForward3()
 {
-  cgShiftBackRight();
+  moveFrontRightLegUp();
+  moveFrontRightLegForward();
+  moveFrontRightLegDown();
   moveFrontLeftLegUp();
   moveFrontLeftLegForward();
   moveFrontLeftLegDown();
-  centerFromCgShiftBackRight();
+  pullForward();
+  moveBackLeftLegUp();
+  moveBackLeftLegForward();
+  moveBackLeftLegDown();
+  moveBackRightLegUp();
+  moveBackRightLegForward();
+  moveBackRightLegDown();
 }
