@@ -14,7 +14,7 @@ Servo backLeftMiddleServo;
 Servo backLeftInnerServo;
 
 bool motionInProgress = false;
-int servoMotionDelay = 33; // min 1 ms
+int servoMotionDelay = 6; // min 1 ms
 int stepDelay = 0; // ms usually a second or more
 bool sweepInProgress = false;
 int activeSweepAngleIndex = 0;
@@ -230,6 +230,15 @@ void moveBackRightLegForward()
   moveServos(servoGroupArr, 1, servoMotionDelay);
 }
 
+void moveBackRightLegBackward()
+{
+  int servoGroupArr[][3] = {
+    {3, 80, 60}
+  };
+
+  moveServos(servoGroupArr, 1, servoMotionDelay);
+}
+
 void moveFrontLeftLegDown()
 {
   int servoGroupArr[][3] = {
@@ -308,7 +317,7 @@ void moveFrontRightLegBack()
 void moveFrontLeftLegBack()
 {
   int servoGroupArr[][3] = {
-    {6, 40, 70}
+    {6, 40, 80}
   };
 
   moveServos(servoGroupArr, 1, servoMotionDelay);
@@ -321,27 +330,6 @@ void moveBackLeftLegBack()
   };
 
   moveServos(servoGroupArr, 1, servoMotionDelay);
-}
-
-void turnLeft()
-{
-  // moveBackLeftLegUp();
-  // moveFrontRightLegForward();
-  // moveBackLeftLegDown();
-
-  // moveBackRightLegUp();
-  // moveFrontLeftLegBack();
-  // moveBackRightLegDown();
-
-  // moveFrontRightLegUp();
-  // moveBackLeftLegBack();
-  // moveFrontRightLegDown();
-
-  // moveFrontLeftLegUp();
-  // moveBackRightLegForward();
-  // moveFrontLeftLegDown();
-
-  // centerAllLegs();
 }
 
 void pivotLeft()
@@ -494,6 +482,40 @@ void performScan()
   sweep(3);
   sweepInProgress = false;
   tiltCenterFromDown();
+}
+
+// tilt-away-from-moving type gait
+void turnLeft()
+{
+  // moveBackRightLegUp();
+  // moveBackRightLegBackward();
+  // moveBackRightLegDown();
+
+  // moveBackLeftLegUp();
+  // moveFrontRightLegForward();
+  // moveBackLeftLegDown();
+
+  // moveBackLeftLegUp();
+  // moveBackLeftLegBack();
+  // moveBackLeftLegDown();
+
+  moveFrontRightLegUp();
+  moveFrontRightLegForward();
+  moveFrontRightLegDown();
+  
+  // moveFrontLeftLegUp();
+
+  // moveBackRightLegUp();
+  // moveBackRightLegForward();
+  // moveBackRightLegDown();
+
+  // moveFrontLeftLegDown();
+
+  // moveFrontLeftLegUp();
+  // moveFrontLeftLegBack();
+  // moveFrontLeftLegDown();
+
+  // centerAllLegs();
 }
 
 void cgShiftBackRight()

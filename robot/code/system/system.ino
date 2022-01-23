@@ -30,7 +30,8 @@ void setup()
   setupTof();
   Serial.println(sensor.readRangeSingleMillimeters() * 0.0393701);
   setAndCenterServos();
-  delay(10000);
+  delay(5000);
+  // turnLeft();
   // performScan();
   // Serial.print(sampleSetPerSweep[0][0]);
 }
@@ -39,4 +40,5 @@ void loop()
 {
   // moveForward3();
   // performScan();
+  // turnLeft();
 }
