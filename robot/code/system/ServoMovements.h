@@ -121,9 +121,12 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
     if (sweepInProgress)
     {
       moveCounter += 1;
-      float tofSensorRead = sensor.readRangeSingleMillimeters() * 0.0393701;
-      // sampleSetPerSweep[nextServoPos][activeSweepAngleIndex] = tofSensorRead;
-      Serial.println(tofSensorRead);
+      if (moveCounter % 5 == 0)
+      {
+        float tofSensorRead = sensor.readRangeSingleMillimeters() * 0.0393701;
+        // sampleSetPerSweep[nextServoPos][activeSweepAngleIndex] = tofSensorRead;
+        Serial.println(tofSensorRead);
+      }
     }
 
     delay(motionDuration);
