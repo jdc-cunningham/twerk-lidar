@@ -16,6 +16,8 @@ Servo backLeftInnerServo;
 bool motionInProgress = false;
 int servoMotionDelay = 6; // min 1 ms
 int stepDelay = 0; // ms usually a second or more
+bool sweepInProgress = false;
+int activeSweepAngleIndex = 0;
 
 /**
  * @brief Get the Servo By Pin object
@@ -103,12 +105,27 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
       if (servoGroupArr[servoGroupIndex][1] < servoGroupArr[servoGroupIndex][2]) {
         // increase
         if (servoGroupArr[servoGroupIndex][1] + pos < servoGroupArr[servoGroupIndex][2]) {
-          getServoByPin(servoGroupArr[servoGroupIndex][0]).write(servoGroupArr[servoGroupIndex][1] + pos);
+          int nextServoPos = servoGroupArr[servoGroupIndex][1] + pos;
+
+          if (sweepInProgress)
+          {
+            float tofSensorRead = sensor.readRangeSingleMillimeters() * 0.0393701;
+            sampleSetPerSweep[nextServoPos][activeSweepAngleIndex] = tofSensorRead;
+          }
+
+          getServoByPin(servoGroupArr[servoGroupIndex][0]).write(nextServoPos);
         }
       } else {
         // decrease
         if (servoGroupArr[servoGroupIndex][1] - pos > servoGroupArr[servoGroupIndex][2]) {
-          getServoByPin(servoGroupArr[servoGroupIndex][0]).write(servoGroupArr[servoGroupIndex][1] - pos);
+          int nextServoPos = servoGroupArr[servoGroupIndex][1] - pos;
+
+          if (sweepInProgress)
+          {
+            float tofSensorRead = sensor.readRangeSingleMillimeters() * 0.0393701;
+            sampleSetPerSweep[nextServoPos][activeSweepAngleIndex] = tofSensorRead;
+          }
+          getServoByPin(servoGroupArr[servoGroupIndex][0]).write(nextServoPos);
         }
       }
     }
@@ -482,17 +499,23 @@ void sweep(int runCount)
 void performScan()
 {
   tiltUp();
-  delay(1000);
+  activeSweepAngleIndex = 0;
+  sampleAngles[0] = 20; // assumed angle, replace with IMU determined
+  sweepInProgress = true;
   sweep(1);
-  delay(1000);
+  sweepInProgress = false;
   tiltCenterFromUp();
-  delay(1000);
+  activeSweepAngleIndex = 1;
+  sampleAngles[1] = 0;
+  sweepInProgress = true;
   sweep(2);
-  delay(1000);
+  sweepInProgress = false;
   tiltDown();
-  delay(1000);
+  activeSweepAngleIndex = 2;
+  sampleAngles[2] = -20;
+  sweepInProgress = true;
   sweep(3);
-  delay(1000);
+  sweepInProgress = false;
   tiltCenterFromDown();
 }
 
