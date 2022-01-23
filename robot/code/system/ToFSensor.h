@@ -1,6 +1,8 @@
 #include <Wire.h>
 #include <VL53L0X.h>
 
+#define HIGH_SPEED
+
 VL53L0X sensor;
 
 int sampleAngles[3] = {};
@@ -16,7 +18,11 @@ void setupTof() {
     while (1) {}
   }
 
-  sensor.startContinuous();
+  // sensor.startContinuous();
+
+  #if defined HIGH_SPEED
+    sensor.setMeasurementTimingBudget(20000);
+  #endif
 }
 
 

@@ -14,7 +14,7 @@ Servo backLeftMiddleServo;
 Servo backLeftInnerServo;
 
 bool motionInProgress = false;
-int servoMotionDelay = 6; // min 1 ms
+int servoMotionDelay = 33; // min 1 ms
 int stepDelay = 0; // ms usually a second or more
 bool sweepInProgress = false;
 int activeSweepAngleIndex = 0;
@@ -79,6 +79,7 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
    * there is no error checking, I find coding in Arduino to be cumbersome */
   motionInProgress = true;
   int largestServoRange = 0;
+  int moveCounter = 0;
 
   for (int servoGroupIndex = 0; servoGroupIndex < servoGroupArrLen; servoGroupIndex++) {
     int range = 0;
@@ -106,29 +107,25 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
         // increase
         if (servoGroupArr[servoGroupIndex][1] + pos < servoGroupArr[servoGroupIndex][2]) {
           int nextServoPos = servoGroupArr[servoGroupIndex][1] + pos;
-
-          if (sweepInProgress)
-          {
-            float tofSensorRead = sensor.readRangeSingleMillimeters() * 0.0393701;
-            sampleSetPerSweep[nextServoPos][activeSweepAngleIndex] = tofSensorRead;
-          }
-
           getServoByPin(servoGroupArr[servoGroupIndex][0]).write(nextServoPos);
         }
       } else {
         // decrease
         if (servoGroupArr[servoGroupIndex][1] - pos > servoGroupArr[servoGroupIndex][2]) {
           int nextServoPos = servoGroupArr[servoGroupIndex][1] - pos;
-
-          if (sweepInProgress)
-          {
-            float tofSensorRead = sensor.readRangeSingleMillimeters() * 0.0393701;
-            sampleSetPerSweep[nextServoPos][activeSweepAngleIndex] = tofSensorRead;
-          }
           getServoByPin(servoGroupArr[servoGroupIndex][0]).write(nextServoPos);
         }
       }
     }
+
+    if (sweepInProgress)
+    {
+      moveCounter += 1;
+      float tofSensorRead = sensor.readRangeSingleMillimeters() * 0.0393701;
+      // sampleSetPerSweep[nextServoPos][activeSweepAngleIndex] = tofSensorRead;
+      Serial.println(tofSensorRead);
+    }
+
     delay(motionDuration);
   }
 
@@ -321,29 +318,6 @@ void moveBackLeftLegBack()
   };
 
   moveServos(servoGroupArr, 1, servoMotionDelay);
-}
-
-void moveForward()
-{
-  moveFrontRightLegUp();
-  moveBackLeftLegUp();
-  moveBackLeftLegForward();
-  moveFrontRightLegDown();
-  moveFrontLeftLegUp();
-  moveBackRightLegForward();
-  moveFrontLeftLegDown();
-  moveBackLeftLegUp();
-  moveFrontRightLegForward();
-  moveBackLeftLegDown();
-  moveBackRightLegUp();
-  moveFrontLeftLegForward();
-  moveBackRightLegDown();
-  moveAllFourLegsBack();  
-}
-
-void moveForward2()
-{
-
 }
 
 void turnLeft()

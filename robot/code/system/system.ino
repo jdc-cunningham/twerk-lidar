@@ -32,11 +32,10 @@ void setup()
   setAndCenterServos();
   delay(10000);
   performScan();
-  // moveForward();
   Serial.print(sampleSetPerSweep[0][0]);
 }
 
 void loop()
 {
-
+  // moveForward3();
 }
