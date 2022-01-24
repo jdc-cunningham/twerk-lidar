@@ -8,7 +8,7 @@ I will learn some of it everyday fresh brain. Will try for 30 mins at least.
 
 ### 01/23/2022 8:27 PM
 
-#### Page 1
+### Page 1
 integrated, integration drifts over long time scales
 algorithms including filtering
 Kalman's in here
