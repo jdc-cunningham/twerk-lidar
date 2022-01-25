@@ -28,6 +28,10 @@ std::vector< vector<double> > getRotatedMatrix(double aX, double aY, double aZ)
   return rotatedMatrix;
 }
 
+// use struct matrix{ double cell[3][3]; };
+// matrix thing = {}
+// double bar = foo.cell[5][7];
+
 int main()
 {
   // uncalibrated values: ax, ay, az, gx, gy, gz, mx, my, myz
