@@ -21,7 +21,7 @@
     THREE.Object3D.DefaultUp.set(0, 0, 1);
     const scene = new THREE.Scene();
     // 10 z distanece
-    const camera = new THREE.PerspectiveCamera(10, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
 
     scene.background = new THREE.Color( 0xffffff );
@@ -36,10 +36,10 @@
 
     // add axes helper
     // x = red, y = green, z = blue
-    // scene.add(axesHelper);
+    scene.add(axesHelper);
 
     // add grid overlay
-    const size = 10;
+    const size = 100;
     const divisions = 10;
     const gridHelper = new THREE.GridHelper(size, divisions);
     const zVector = new THREE.Vector3(1, 0, 0);
@@ -68,25 +68,27 @@
     // working code
     // vertices
     const vectorSamples = [
-      [-0.75,-1.14,-9.85],
-      [0.03,-0.03,0.00],
-      [-19.15,11.46,-7.98]
+      [0,0,-9.92],
+      [116.369,181.319,-30.118],
+      [-1833.62,1177.27,2.81477]
     ];
 
     let points = [];
 
     // plot lines from points
     vectorSamples.map((row, index) => {
+      const startVector = new THREE.Vector3(0, 0, 0);
+      points.push(startVector);
       const vector = new THREE.Vector3(row[0], row[1], row[2]);
       points.push(vector);
+
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      const line = new THREE.Line( geometry, material );
+      scene.add(line);
+
+      points = [];
     });
 
-    console.log(points);
-
-    
-    const geometry = new THREE.BufferGeometry().setFromPoints(points);
-    const line = new THREE.Line( geometry, material );
-    // scene.add(line);
 
 
     // loop over physical coordinates globally accessed by previusly included script
