@@ -68,9 +68,9 @@
     // working code
     // vertices
     const vectorSamples = [
-      [-0.0223654, 0.535797, -0.844051],
-      [0.076841, -0.0223654, 0],
-      [0.00649836, 0.535797, 0]
+      [-0.75,-1.14,-9.85],
+      [0.03,-0.03,0.00],
+      [-19.15,11.46,-7.98]
     ];
 
     let points = [];
@@ -86,7 +86,7 @@
     
     const geometry = new THREE.BufferGeometry().setFromPoints(points);
     const line = new THREE.Line( geometry, material );
-    scene.add(line);
+    // scene.add(line);
 
 
     // loop over physical coordinates globally accessed by previusly included script
