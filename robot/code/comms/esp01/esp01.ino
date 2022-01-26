@@ -56,7 +56,6 @@ void loop()
         if (Serial.available())
         {
           client.send(Serial.readString());
-          clearSerial();
         }
       }
       delay(1);
