@@ -76,6 +76,8 @@
     const plotVectors = (vectors) => {
       let points = [];
 
+      console.log('vectors', vectors);
+
       // plot lines from points
       vectors.map((row, index) => {
         const startVector = new THREE.Vector3(0, 0, 0);
@@ -88,11 +90,12 @@
         scene.add(line);
         
         if (index === 0) {
-          material = new THREE.LineBasicMaterial({ color: 0x0000FF }); // blue
+          material = new THREE.LineBasicMaterial({ color: 0x0000FF }); // blue, down
         } else if (index === 1) {
-          material = new THREE.LineBasicMaterial({ color: 0xFF0000 }); // red
+          material = new THREE.LineBasicMaterial({ color: 0xFF0000 }); // red, east
         } else {
-          material = new THREE.LineBasicMaterial({ color: 0x00FF00 }); // green
+          console.log('green', row);
+          material = new THREE.LineBasicMaterial({ color: 0x00FF00 }); // green, north
         }
 
         points = [];
@@ -218,7 +221,7 @@
       );
 
       return [
-        [0, 0, down],
+        [imuVectors[0][0], imuVectors[0][1], imuVectors[0][2]],
         [east[0], east[1], east[2]],
         [north[0], north[1], north[2]]
       ];
