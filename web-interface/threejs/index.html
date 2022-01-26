@@ -20,7 +20,8 @@
     // https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
     THREE.Object3D.DefaultUp.set(0, 0, 1);
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    // 10 z distanece
+    const camera = new THREE.PerspectiveCamera(10, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
 
     scene.background = new THREE.Color( 0xffffff );
@@ -35,7 +36,7 @@
 
     // add axes helper
     // x = red, y = green, z = blue
-    scene.add(axesHelper);
+    // scene.add(axesHelper);
 
     // add grid overlay
     const size = 10;
@@ -61,26 +62,31 @@
     camera.lookAt( 0, 0, 0 );
 
     // line material
-    const material = new THREE.LineBasicMaterial({ color: 0x0000ff });
+    const material = new THREE.LineBasicMaterial({ color: 0xf5c71a });
+    // material.lineWidth = 1; // no change
 
     // working code
     // vertices
+    const vectorSamples = [
+      [-0.0223654, 0.535797, -0.844051],
+      [0.076841, -0.0223654, 0],
+      [0.00649836, 0.535797, 0]
+    ];
+
     let points = [];
 
     // plot lines from points
-    // coordinates.map((row, index) => {
-    //   row.map((measurement, rowIndex) => {
-    //     points.push(new THREE.Vector3( measurement[0], measurement[1], measurement[2] ));
-    //   })
+    vectorSamples.map((row, index) => {
+      const vector = new THREE.Vector3(row[0], row[1], row[2]);
+      points.push(vector);
+    });
 
-    //   const geometry = new THREE.BufferGeometry().setFromPoints(points);
+    console.log(points);
 
-    //   const line = new THREE.Line( geometry, material );
-
-    //   scene.add(line);
-
-    //   points = [];
-    // });
+    
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+    const line = new THREE.Line( geometry, material );
+    scene.add(line);
 
 
     // loop over physical coordinates globally accessed by previusly included script

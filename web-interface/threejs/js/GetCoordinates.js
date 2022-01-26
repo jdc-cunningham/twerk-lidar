@@ -33,7 +33,7 @@ const measuredCoordinates =  [
 ];
 
 const coordinates = measuredCoordinates.map((row, index) => {
-  console.log(row);
+  // console.log(row);
   return row.map((measurement, rowIndex) => get3dCoordinates(
     angleMap[index],
     angleMap[rowIndex],
@@ -43,4 +43,4 @@ const coordinates = measuredCoordinates.map((row, index) => {
 });
 
 /* console.log(coordinates.join(",")); */
-console.log(coordinates);
+// console.log(coordinates);
