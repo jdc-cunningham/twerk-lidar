@@ -57,6 +57,8 @@ void loop()
         {
           client.send(Serial.readString());
         }
+
+        clearSerial();
       }
       delay(1);
     }
