@@ -36,7 +36,7 @@
 
     // add axes helper
     // x = red, y = green, z = blue
-    scene.add(axesHelper);
+    // scene.add(axesHelper);
 
     // add grid overlay
     const size = 100;
@@ -62,7 +62,7 @@
     camera.lookAt( 0, 0, 0 );
 
     // line material
-    const material = new THREE.LineBasicMaterial({ color: 0xf5c71a });
+    let material = new THREE.LineBasicMaterial({ color: 0x00FF00 });
     // material.lineWidth = 1; // no change
 
     // working code
@@ -73,23 +73,33 @@
       [-1833.62,1177.27,2.81477]
     ];
 
-    let points = [];
+    const plotVectors = (vectors) => {
+      let points = [];
 
-    // plot lines from points
-    vectorSamples.map((row, index) => {
-      const startVector = new THREE.Vector3(0, 0, 0);
-      points.push(startVector);
-      const vector = new THREE.Vector3(row[0], row[1], row[2]);
-      points.push(vector);
+      // plot lines from points
+      vectors.map((row, index) => {
+        const startVector = new THREE.Vector3(0, 0, 0);
+        points.push(startVector);
+        const vector = new THREE.Vector3(row[0], row[1], row[2]);
+        points.push(vector);
 
-      const geometry = new THREE.BufferGeometry().setFromPoints(points);
-      const line = new THREE.Line( geometry, material );
-      scene.add(line);
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        const line = new THREE.Line( geometry, material );
+        scene.add(line);
+        
+        if (index === 0) {
+          material = new THREE.LineBasicMaterial({ color: 0x0000FF }); // blue
+        } else if (index === 1) {
+          material = new THREE.LineBasicMaterial({ color: 0xFF0000 }); // red
+        } else {
+          material = new THREE.LineBasicMaterial({ color: 0x00FF00 }); // green
+        }
 
-      points = [];
-    });
+        points = [];
+      });
+    }
 
-
+    plotVectors(vectorSamples);
 
     // loop over physical coordinates globally accessed by previusly included script
     // coordinates.map((row, index) => {
@@ -128,6 +138,121 @@
     // render scene
     renderer.render(scene, camera);
     animate();
+
+    setTimeout(() => {
+      // scene.remove(axesHelper);
+      // animate();
+    }, 1000);
+
+    // socket feed
+    // Create WebSocket connection.
+    const socket = new WebSocket('ws://192.168.1.187:80');
+
+    // Connection opened
+    socket.addEventListener('open', function (event) {
+      socket.send('Hello Server!');
+
+      setInterval(() => {
+        socket.send('yo');
+      }, 1000);
+    });
+
+    const parseImuStream = (imuStream) => {
+      if (imuStream.indexOf(',') !== -1) {
+        const imuVals = imuStream.split(',');
+        return [
+          [imuVals[0], imuVals[1], imuVals[2]],
+          [imuVals[3], imuVals[4], imuVals[5]],
+          [imuVals[6], imuVals[7], imuVals[8]],
+        ];
+      } else {
+        return [];
+      }
+    }
+
+    // [a, b, c]
+    const getMaxValue = (vector) => {
+      const posVals = [];
+      
+      vector.forEach(val => {
+        if (val < 0) {
+          posVals.push(val * -1);
+        } else {
+          posVals.push(val);
+        }
+      });
+      
+      let largestVal = 0;
+      let largestValIndex = 0;
+      
+      posVals.forEach((val, index) => {
+        if (val > largestVal) {
+          largestVal = val;
+          largestValIndex = index;
+        }
+      });
+      
+      return vector[largestValIndex];
+    };
+
+    const getCrossProduct = (aX, aY, aZ, bX, bY, bZ) => {
+      const cX = aY * bZ - aZ * bY;
+      const cY = aZ * bX - aX * bZ;
+      const cZ = aX * bY - aY * bX;
+
+      return [cX, cY, cZ];
+    }
+
+    // accel, gyro, mag
+    const getNed = (imuVectors) => {
+      const down = getMaxValue(imuVectors[0]);
+
+      const east = getCrossProduct(
+        imuVectors[0][0], imuVectors[0][1], imuVectors[0][2],
+        imuVectors[2][0], imuVectors[2][1], imuVectors[2][2]
+      );
+
+      const north = getCrossProduct(
+        east[0], east[1], east[2],
+        imuVectors[0][0], imuVectors[0][1], imuVectors[0][2]
+      );
+
+      return [
+        [0, 0, down],
+        [east[0], east[1], east[2]],
+        [north[0], north[1], north[2]]
+      ];
+    }
+
+    // https://stackoverflow.com/a/30360368/2710227
+    const clearScreen = () => {
+      scene.remove.apply(scene, scene.children);
+      // re-add grid and axes
+      // scene.add(axesHelper);
+      scene.add(gridHelper);
+    }
+
+    // Listen for messages
+    socket.addEventListener('message', function (event) {
+      console.log('Message from server');
+      const imuStream = event.data;
+      const imuStreamVectors = parseImuStream(event.data);
+
+      console.log(imuStreamVectors);
+      console.log(scene.children);
+
+      if (imuStreamVectors.length) {
+        const ned = getNed(imuStreamVectors);
+        console.log(ned);
+        clearScreen();
+        plotVectors(ned);
+        controls.update();
+      }
+    });
+
+    socket.addEventListener('error', function (event) {
+      console.log('error', event);
+    });
   </script>
 </body>
 </html>
