@@ -23,13 +23,13 @@
 
 void setup()
 {
+  setAndCenterServos();
   setupSerial();
   Serial.println(getBatteryVoltage());
   setupTof();
   setupImu();
   Serial.println(sensor.readRangeSingleMillimeters() * 0.0393701);
-  setAndCenterServos();
-  delay(5000);
+  delay(3000);
   // turnLeft();
   // performScan();
   // Serial.print(sampleSetPerSweep[0][0]);
@@ -51,7 +51,6 @@ void loop()
     Serial5.println(sensorAccelSample);
     Serial5.println(sensorGyroSample);
     Serial5.println(sensorMagSample);
-    Serial5.println("");
   }
 
   delay(1000);
