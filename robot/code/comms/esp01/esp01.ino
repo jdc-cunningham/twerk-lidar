@@ -42,7 +42,7 @@ void loop()
     auto client = socketServer.accept();
     clientActive = true;
 
-    for (int i = 0; i < 3000; i++) // 1 second ESP to Web client connection poll
+    for (int i = 0; i < 1000; i++) // 1 second ESP to Web client connection poll
     {
       if (client.available())
       {
