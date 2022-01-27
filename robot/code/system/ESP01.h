@@ -1,6 +1,9 @@
-void checkEspSerialMsg() {
+String checkEspSerialMsg() {
   if (Serial5.available()) {
-    Serial.print(Serial5.readString());
-    clearSerial5();
+    String msg = Serial5.readString();
+    clearSerial5(); // might be redundant
+    return msg;
   }
+
+  return "";
 }
