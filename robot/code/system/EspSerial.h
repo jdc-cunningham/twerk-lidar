@@ -11,3 +11,12 @@ void clearEspSerial()
     ESPSERIAL.read();
   }
 }
+
+String getEspSerialMsg() {
+  if (ESPSERIAL.available() > 0) {
+    String msg = ESPSERIAL.readString();
+    return msg;
+  }
+
+  return "";
+}
