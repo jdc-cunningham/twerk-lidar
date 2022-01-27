@@ -1,6 +1,7 @@
 #define ESPSERIAL Serial5
 
-void setupEspSerial() {
+void setupEspSerial()
+{
   ESPSERIAL.begin(115200);
 }
 
