@@ -53,7 +53,7 @@ void loop()
           Serial.print(msg.data());
         }
 
-        if (Serial.available())
+        if (Serial.available() > 0)
         {
           client.send(Serial.readString());
         }
@@ -63,6 +63,7 @@ void loop()
 
     client.close();
     clientActive = false;
+    clearSerial();
   }
 
   delay(50);

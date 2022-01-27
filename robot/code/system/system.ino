@@ -25,8 +25,8 @@
 void setup()
 {
   setAndCenterServos();
-  Serial.begin(115200);
-  setupSerial5();
+  // Serial.begin(115200);
+  setupEspSerial();
   // Serial.println(getBatteryVoltage());
   setupTof();
   setupImu();
@@ -44,7 +44,7 @@ void loop()
   // turnLeft();
   if (imu.Read()) {
     // Serial5.print(sensor.readRangeSingleMillimeters() * 0.0393701);
-    String espMsg = checkEspSerialMsg();
+    String espMsg = getEspSerialMsg();
 
     if (espMsg.length() > 0)
     {
@@ -52,9 +52,10 @@ void loop()
       String sensorGyroSample = String(imu.gyro_x_radps()) + "," + String(imu.gyro_y_radps()) + "," + String(imu.gyro_z_radps()) + ",";
       String sensorMagSample = String(imu.mag_x_ut()) + "," + String(imu.mag_y_ut()) + "," + String(imu.mag_z_ut());
 
-      Serial5.print(sensorAccelSample);
-      Serial5.print(sensorGyroSample);
-      Serial5.print(sensorMagSample);
+      ESPSERIAL.print(sensorAccelSample);
+      ESPSERIAL.print(sensorGyroSample);
+      ESPSERIAL.print(sensorMagSample);
+      clearEspSerial();
     }
   }
 
