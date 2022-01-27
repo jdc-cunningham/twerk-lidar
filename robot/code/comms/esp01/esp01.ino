@@ -13,11 +13,8 @@ void connectToWiFi()
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-    // Serial.println("Waiting for connection");
   }
 
-  // Serial.println("Connected!");
-  // Serial.println("Starting socket server...");
   socketServer.listen(80);
 }
 

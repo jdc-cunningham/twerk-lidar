@@ -15,18 +15,18 @@
  *    BLO                           BRO
  */
 
-// #include "ToFSensor.h"
-// #include "ServoMovements.h"
-// #include "Misc.h"
-// #include "IMU.h"
+#include "ToFSensor.h"
+#include "ServoMovements.h"
+#include "Misc.h"
+#include "IMU.h"
 #include "EspSerial.h"
 
 void setup()
 {
-  // setAndCenterServos();
+  setAndCenterServos();
   setupEspSerial();
-  // setupTof();
-  // setupImu();
+  setupTof();
+  setupImu();
   // delay(3000);
 
   // turnLeft();
@@ -42,32 +42,23 @@ void loop()
   // moveForward3();
   // performScan();
   // turnLeft();
-  // if (imu.Read()) {
-  //   // Serial5.print(sensor.readRangeSingleMillimeters() * 0.0393701);
-    // String espMsg = getEspSerialMsg();
 
-  //   if (espMsg.length() > 0)
-  //   {
-  //     clearEspSerial(); // might be redundant from readString
-  //     moveForward3();
-      // ESPSERIAL.print("esp");
+  if (imu.Read())
+  {
+    // Serial5.print(sensor.readRangeSingleMillimeters() * 0.0393701);
+    String espMsg = getEspSerialMsg();
 
-      // String sensorAccelSample = String(imu.accel_x_mps2()) + "," + String(imu.accel_y_mps2()) + "," + String(imu.accel_z_mps2()) + ",";
-      // String sensorGyroSample = String(imu.gyro_x_radps()) + "," + String(imu.gyro_y_radps()) + "," + String(imu.gyro_z_radps()) + ",";
-      // String sensorMagSample = String(imu.mag_x_ut()) + "," + String(imu.mag_y_ut()) + "," + String(imu.mag_z_ut());
+    if (espMsg.length() > 0)
+    {
+      String sensorAccelSample = String(imu.accel_x_mps2()) + "," + String(imu.accel_y_mps2()) + "," + String(imu.accel_z_mps2()) + ",";
+      String sensorGyroSample = String(imu.gyro_x_radps()) + "," + String(imu.gyro_y_radps()) + "," + String(imu.gyro_z_radps()) + ",";
+      String sensorMagSample = String(imu.mag_x_ut()) + "," + String(imu.mag_y_ut()) + "," + String(imu.mag_z_ut());
 
-      // ESPSERIAL.print(sensorAccelSample);
-      // ESPSERIAL.print(sensorGyroSample);
-      // ESPSERIAL.print(sensorMagSample);
-
-
-      // clearEspSerial();
-  //   }
-  // }
-
-  ESPSERIAL.print("esp");
-
-  // moveForward3();
+      ESPSERIAL.print(sensorAccelSample);
+      ESPSERIAL.print(sensorGyroSample);
+      ESPSERIAL.print(sensorMagSample);
+    }
+  }
 
   delay(1000);
 }
