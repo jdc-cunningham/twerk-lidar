@@ -15,18 +15,18 @@
  *    BLO                           BRO
  */
 
-#include "ToFSensor.h"
-#include "ServoMovements.h"
-#include "Misc.h"
-#include "IMU.h"
-#include "EspSerial.h"
+// #include "ToFSensor.h"
+// #include "ServoMovements.h"
+// #include "Misc.h"
+// #include "IMU.h"
+// #include "EspSerial.h"
 
 void setup()
 {
-  setAndCenterServos();
+  // setAndCenterServos();
   setupEspSerial();
-  setupTof();
-  setupImu();
+  // setupTof();
+  // setupImu();
   // delay(3000);
 
   // turnLeft();
