@@ -1,11 +1,13 @@
-void setupSerial5() {
-  Serial5.begin(115200);
+#define ESPSERIAL Serial5
+
+void setupEspSerial() {
+  ESPSERIAL.begin(115200);
 }
 
-void clearSerial5()
+void clearEspSerial()
 {
-  while (Serial5.available())
+  while (ESPSERIAL.available() > 0)
   {
-    Serial5.read();
+    ESPSERIAL.read();
   }
 }
