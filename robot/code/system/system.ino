@@ -23,17 +23,19 @@
 
 void setup()
 {
+  Serial.begin(115200);
   setAndCenterServos();
   setupEspSerial();
   setupTof();
   setupImu();
+  Serial.println(getBatteryVoltage());
+  getMagnetometerOffset();
   // delay(3000);
 
   // turnLeft();
   // performScan();
   // Serial.print(sampleSetPerSweep[0][0]);
   // Serial.begin(115200);
-  // Serial.println(getBatteryVoltage());
   // Serial.println(sensor.readRangeSingleMillimeters() * 0.0393701);
 }
 
