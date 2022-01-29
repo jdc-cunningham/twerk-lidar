@@ -65,7 +65,7 @@ void loop()
     // }
   // }
 
-  // performScan();
+  // performSweep();
 
   delay(5000);
 }

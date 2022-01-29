@@ -465,6 +465,13 @@ void sweep(int runCount)
   }
 }
 
+void performSweep()
+{
+  sweep(1);
+  sweep(2);
+  sweep(3);
+}
+
 void performScan()
 {
   tiltUp();
