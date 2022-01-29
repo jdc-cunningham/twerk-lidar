@@ -17,9 +17,9 @@
 
 #include "BlueLed.h"
 #include "ToFSensor.h"
+#include "IMU.h"
 #include "ServoMovements.h"
 #include "Misc.h"
-#include "IMU.h"
 #include "EspSerial.h"
 
 void setup()
@@ -47,22 +47,25 @@ void loop()
   // performScan();
   // turnLeft();
 
-  if (imu.Read())
-  {
+  // if (imu.Read())
+  // {
+  //   Serial.println(radianToDegree(imu.gyro_z_radps()));
     // Serial5.print(sensor.readRangeSingleMillimeters() * 0.0393701);
-    String espMsg = getEspSerialMsg();
+    // String espMsg = getEspSerialMsg();
 
-    if (espMsg.length() > 0)
-    {
-      String sensorAccelSample = String(imu.accel_x_mps2()) + "," + String(imu.accel_y_mps2()) + "," + String(imu.accel_z_mps2()) + ",";
-      String sensorGyroSample = String(imu.gyro_x_radps()) + "," + String(imu.gyro_y_radps()) + "," + String(imu.gyro_z_radps()) + ",";
-      String sensorMagSample = String(imu.mag_x_ut()) + "," + String(imu.mag_y_ut()) + "," + String(imu.mag_z_ut());
+    // if (espMsg.length() > 0)
+    // {
+    //   String sensorAccelSample = String(imu.accel_x_mps2()) + "," + String(imu.accel_y_mps2()) + "," + String(imu.accel_z_mps2()) + ",";
+    //   String sensorGyroSample = String(imu.gyro_x_radps()) + "," + String(imu.gyro_y_radps()) + "," + String(imu.gyro_z_radps()) + ",";
+    //   String sensorMagSample = String(imu.mag_x_ut()) + "," + String(imu.mag_y_ut()) + "," + String(imu.mag_z_ut());
 
-      ESPSERIAL.print(sensorAccelSample);
-      ESPSERIAL.print(sensorGyroSample);
-      ESPSERIAL.print(sensorMagSample);
-    }
-  }
+    //   ESPSERIAL.print(sensorAccelSample);
+    //   ESPSERIAL.print(sensorGyroSample);
+    //   ESPSERIAL.print(sensorMagSample);
+    // }
+  // }
 
-  delay(1000);
+  // performScan();
+
+  delay(5000);
 }

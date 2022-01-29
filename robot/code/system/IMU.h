@@ -111,6 +111,11 @@ float applyMagOffset(char axis, float magVal)
   return offsetMagVal;
 }
 
+float radianToDegree(float rad)
+{
+  return rad * 57.2958;
+}
+
 void setupImu() {
   Serial.begin(115200);
   while(!Serial) {}
