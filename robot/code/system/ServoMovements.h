@@ -129,9 +129,11 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
       }
     }
 
+
     if (imu.Read())
     {
       Serial.println(radianToDegree(imu.gyro_z_radps()));
+      Serial.println(sensor.readRangeSingleMillimeters() * 0.0393701);
     }
     delay(motionDuration);
   }
