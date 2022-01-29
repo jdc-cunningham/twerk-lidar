@@ -15,6 +15,7 @@
  *    BLO                           BRO
  */
 
+#include "BlueLed.h"
 #include "ToFSensor.h"
 #include "ServoMovements.h"
 #include "Misc.h"
@@ -24,6 +25,7 @@
 void setup()
 {
   Serial.begin(115200);
+  setupBlueLed();
   setAndCenterServos();
   setupEspSerial();
   setupTof();

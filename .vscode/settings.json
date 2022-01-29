@@ -37,6 +37,10 @@
     "xstddef": "cpp",
     "xstring": "cpp",
     "xtr1common": "cpp",
-    "xutility": "cpp"
+    "xutility": "cpp",
+    "__locale": "cpp",
+    "__string": "cpp",
+    "string": "cpp",
+    "string_view": "cpp"
   }
 }

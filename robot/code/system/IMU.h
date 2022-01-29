@@ -19,6 +19,8 @@ void getMagnetometerOffset()
   for (int a = 0; a < 3; a++)
   {
     Serial.print("prepare to calibrate axis:");
+    blueLedBlink(2);
+
     if (a == 0)
     {
       Serial.println("x");
@@ -33,6 +35,7 @@ void getMagnetometerOffset()
     delay(5000);
 
     Serial.println("start rotating");
+    blueLedOn();
 
     for (int i = 0; i < 360; i++)
     {
@@ -77,6 +80,8 @@ void getMagnetometerOffset()
       }
       delay(16);
     }
+
+    blueLedOff();
   }
 
   magXOffset = (magXMax - magXMin) / 2;
