@@ -31,11 +31,12 @@
 
     // add orbit controls
     const controls = new THREE.OrbitControls( camera, renderer.domElement );
-    const axesHelper = new THREE.AxesHelper(15);
+    const axesHelper = new THREE.AxesHelper(70);
     // const controls = new OrbitControls( camera, renderer.domElement );
 
     // add axes helper
     // x = red, y = green, z = blue
+    // east, north, down
     scene.add(axesHelper);
 
     // add grid overlay
@@ -45,7 +46,7 @@
     // const zVector = new THREE.Vector3(0, 0, 1);
     gridHelper.rotateX(Math.PI / 2); // https://stackoverflow.com/a/58554774/2710227
     // gridHelper.lookAt(zVector);
-    // scene.add(gridHelper);
+    scene.add(gridHelper);
 
     controls.update();
 
@@ -230,7 +231,7 @@
       scene.remove.apply(scene, scene.children);
       // re-add grid and axes
       scene.add(axesHelper);
-      // scene.add(gridHelper);
+      scene.add(gridHelper);
     }
 
     // Listen for messages
