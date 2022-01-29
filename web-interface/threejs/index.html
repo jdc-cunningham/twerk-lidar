@@ -36,15 +36,16 @@
 
     // add axes helper
     // x = red, y = green, z = blue
-    // scene.add(axesHelper);
+    scene.add(axesHelper);
 
     // add grid overlay
     const size = 100;
     const divisions = 10;
     const gridHelper = new THREE.GridHelper(size, divisions);
-    const zVector = new THREE.Vector3(1, 0, 0);
-    gridHelper.lookAt(zVector);
-    scene.add(gridHelper);
+    // const zVector = new THREE.Vector3(0, 0, 1);
+    gridHelper.rotateX(Math.PI / 2); // https://stackoverflow.com/a/58554774/2710227
+    // gridHelper.lookAt(zVector);
+    // scene.add(gridHelper);
 
     controls.update();
 
@@ -73,10 +74,12 @@
       [-1833.62,1177.27,2.81477]
     ];
 
+    const blue = 0x0000FF;
+    const red = 0xFF0000;
+    const green = 0x00FF00;
+
     const plotVectors = (vectors) => {
       let points = [];
-
-      console.log('vectors', vectors);
 
       // plot lines from points
       vectors.map((row, index) => {
@@ -86,23 +89,23 @@
         points.push(vector);
 
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+        if (index === 0) {
+          material = new THREE.LineBasicMaterial({ color: red }); // north
+        } else if (index === 1) {
+          material = new THREE.LineBasicMaterial({ color: green }); // east
+        } else {
+          material = new THREE.LineBasicMaterial({ color: blue }); // down
+        }
+
         const line = new THREE.Line( geometry, material );
         scene.add(line);
-        
-        if (index === 0) {
-          material = new THREE.LineBasicMaterial({ color: 0x0000FF }); // blue, down
-        } else if (index === 1) {
-          material = new THREE.LineBasicMaterial({ color: 0xFF0000 }); // red, east
-        } else {
-          console.log('green', row);
-          material = new THREE.LineBasicMaterial({ color: 0x00FF00 }); // green, north
-        }
 
         points = [];
       });
     }
 
-    plotVectors(vectorSamples);
+    // plotVectors(vectorSamples);
 
     // loop over physical coordinates globally accessed by previusly included script
     // coordinates.map((row, index) => {
@@ -216,9 +219,9 @@
       );
 
       return [
-        [imuVectors[0][0], imuVectors[0][1], imuVectors[0][2]],
+        [north[0], north[1], north[2]],
         [east[0], east[1], east[2]],
-        [north[0], north[1], north[2]]
+        [imuVectors[0][0], imuVectors[0][1], imuVectors[0][2]],
       ];
     }
 
@@ -226,22 +229,17 @@
     const clearScreen = () => {
       scene.remove.apply(scene, scene.children);
       // re-add grid and axes
-      // scene.add(axesHelper);
-      scene.add(gridHelper);
+      scene.add(axesHelper);
+      // scene.add(gridHelper);
     }
 
     // Listen for messages
     socket.addEventListener('message', function (event) {
-      console.log('Message from server');
       const imuStream = event.data;
       const imuStreamVectors = parseImuStream(event.data);
 
-      console.log(imuStreamVectors);
-      console.log(scene.children);
-
       if (imuStreamVectors.length) {
         const ned = getNed(imuStreamVectors);
-        console.log(ned);
         clearScreen();
         plotVectors(ned);
         controls.update();
