@@ -23,12 +23,11 @@ int activeSweepAngleIndex = 0;
 bool sampleDepth = false;
 bool sampleGyroZ = false; // yaw
 bool sampleGyroX = false; // pitch
-// std::map<int, float> gyroVals = {};
-std::vector<float> gyroVals = {};
-std::vector<int> timeVals = {};
-std::vector<int> servoPosVals = {};
-std::vector<int> servoPosImuVals = {}; // where IMU was able to get a reading
-std::vector<float> depthVals = {};
+
+// these use time from millis() as a shared key to sync the data
+std::map<int, float> gyroVals = {};
+std::map<int, int> servoPosVals = {};
+std::map<int, float> depthVals = {};
 
 /**
  * @brief Get the Servo By Pin object
@@ -129,12 +128,14 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
       }
     }
 
+    int timeNow = millis();
+
     if (imu.Read())
     {
       if (sampleDepth)
       {
         float distSample = sensor.readRangeSingleMillimeters() * 0.0393701;
-        depthVals.push_back(distSample);
+        depthVals[timeNow] = distSample;
       }
 
       // pitch angle rate
@@ -146,18 +147,13 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
       // yaw angle rate
       if (sampleGyroZ)
       {
-        // gyroVals[pos] = radianToDegree(imu.gyro_z_radps());
-        // https://stackoverflow.com/a/12103604/2710227
-        gyroVals.push_back(radianToDegree(imu.gyro_z_radps()));
+        gyroVals[timeNow] = radianToDegree(imu.gyro_z_radps());
       }
-
-      servoPosImuVals.push_back(pos);
     }
 
     if (sampleDepth || sampleGyroX || sampleGyroZ)
     {
-      servoPosVals.push_back(pos);
-      timeVals.push_back(millis());
+      servoPosVals[timeNow] = pos;
     }
     delay(motionDuration);
   }
@@ -472,8 +468,8 @@ void sweep(int runCount)
   if (runCount == 1)
   {
     sampleGyroZ = true;
-    pivotRight();
     sampleDepth = true;
+    pivotRight();
     pivotCenterFromRight();
     pivotLeft();
     sampleGyroZ = false;
@@ -498,44 +494,44 @@ void performSweep()
   sweep(1);
 
   Serial.println(gyroVals.size());
-  Serial.println(timeVals.size());
 
-  // https://stackoverflow.com/a/409396/2710227
-  // whoa this answer is 1 digit less than others it's old 2009
-  for (std::vector<int>::iterator it = timeVals.begin(); it != timeVals.end(); ++it)
+  // https://stackoverflow.com/a/14070977/2710227
+  // sucks but easier to copy-paste into excel
+  Serial.print("s");
+  for (auto it = servoPosVals.cbegin(); it != servoPosVals.cend(); ++it)
   {
-    Serial.print("t");
-    Serial.println(*it);
+    Serial.println(it->first);
   }
 
-  for (std::vector<float>::iterator it = gyroVals.begin(); it != gyroVals.end(); ++it)
+  for (auto it = servoPosVals.cbegin(); it != servoPosVals.cend(); ++it)
   {
-    Serial.print("g");
-    Serial.println(*it);
+    Serial.println(it->second);
   }
 
-  for (std::vector<int>::iterator it = servoPosVals.begin(); it != servoPosVals.end(); ++it)
+  Serial.print("g");
+  for (auto it = gyroVals.cbegin(); it != gyroVals.cend(); ++it)
   {
-    Serial.print("s");
-    Serial.println(*it);
+    Serial.println(it->first);
   }
 
-  for (std::vector<int>::iterator it = servoPosImuVals.begin(); it != servoPosImuVals.end(); ++it)
+  for (auto it = gyroVals.cbegin(); it != gyroVals.cend(); ++it)
   {
-    Serial.print("sm");
-    Serial.println(*it);
+    Serial.println(it->second);
   }
 
-  for (std::vector<float>::iterator it = depthVals.begin(); it != depthVals.end(); ++it)
+  Serial.print("d");
+  for (auto it = depthVals.cbegin(); it != depthVals.cend(); ++it)
   {
-    Serial.print("d");
-    Serial.println(*it);
+    Serial.println(it->first);
+  }
+
+  for (auto it = depthVals.cbegin(); it != depthVals.cend(); ++it)
+  {
+    Serial.println(it->second);
   }
 
   gyroVals = {};
-  timeVals = {};
   servoPosVals = {};
-  servoPosImuVals = {};
   depthVals = {};
 
   // sweep(2);
