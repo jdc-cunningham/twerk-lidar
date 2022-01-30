@@ -27,6 +27,7 @@ bool sampleGyroX = false; // pitch
 std::vector<float> gyroVals = {};
 std::vector<int> timeVals = {};
 std::vector<int> servoPosVals = {};
+std::vector<int> servoPosImuVals = {}; // where IMU was able to get a reading
 std::vector<float> depthVals = {};
 
 /**
@@ -148,20 +149,15 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
         // gyroVals[pos] = radianToDegree(imu.gyro_z_radps());
         // https://stackoverflow.com/a/12103604/2710227
         gyroVals.push_back(radianToDegree(imu.gyro_z_radps()));
-
-        if (sampleDepth)
-        {
-          timeVals.push_back(20); // ms
-        } else
-        {
-          timeVals.push_back(6);
-        }
       }
 
-      if (sampleDepth || sampleGyroX || sampleGyroZ)
-      {
-        servoPosVals.push_back(pos);
-      }
+      servoPosImuVals.push_back(pos);
+    }
+
+    if (sampleDepth || sampleGyroX || sampleGyroZ)
+    {
+      servoPosVals.push_back(pos);
+      timeVals.push_back(millis());
     }
     delay(motionDuration);
   }
@@ -524,6 +520,12 @@ void performSweep()
     Serial.println(*it);
   }
 
+  for (std::vector<int>::iterator it = servoPosImuVals.begin(); it != servoPosImuVals.end(); ++it)
+  {
+    Serial.print("sm");
+    Serial.println(*it);
+  }
+
   for (std::vector<float>::iterator it = depthVals.begin(); it != depthVals.end(); ++it)
   {
     Serial.print("d");
@@ -533,6 +535,7 @@ void performSweep()
   gyroVals = {};
   timeVals = {};
   servoPosVals = {};
+  servoPosImuVals = {};
   depthVals = {};
 
   // sweep(2);

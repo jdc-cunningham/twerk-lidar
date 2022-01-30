@@ -5,10 +5,13 @@
  *    FLO                          FRO
  *         FLM                 FRM
  *              FLI  TOF  FRI
+ *                    ^
+ *                    y
  * 
- *
+ *                   (z)  x >
  *                   IMU
  *
+ * 
  *
  *              BLI       BRI
  *         BLM                 BRM

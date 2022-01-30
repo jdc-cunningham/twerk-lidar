@@ -3,9 +3,10 @@
 
 bfs::Mpu9250 imu(&Wire1, 0x68);
 
-float magXOffset = 0.0;
-float magYOffset = 0.0;
-float magZOffset = 0.0;
+// measured on 01/30/2022 2:16 PM
+float magXOffset = 56.84;
+float magYOffset = 47.51;
+float magZOffset = 18.68;
 
 // calibration
 void getMagnetometerOffset()
@@ -41,44 +42,48 @@ void getMagnetometerOffset()
     for (int i = 0; i < 360; i++)
     {
       // this is nasty code can be flexed by function
-      if (a == 0)
+      if (imu.Read())
       {
-        float magVal = imu.mag_x_ut();
-        if (magVal < 0 && magVal < magXMin)
+        if (a == 0)
         {
-          magXMin = magVal;
+          float magVal = imu.mag_x_ut();
+          if (magVal < 0 && magVal < magXMin)
+          {
+            magXMin = magVal;
+          }
+          if (magVal > 0 && magVal > magXMax)
+          {
+            magXMax = magVal;
+          }
         }
-        if (magVal > 0 && magVal > magXMax)
+
+        if (a == 1)
         {
-          magXMax = magVal;
+          float magVal = imu.mag_y_ut();
+          if (magVal < 0 && magVal < magYMin)
+          {
+            magYMin = magVal;
+          }
+          if (magVal > 0 && magVal > magYMax)
+          {
+            magYMax = magVal;
+          }
+        }
+
+        if (a == 2)
+        {
+          float magVal = imu.mag_z_ut();
+          if (magVal < 0 && magVal < magZMin)
+          {
+            magZMin = magVal;
+          }
+          if (magVal > 0 && magVal > magZMax)
+          {
+            magZMax = magVal;
+          }
         }
       }
 
-      if (a == 1)
-      {
-        float magVal = imu.mag_y_ut();
-        if (magVal < 0 && magVal < magYMin)
-        {
-          magYMin = magVal;
-        }
-        if (magVal > 0 && magVal > magYMax)
-        {
-          magYMax = magVal;
-        }
-      }
-
-      if (a == 2)
-      {
-        float magVal = imu.mag_z_ut();
-        if (magVal < 0 && magVal < magZMin)
-        {
-          magZMin = magVal;
-        }
-        if (magVal > 0 && magVal > magZMax)
-        {
-          magZMax = magVal;
-        }
-      }
       delay(16);
     }
 
@@ -90,6 +95,12 @@ void getMagnetometerOffset()
   magZOffset = (magZMax - magZMin) / 2;
 
   Serial.println("Offsets found done");
+
+  delay(10000);
+
+  Serial.println((magXMax - magXMin) / 2);
+  Serial.println((magYMax - magYMin) / 2);
+  Serial.println((magZMax - magZMin) / 2);
 }
 
 float applyMagOffset(char axis, float magVal)
