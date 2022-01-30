@@ -1,4 +1,7 @@
 #include <Servo.h>
+#include <map>
+#include <vector>
+#include <math.h>
 
 Servo frontRightOuterServo;
 Servo frontRightMiddleServo;
@@ -16,8 +19,15 @@ Servo backLeftInnerServo;
 bool motionInProgress = false;
 int servoMotionDelay = 6; // min 1 ms
 int stepDelay = 0; // ms usually a second or more
-bool sweepInProgress = false;
 int activeSweepAngleIndex = 0;
+bool sampleDepth = false;
+bool sampleGyroZ = false; // yaw
+bool sampleGyroX = false; // pitch
+// std::map<int, float> gyroVals = {};
+std::vector<float> gyroVals = {};
+std::vector<int> timeVals = {};
+std::vector<int> servoPosVals = {};
+std::vector<float> depthVals = {};
 
 /**
  * @brief Get the Servo By Pin object
@@ -79,7 +89,7 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
    * there is no error checking, I find coding in Arduino to be cumbersome */
   motionInProgress = true;
   int largestServoRange = 0;
-  int moveCounter = 0;
+  // int moveCounter = 0;
 
   for (int servoGroupIndex = 0; servoGroupIndex < servoGroupArrLen; servoGroupIndex++) {
     int range = 0;
@@ -118,22 +128,40 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
       }
     }
 
-    if (sweepInProgress)
-    {
-      moveCounter += 1;
-      if (moveCounter % 5 == 0)
-      {
-        float tofSensorRead = sensor.readRangeSingleMillimeters() * 0.0393701;
-        // sampleSetPerSweep[nextServoPos][activeSweepAngleIndex] = tofSensorRead;
-        Serial.println(tofSensorRead);
-      }
-    }
-
-
     if (imu.Read())
     {
-      Serial.println(radianToDegree(imu.gyro_z_radps()));
-      Serial.println(sensor.readRangeSingleMillimeters() * 0.0393701);
+      if (sampleDepth)
+      {
+        float distSample = sensor.readRangeSingleMillimeters() * 0.0393701;
+        depthVals.push_back(distSample);
+      }
+
+      // pitch angle rate
+      if (sampleGyroX)
+      {
+        
+      }
+
+      // yaw angle rate
+      if (sampleGyroZ)
+      {
+        // gyroVals[pos] = radianToDegree(imu.gyro_z_radps());
+        // https://stackoverflow.com/a/12103604/2710227
+        gyroVals.push_back(radianToDegree(imu.gyro_z_radps()));
+
+        if (sampleDepth)
+        {
+          timeVals.push_back(20); // ms
+        } else
+        {
+          timeVals.push_back(6);
+        }
+      }
+
+      if (sampleDepth || sampleGyroX || sampleGyroZ)
+      {
+        servoPosVals.push_back(pos);
+      }
     }
     delay(motionDuration);
   }
@@ -447,22 +475,24 @@ void sweep(int runCount)
 {
   if (runCount == 1)
   {
+    sampleGyroZ = true;
     pivotRight();
-    // start sample
+    sampleDepth = true;
     pivotCenterFromRight();
     pivotLeft();
-    // end sample
+    sampleGyroZ = false;
+    sampleDepth = false;
   } else if (runCount == 2)
   {
-    // start sample
+    sampleDepth = true;
     pivotCenterFromLeft();
     pivotRight();
-    // end sample
+    sampleDepth = false;
   } else {
-    // start sample
+    sampleDepth = true;
     pivotCenterFromRight();
     pivotLeft();
-    // end sample
+    sampleDepth = false;
     pivotCenterFromLeft();
   }
 }
@@ -470,8 +500,43 @@ void sweep(int runCount)
 void performSweep()
 {
   sweep(1);
-  sweep(2);
-  sweep(3);
+
+  Serial.println(gyroVals.size());
+  Serial.println(timeVals.size());
+
+  // https://stackoverflow.com/a/409396/2710227
+  // whoa this answer is 1 digit less than others it's old 2009
+  for (std::vector<int>::iterator it = timeVals.begin(); it != timeVals.end(); ++it)
+  {
+    Serial.print("t");
+    Serial.println(*it);
+  }
+
+  for (std::vector<float>::iterator it = gyroVals.begin(); it != gyroVals.end(); ++it)
+  {
+    Serial.print("g");
+    Serial.println(*it);
+  }
+
+  for (std::vector<int>::iterator it = servoPosVals.begin(); it != servoPosVals.end(); ++it)
+  {
+    Serial.print("s");
+    Serial.println(*it);
+  }
+
+  for (std::vector<float>::iterator it = depthVals.begin(); it != depthVals.end(); ++it)
+  {
+    Serial.print("d");
+    Serial.println(*it);
+  }
+
+  gyroVals = {};
+  timeVals = {};
+  servoPosVals = {};
+  depthVals = {};
+
+  // sweep(2);
+  // sweep(3);
 }
 
 void performScan()
@@ -479,21 +544,15 @@ void performScan()
   tiltUp();
   activeSweepAngleIndex = 0;
   sampleAngles[0] = 20; // assumed angle, replace with IMU determined
-  sweepInProgress = true;
   sweep(1);
-  sweepInProgress = false;
   tiltCenterFromUp();
   activeSweepAngleIndex = 1;
   sampleAngles[1] = 0;
-  sweepInProgress = true;
   sweep(2);
-  sweepInProgress = false;
   tiltDown();
   activeSweepAngleIndex = 2;
   sampleAngles[2] = -20;
-  sweepInProgress = true;
   sweep(3);
-  sweepInProgress = false;
   tiltCenterFromDown();
 }
 

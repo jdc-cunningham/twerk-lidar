@@ -1,4 +1,5 @@
 #include "mpu9250.h"
+#include <math.h>
 
 bfs::Mpu9250 imu(&Wire1, 0x68);
 
@@ -113,6 +114,7 @@ float applyMagOffset(char axis, float magVal)
 
 float radianToDegree(float rad)
 {
+  // return std::trunc(10000 * (rad * 57.2958)) / 10000;
   return rad * 57.2958;
 }
 

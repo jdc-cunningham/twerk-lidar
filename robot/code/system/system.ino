@@ -31,7 +31,7 @@ void setup()
   setupTof();
   setupImu();
   Serial.println(getBatteryVoltage());
-  getMagnetometerOffset();
+  // getMagnetometerOffset();
   // delay(3000);
 
   // turnLeft();
@@ -39,6 +39,10 @@ void setup()
   // Serial.print(sampleSetPerSweep[0][0]);
   // Serial.begin(115200);
   // Serial.println(sensor.readRangeSingleMillimeters() * 0.0393701);
+
+  delay(5000);
+
+  performSweep();
 }
 
 void loop()
@@ -68,5 +72,5 @@ void loop()
   // performScan();
   // performSweep();
 
-  delay(5000);
+  delay(1000);
 }
