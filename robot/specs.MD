@@ -8,3 +8,10 @@
 
 ### Total weight
 9.8oz
+
+### Rough dimensions
+8.5" x 8" x 8"
+
+### Sensor height from floor
+3" and 7/16" or 3.44"
+
