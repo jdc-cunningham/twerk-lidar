@@ -19,7 +19,6 @@ Servo backLeftInnerServo;
 bool motionInProgress = false;
 int servoMotionDelay = 6; // min 1 ms
 int stepDelay = 0; // ms usually a second or more
-int activeSweepAngleIndex = 0;
 bool sampleDepth = false;
 bool sampleGyroZ = false; // yaw
 bool sampleGyroX = false; // pitch
@@ -361,10 +360,10 @@ void moveBackLeftLegBack()
 void pivotLeft()
 {
   int servoGroupArr[][3] = {
-    {6, 50, 20},
-    {9, 130, 100},
-    {0, 85, 55},
-    {3, 80, 50}
+    {6, 50, 0},
+    {9, 130, 80},
+    {0, 85, 35},
+    {3, 80, 30}
   };
 
   moveServos(servoGroupArr, 4, servoMotionDelay);
@@ -373,10 +372,10 @@ void pivotLeft()
 void pivotCenterFromLeft()
 {
   int servoGroupArr[][3] = {
-    {6, 10, 40},
-    {9, 100, 130},
-    {0, 70, 105},
-    {3, 20, 50}
+    {6, 0, 50},
+    {9, 80, 130},
+    {0, 35, 85},
+    {3, 30, 80}
   };
 
   moveServos(servoGroupArr, 4, servoMotionDelay);
@@ -385,10 +384,10 @@ void pivotCenterFromLeft()
 void pivotRight()
 {
   int servoGroupArr[][3] = {
-    {6, 50, 80},
-    {9, 130, 160},
-    {0, 85, 115},
-    {3, 80, 110}
+    {6, 50, 100},
+    {9, 130, 180},
+    {0, 85, 135},
+    {3, 80, 130}
   };
 
   moveServos(servoGroupArr, 4, servoMotionDelay);
@@ -397,10 +396,10 @@ void pivotRight()
 void pivotCenterFromRight()
 {
   int servoGroupArr[][3] = {
-    {6, 80, 50},
-    {9, 160, 130},
-    {0, 115, 85},
-    {3, 110, 80}
+    {6, 100, 50},
+    {9, 180, 130},
+    {0, 135, 85},
+    {3, 130, 80}
   };
 
   moveServos(servoGroupArr, 4, servoMotionDelay);
@@ -540,19 +539,21 @@ void performSweep()
 
 void performScan()
 {
+
   tiltUp();
-  activeSweepAngleIndex = 0;
-  sampleAngles[0] = 20; // assumed angle, replace with IMU determined
+
   sweep(1);
+
   tiltCenterFromUp();
-  activeSweepAngleIndex = 1;
-  sampleAngles[1] = 0;
+
   sweep(2);
+
   tiltDown();
-  activeSweepAngleIndex = 2;
-  sampleAngles[2] = -20;
+
   sweep(3);
+
   tiltCenterFromDown();
+
 }
 
 // tilt-away-from-moving type gait
