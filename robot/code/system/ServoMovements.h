@@ -545,8 +545,10 @@ void performSweep()
 
 void performScan()
 {
+  sampleDepth = true;
   sampleGyroX = true;
   tiltUp();
+  sampleDepth = false;
   sampleGyroX = false;
 
   dumpData();
@@ -559,8 +561,10 @@ void performScan()
 
   delay(15000);
 
+  sampleDepth = true;
   sampleGyroX = true;
   tiltCenterFromUp();
+  sampleDepth = false;
   sampleGyroX = false;
 
   dumpData();
@@ -573,8 +577,10 @@ void performScan()
 
   delay(15000);
 
+  sampleDepth = true;
   sampleGyroX = true;
   tiltDown();
+  sampleDepth = false;
   sampleGyroX = false;
 
   dumpData();
@@ -587,8 +593,10 @@ void performScan()
 
   delay(15000);
 
+  sampleDepth = true;
   sampleGyroX = true;
   tiltCenterFromDown();
+  sampleDepth = false;
   sampleGyroX = false;
 
   dumpData();
