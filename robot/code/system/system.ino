@@ -43,9 +43,10 @@ void setup()
   // Serial.begin(115200);
   // Serial.println(sensor.readRangeSingleMillimeters() * 0.0393701);
 
-  delay(5000);
+  delay(10000);
 
-  performSweep();
+  // performSweep();
+  // performScan();
 }
 
 void loop()

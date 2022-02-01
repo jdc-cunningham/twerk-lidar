@@ -140,7 +140,7 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
       // pitch angle rate
       if (sampleGyroX)
       {
-        
+        gyroVals[timeNow] = radianToDegree(imu.gyro_x_radps());
       }
 
       // yaw angle rate
@@ -466,37 +466,39 @@ void sweep(int runCount)
 {
   if (runCount == 1)
   {
-    sampleGyroZ = true;
     sampleDepth = true;
+    sampleGyroZ = true;
     pivotRight();
     pivotCenterFromRight();
     pivotLeft();
-    sampleGyroZ = false;
     sampleDepth = false;
+    sampleGyroZ = false;
   } else if (runCount == 2)
   {
     sampleDepth = true;
+    sampleGyroZ = true;
     pivotCenterFromLeft();
     pivotRight();
     sampleDepth = false;
+    sampleGyroZ = false;
   } else {
     sampleDepth = true;
+    sampleGyroZ = true;
     pivotCenterFromRight();
     pivotLeft();
-    sampleDepth = false;
     pivotCenterFromLeft();
+    sampleDepth = false;
+    sampleGyroZ = false;
   }
 }
 
-void performSweep()
+void dumpData()
 {
-  sweep(1);
-
   Serial.println(gyroVals.size());
 
   // https://stackoverflow.com/a/14070977/2710227
   // sucks but easier to copy-paste into excel
-  Serial.print("s");
+  Serial.println("s");
   for (auto it = servoPosVals.cbegin(); it != servoPosVals.cend(); ++it)
   {
     Serial.println(it->first);
@@ -507,7 +509,7 @@ void performSweep()
     Serial.println(it->second);
   }
 
-  Serial.print("g");
+  Serial.println("g");
   for (auto it = gyroVals.cbegin(); it != gyroVals.cend(); ++it)
   {
     Serial.println(it->first);
@@ -518,7 +520,7 @@ void performSweep()
     Serial.println(it->second);
   }
 
-  Serial.print("d");
+  Serial.println("d");
   for (auto it = depthVals.cbegin(); it != depthVals.cend(); ++it)
   {
     Serial.println(it->first);
@@ -532,28 +534,66 @@ void performSweep()
   gyroVals = {};
   servoPosVals = {};
   depthVals = {};
+}
 
-  // sweep(2);
-  // sweep(3);
+void performSweep()
+{
+  sweep(1);
+  sweep(2);
+  sweep(3);
 }
 
 void performScan()
 {
-
+  sampleGyroX = true;
   tiltUp();
+  sampleGyroX = false;
+
+  dumpData();
+
+  delay(15000); // to copy paste form serial monitor output
 
   sweep(1);
 
+  dumpData();
+
+  delay(15000);
+
+  sampleGyroX = true;
   tiltCenterFromUp();
+  sampleGyroX = false;
+
+  dumpData();
+
+  delay(15000);
 
   sweep(2);
 
+  dumpData();
+
+  delay(15000);
+
+  sampleGyroX = true;
   tiltDown();
+  sampleGyroX = false;
+
+  dumpData();
+
+  delay(15000);
 
   sweep(3);
 
-  tiltCenterFromDown();
+  dumpData();
 
+  delay(15000);
+
+  sampleGyroX = true;
+  tiltCenterFromDown();
+  sampleGyroX = false;
+
+  dumpData();
+
+  delay(15000);
 }
 
 // tilt-away-from-moving type gait
