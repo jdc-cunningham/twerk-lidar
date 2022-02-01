@@ -47,6 +47,8 @@ void setup()
 
   // performSweep();
   // performScan();
+
+  // performPitchTest();
 }
 
 void loop()
