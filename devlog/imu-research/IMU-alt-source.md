@@ -42,10 +42,10 @@ So I guess... once you have this starting matrix, you can then multiply future r
 
 So I wrote this math but idk what it means... or if it's right. I plotted it and I don't understand what I got or if it maeks sense... ahhhhhh.
 
-<img src="../media/01-24-2022--math.JPG" width="800">
+<img src="../../../media/01-24-2022--math.JPG" width="800">
 
 Plotted looks like this
 
-<img src="../media/01-24-2022--what-is-this.png" width="800">
+<img src="../../../media/01-24-2022--what-is-this.png" width="800">
 
 Well... not a complete loss, did some math programming in C++ that's cool.
