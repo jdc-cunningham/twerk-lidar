@@ -408,8 +408,8 @@ void pivotCenterFromRight()
 void tiltUp()
 {
   int servoGroupArr[][3] = {
-    {10, 80, 60},
-    {4, 95, 110},
+    {10, 70, 50},
+    {4, 85, 105},
     {7, 100, 80},
     {1, 80, 100}
   };
@@ -420,8 +420,8 @@ void tiltUp()
 void tiltCenterFromUp()
 {
   int servoGroupArr[][3] = {
-    {10, 60, 80},
-    {4, 110, 95},
+    {10, 50, 70},
+    {4, 105, 85},
     {7, 80, 100},
     {1, 100, 80}
   };
@@ -432,8 +432,8 @@ void tiltCenterFromUp()
 void tiltDown()
 {
   int servoGroupArr[][3] = {
-    {10, 80, 100},
-    {4, 95, 80},
+    {10, 70, 90},
+    {4, 85, 65},
     {7, 100, 120},
     {1, 80, 60}
   };
@@ -444,8 +444,8 @@ void tiltDown()
 void tiltCenterFromDown()
 {
   int servoGroupArr[][3] = {
-    {10, 100, 80},
-    {4, 80, 95},
+    {10, 90, 70},
+    {4, 65, 85},
     {7, 120, 100},
     {1, 60, 80}
   };
@@ -702,12 +702,12 @@ void pitchUp()
 void performPitchTest()
 {
   tiltUp();
-  delay(5000);
-  tiltCenterFromUp();
-  delay(5000);
-  tiltDown();
-  delay(5000);
-  tiltCenterFromDown();
+  // delay(5000);
+  // tiltCenterFromUp();
+  // delay(5000);
+  // tiltDown();
+  // delay(5000);
+  // tiltCenterFromDown();
 }
 
 void moveForward3()

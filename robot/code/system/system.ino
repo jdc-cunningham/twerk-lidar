@@ -43,12 +43,13 @@ void setup()
   // Serial.begin(115200);
   // Serial.println(sensor.readRangeSingleMillimeters() * 0.0393701);
 
-  delay(10000);
+  delay(5000);
 
   // performSweep();
   // performScan();
 
   // performPitchTest();
+  // tiltUp();
 }
 
 void loop()
