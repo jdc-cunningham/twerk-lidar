@@ -702,12 +702,12 @@ void pitchUp()
 void performPitchTest()
 {
   tiltUp();
-  // delay(5000);
-  // tiltCenterFromUp();
-  // delay(5000);
-  // tiltDown();
-  // delay(5000);
-  // tiltCenterFromDown();
+  delay(5000);
+  tiltCenterFromUp();
+  delay(5000);
+  tiltDown();
+  delay(5000);
+  tiltCenterFromDown();
 }
 
 void moveForward3()

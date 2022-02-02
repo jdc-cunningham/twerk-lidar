@@ -50,6 +50,9 @@ void setup()
 
   // performPitchTest();
   // tiltUp();
+  // moveFrontRightLegUp();
+  // moveBackLeftLegUp();
+  // moveBackLeftLegDown();
 }
 
 void loop()
@@ -79,5 +82,5 @@ void loop()
   // performScan();
   // performSweep();
 
-  delay(1000);
+  // delay(1000);
 }
