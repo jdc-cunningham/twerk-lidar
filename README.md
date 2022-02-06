@@ -1,3 +1,8 @@
+### About this branch
+This was the most current branch, main difference other than test code is the devlogs being included in the branch. The devlogs include a a lot of images as in bigger download.
+
+I'm changing the way servo state is kept and how the motions move the servos. Specifically I'm trying to avoid hard coded positions and updating the gaits to include the outer legs in motion to avoid jumping/make the robot move in a more coordinate manner.
+
 ### Twerk Lidar Robot
 A robot that utilizes onboard IMU and single-point lidar to navigate the world
 
