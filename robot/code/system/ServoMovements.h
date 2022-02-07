@@ -539,8 +539,8 @@ void dumpData()
 void performSweep()
 {
   sweep(1);
-  sweep(2);
-  sweep(3);
+  // sweep(2);
+  // sweep(3);
 }
 
 void performScan()

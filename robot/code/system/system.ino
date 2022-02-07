@@ -24,16 +24,17 @@
 #include "ServoMovements.h"
 #include "Misc.h"
 #include "EspSerial.h"
+#include "WorldNavigation.h"
 
 void setup()
 {
   Serial.begin(115200);
+  Serial.println(getBatteryVoltage());
   setupBlueLed();
   setAndCenterServos();
   setupEspSerial();
   setupTof();
   setupImu();
-  Serial.println(getBatteryVoltage());
   // getMagnetometerOffset();
   // delay(3000);
 
@@ -43,9 +44,16 @@ void setup()
   // Serial.begin(115200);
   // Serial.println(sensor.readRangeSingleMillimeters() * 0.0393701);
 
-  delay(5000);
-
+  delay(15000);
+  // sampleDepth = true;
+  // sampleGyroX = true;
+  // tiltDown();
+  // sampleDepth = false;
+  // sampleGyroX = false;
+  // dumpData();
+  // delay(15000);
   // performSweep();
+  // dumpData();
   // performScan();
 
   // performPitchTest();
