@@ -44,7 +44,7 @@ void setup()
   // Serial.begin(115200);
   // Serial.println(sensor.readRangeSingleMillimeters() * 0.0393701);
 
-  delay(15000);
+  // delay(15000);
   // sampleDepth = true;
   // sampleGyroX = true;
   // tiltDown();
@@ -65,6 +65,11 @@ void setup()
 
 void loop()
 {
+  delay(5000);
+  tiltDown();
+  delay(5000);
+  tiltCenterFromDown();
+
   // moveForward3();
   // performScan();
   // turnLeft();
