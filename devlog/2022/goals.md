@@ -1,6 +1,7 @@
 ### Bare minimum working mapping and navigation
 - [ ] Robot system
-  - [ ] fix pitch up/down because angle sampling is not good due to vibration
+  - [x] fix pitch up/down because angle sampling is not good due to vibration
+  - [ ] get pitch angle from NED, hopefully better than gyro
   - [ ] finish basic obstacle math using 3D collision checking
   - [ ] track linear acceleration and rotation
 - [ ] ThreeJS visualizer
