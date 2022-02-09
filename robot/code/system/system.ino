@@ -25,6 +25,7 @@
 #include "Misc.h"
 #include "EspSerial.h"
 #include "WorldNavigation.h"
+#include "Orientation.h"
 
 void setup()
 {
@@ -37,6 +38,10 @@ void setup()
   setupImu();
   // getMagnetometerOffset();
   // delay(3000);
+
+  std::vector<float> imuDown = getDown();
+
+  Serial.println(imuDown[0]);
 
   // turnLeft();
   // performScan();
@@ -56,16 +61,16 @@ void setup()
   // dumpData();
   // performScan();
 
-  delay(15000);
-  sampleDepth = true;
-  sampleGyroX = true;
-  tiltDown();
-  dumpData();
-  delay(15000);
-  tiltCenterFromDown();
-  dumpData();
-  sampleDepth = false;
-  sampleGyroX = false;
+  // delay(15000);
+  // sampleDepth = true;
+  // sampleGyroX = true;
+  // tiltDown();
+  // dumpData();
+  // delay(15000);
+  // tiltCenterFromDown();
+  // dumpData();
+  // sampleDepth = false;
+  // sampleGyroX = false;
 
   // performPitchTest();
   // tiltUp();
