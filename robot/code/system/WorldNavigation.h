@@ -33,5 +33,5 @@ std::vector<std::vector <float>> robotCube = {
 // 3D locations and cubes
 bool collisionCheck(std::vector<std::vector <float>>)
 {
-
+  return false;
 }

@@ -56,6 +56,17 @@ void setup()
   // dumpData();
   // performScan();
 
+  delay(15000);
+  sampleDepth = true;
+  sampleGyroX = true;
+  tiltDown();
+  dumpData();
+  delay(15000);
+  tiltCenterFromDown();
+  dumpData();
+  sampleDepth = false;
+  sampleGyroX = false;
+
   // performPitchTest();
   // tiltUp();
   // moveFrontRightLegUp();
@@ -65,11 +76,6 @@ void setup()
 
 void loop()
 {
-  delay(5000);
-  tiltDown();
-  delay(5000);
-  tiltCenterFromDown();
-
   // moveForward3();
   // performScan();
   // turnLeft();

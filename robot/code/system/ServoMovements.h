@@ -409,24 +409,32 @@ void tiltUp()
 {
   int servoGroupArr[][3] = {
     {10, 70, 50},
-    {4, 85, 105},
     {7, 100, 80},
-    {1, 80, 100}
+    {2, 95, 80},
+    {8, 75, 90},
+    {4, 85, 105},
+    {1, 80, 100},
+    {11, 95, 110},
+    {5, 70, 55}
   };
 
-  moveServos(servoGroupArr, 4, servoMotionDelay);
+  moveServos(servoGroupArr, 8, servoMotionDelay);
 }
 
 void tiltCenterFromUp()
 {
   int servoGroupArr[][3] = {
     {10, 50, 70},
-    {4, 105, 85},
     {7, 80, 100},
-    {1, 100, 80}
+    {2, 80, 95},
+    {8, 90, 75},
+    {4, 105, 85},
+    {1, 100, 80},
+    {11, 110, 95},
+    {5, 55, 70}
   };
 
-  moveServos(servoGroupArr, 4, servoMotionDelay);
+  moveServos(servoGroupArr, 8, servoMotionDelay);
 }
 
 void tiltDown()
