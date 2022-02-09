@@ -1,9 +1,3 @@
-#include <iostream>
-#include <cmath>
-#include <vector>
-
-using namespace std;
-
 // the math described here is from this matlab video:
 // https://www.youtube.com/watch?v=0rlvvYgmTvI
 // math from here https://www.mathsisfun.com/algebra/vectors-cross-product.html
@@ -55,30 +49,28 @@ float getMaxElement(std::vector<float> originalVector)
 
 std::vector<std::vector <float>> getNed()
 {
-  std::vector<std::vector <float>> imuSample = {
-    {imu.accel_x_mps2(), imu.accel_y_mps2(), imu.accel_z_mps2()},
-    {imu.gyro_x_radps(), imu.gyro_y_radps(), imu.gyro_z_radps()},
-    {imu.mag_x_ut(), imu.mag_y_ut(), imu.mag_z_ut()}
-  };
+  if (imu.Read())
+  {
+    std::vector<std::vector <float>> imuSample = {
+      {imu.accel_x_mps2(), imu.accel_y_mps2(), imu.accel_z_mps2()},
+      {imu.gyro_x_radps(), imu.gyro_y_radps(), imu.gyro_z_radps()},
+      {imu.mag_x_ut(), imu.mag_y_ut(), imu.mag_z_ut()}
+    };
 
-  float down = getMaxElement(imuSample[0]);
-  std::vector<float> east = getCrossProduct(imuSample[0][0], imuSample[0][1], imuSample[0][2], imuSample[2][0], imuSample[2][1], imuSample[2][2]);
-  std::vector<float> north = getCrossProduct(east[0], east[1], east[2], imuSample[0][0], imuSample[0][1], imuSample[0][2]);
+    float down = getMaxElement(imuSample[0]);
+    std::vector<float> east = getCrossProduct(imuSample[0][0], imuSample[0][1], imuSample[0][2], imuSample[2][0], imuSample[2][1], imuSample[2][2]);
+    std::vector<float> north = getCrossProduct(east[0], east[1], east[2], imuSample[0][0], imuSample[0][1], imuSample[0][2]);
 
-  return {
-    {north[0], north[1], north[2]},
-    {east[0], east[1], east[2]},
-    {0, 0, down}
-  };
-}
-
-std::vector<float> getDown()
-{
-  std::vector<std::vector <float>> imuSample = {
-    {imu.accel_x_mps2(), imu.accel_y_mps2(), imu.accel_z_mps2()},
-  };
-
-  float down = getMaxElement(imuSample[0]);
-
-  return {0, 0, down};
+    return {
+      {north[0], north[1], north[2]},
+      {east[0], east[1], east[2]},
+      {0, 0, down}
+    };
+  } else {
+    return {
+      {0, 0, 0},
+      {0, 0, 0},
+      {0, 0, 0}
+    };
+  }
 }
