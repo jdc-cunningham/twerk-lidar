@@ -39,19 +39,24 @@ void setup()
   // getMagnetometerOffset();
   // delay(3000);
 
-std::vector<std::vector <float>> imuNed = getNed();
+  if (imu.Read())
+  {
+    Serial.println(imu.accel_z_mps2() * 3.28084); // f/s^2
+  }
 
-  Serial.println(imuNed[0][0]);
-  Serial.println(imuNed[0][1]);
-  Serial.println(imuNed[0][2]);
+  // std::vector<std::vector <float>> imuNed = getNed();
 
-  Serial.println(imuNed[1][0]);
-  Serial.println(imuNed[1][1]);
-  Serial.println(imuNed[1][2]);
+  // Serial.println(imuNed[0][0]);
+  // Serial.println(imuNed[0][1]);
+  // Serial.println(imuNed[0][2]);
 
-  Serial.println(imuNed[2][0]);
-  Serial.println(imuNed[2][1]);
-  Serial.println(imuNed[2][2]);
+  // Serial.println(imuNed[1][0]);
+  // Serial.println(imuNed[1][1]);
+  // Serial.println(imuNed[1][2]);
+
+  // Serial.println(imuNed[2][0]);
+  // Serial.println(imuNed[2][1]);
+  // Serial.println(imuNed[2][2]);
 
   // turnLeft();
   // performScan();
