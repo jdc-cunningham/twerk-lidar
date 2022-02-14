@@ -27,6 +27,8 @@
 #include "WorldNavigation.h"
 #include "Orientation.h"
 
+float levelGravityVal;
+
 void setup()
 {
   Serial.begin(115200);
@@ -36,13 +38,41 @@ void setup()
   setupEspSerial();
   setupTof();
   setupImu();
-  // getMagnetometerOffset();
-  // delay(3000);
+
+  Serial.println("place robot on floor");
+  delay(3000);
 
   if (imu.Read())
   {
-    Serial.println(imu.accel_z_mps2() * 3.28084); // f/s^2
+    levelGravityVal = imu.accel_z_mps2();
   }
+
+  // getMagnetometerOffset();
+  // delay(3000);
+
+  // float levelGravityVal;
+  // float angledGravityVal;
+
+  // if (imu.Read())
+  // {
+  //   Serial.println("rest robot on floor");
+  //   delay(5000);
+  //   levelGravityVal = imu.accel_z_mps2() * 3.28084;
+  //   Serial.println(levelGravityVal);
+  //   delay(5000);
+    
+  // }
+
+  // if (imu.Read())
+  // {
+  //   Serial.println("rotate robot");
+  //   delay(5000);
+  //   angledGravityVal = imu.accel_z_mps2() * 3.28084;
+  //   Serial.println(angledGravityVal);
+  //   Serial.println("angle is");
+  //   float angle = acos(angledGravityVal/levelGravityVal) * 57.2958; // to degree
+  //   Serial.println(angle);
+  // }
 
   // std::vector<std::vector <float>> imuNed = getNed();
 
@@ -96,6 +126,15 @@ void setup()
 
 void loop()
 {
+  if (imu.Read())
+  {
+    float currentGravityVal = imu.accel_z_mps2();
+    Serial.println(currentGravityVal/levelGravityVal);
+    Serial.println(acos(currentGravityVal/levelGravityVal) * 57.2958);
+  }
+
+  delay(100);
+
   // moveForward3();
   // performScan();
   // turnLeft();
