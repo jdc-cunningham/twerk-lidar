@@ -12,6 +12,8 @@
 ### Rough dimensions
 8.5" x 8" x 8"
 
-### Sensor height from floor
-3" and 7/16" or 3.44"
+### ToF sensor height from floor
+3" and 6.5/16" or 3.38"
 
+### ToF sensor distance from middle of body
+2.5"
