@@ -47,12 +47,12 @@ float getMaxElement(std::vector<float> originalVector)
   return originalVector[largestValIndex];
 }
 
-std::vector<std::vector <float>> getNed()
+std::vector<std::vector <float>> getNed(bool flipGravity = false)
 {
   if (imu.Read())
   {
     std::vector<std::vector <float>> imuSample = {
-      {imu.accel_x_mps2(), imu.accel_y_mps2(), imu.accel_z_mps2()},
+      {imu.accel_x_mps2(), imu.accel_y_mps2(), (flipGravity ? (imu.accel_z_mps2() * -1) : imu.accel_z_mps2())},
       {imu.gyro_x_radps(), imu.gyro_y_radps(), imu.gyro_z_radps()},
       {imu.mag_x_ut(), imu.mag_y_ut(), imu.mag_z_ut()}
     };

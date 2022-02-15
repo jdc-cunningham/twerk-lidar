@@ -40,7 +40,7 @@ void setup()
   setupImu();
   tiltDown();
 
-  std::vector<std::vector <float>> imuNed = getNed();
+  std::vector<std::vector <float>> imuNed = getNed(false);
 
   Serial.println(imuNed[0][0]);
   Serial.println(imuNed[0][1]);
