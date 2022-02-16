@@ -17,3 +17,6 @@
 
 ### ToF sensor distance from middle of body
 2.5"
+
+### Height from floor to pitch joints (middle servos)
+2.5"
