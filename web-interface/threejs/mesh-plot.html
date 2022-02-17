@@ -115,7 +115,7 @@
       const posMedian = median < -1 ? median * -1 : median;
 
       // counter-clockwise from my video/measurements
-      if (end < -1) {
+      if (end < 0) {
         if (current > median) {
           return current - median;
         } else if (current < median) {
@@ -160,9 +160,9 @@
       trimmedTofData = trimmedTofData.splice(0, 96);
       trimmedSweepAngleData = trimmedSweepAngleData.splice(0, 96);
 
-      if (sampleKey === 'tilt-up-1' || sampleKey === 'tilt-down-1') {
+      if (sampleKey !== 'tilt-up-1' || sampleKey !== 'tilt-down-1') {
         trimmedTofData = trimmedTofData.reverse();
-        trimmedSweepAngleData = trimmedSweepAngleData.reverse().map(val => val * -1);
+        trimmedSweepAngleData = trimmedSweepAngleData.reverse();
       }
 
       meshPoints.push(
@@ -194,22 +194,36 @@
     // ]);
 
     meshPoints.forEach((samplePlane, index) => {
-      if (index < 4) {
+      if (index < 5) {
+        const points = [];
         samplePlane.forEach((coordinate, coordinateIndex) => {
           if (coordinateIndex <= samplePlane.length - 2) {
 
-            const planePoints = [
-              coordinate,
-              samplePlane[coordinateIndex + 1],
-              meshPoints[index + 1][coordinateIndex],
-              meshPoints[index + 1][coordinateIndex + 1]
-            ];
+            // const planePoints = [
+            //   coordinate,
+            //   samplePlane[coordinateIndex + 1],
+            //   meshPoints[index + 1][coordinateIndex],
+            //   meshPoints[index + 1][coordinateIndex + 1]
+            // ];
 
-            console.log(planePoints);
+            // const planePoints = [
+            //   coordinate,
+            //   samplePlane[coordinateIndex + 1],
+            //   meshPoints[index + 1][coordinateIndex],
+            //   meshPoints[index + 1][coordinateIndex + 1]
+            // ];
 
-            plotFourPointsAsPlane(planePoints);
+            // console.log(planePoints);
+
+            // plotFourPointsAsPlane(planePoints);
+
+            points.push(new THREE.Vector3(coordinate[0], coordinate[1], coordinate[2]));
           }
         });
+        
+        const geometry = new THREE.BufferGeometry().setFromPoints( points );
+        const line = new THREE.Line( geometry, material );
+        scene.add( line );
       }
     });
 
