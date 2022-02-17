@@ -17,6 +17,7 @@
   <script src="js/ConvexGeometry.js"></script>
   <script src="js/GetCoordinates.js"></script>
   <script src="js/utils.js"></script>
+  <script src="js/sample-data.js"></script>
   <script>
 // https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
 THREE.Object3D.DefaultUp.set(0, 0, 1);
@@ -69,8 +70,97 @@ THREE.Object3D.DefaultUp.set(0, 0, 1);
     const red = 0xFF0000;
     const green = 0x00FF00;
 
+    // to make distinguishable panels, will eventually add a nice color pallete/ranging
+    const getRandomHex = () => {
+      // https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+      var result           = '';
+      var characters       = 'abcdef0123456789';
+      var charactersLength = characters.length;
+      for ( var i = 0; i < 6; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return parseInt(`0x${result}`, 16);
+    }
+
     // plot mesh
-    
+    const plotFourPointsAsPlane = (planePoints) => {
+      let points = [];
+      planePoints.forEach((panelPoint) => {
+        points.push(new THREE.Vector3(panelPoint[0], panelPoint[1], panelPoint[2]));
+      });
+      material = new THREE.LineBasicMaterial({ color: getRandomHex() });
+      meshGeometry = new THREE.ConvexGeometry( points ); // points = vertices array
+      mesh = new THREE.Mesh(meshGeometry, material);
+      scene.add(mesh);
+    }
+
+    const floorToSensorOffset = 3.38;
+    const processOrder = ['tilt-up-2', 'tilt-up-1', 'level', 'tilt-up-1', 'tilt-up-2'];
+    const meshPoints = [];
+
+    processOrder.forEach(sampleKey => {
+      const preppedTofData = sensorSamples[sampleKey]['tof-samples'].split('\n').map(s => s.trim());
+      const preppedSweepAngleData = sensorSamples[sampleKey]['sweep-angles'].split('\n').map(s => s.trim());
+
+      let trimmedTofData = [];
+      let trimmedSweepAngleData = [];
+
+      if (sensorSamples[sampleKey]?.trim) {
+        if (sensorSamples[sampleKey].trim === 'end') {
+          trimmedTofData = preppedTofData.slice(0, 100);
+          trimmedSweepAngleData = preppedSweepAngleData.slice(0, 100);
+        } else {
+          trimmedTofData = preppedTofData.slice(49, preppedTofData.length - 1);
+          trimmedSweepAngleData = preppedSweepAngleData.slice(49, preppedTofData.length - 1);
+        }
+      } else {
+        trimmedTofData = preppedTofData;
+        trimmedSweepAngleData = preppedSweepAngleData;
+      }
+
+      // remove two points from each side
+      trimmedTofData = trimmedTofData.splice(2, 100);
+      trimmedSweepAngleData = trimmedSweepAngleData.splice(2, 100);
+      trimmedTofData = trimmedTofData.splice(0, 96);
+      trimmedSweepAngleData = trimmedSweepAngleData.splice(0, 96);
+
+      meshPoints.push(
+        trimmedTofData.map((distance, index) => [
+          parseFloat(getXCoordinate(trimmedSweepAngleData[index], distance).toFixed(2)),
+          parseFloat(getYCoordinate(trimmedSweepAngleData[index], distance).toFixed(2)),
+          parseFloat(getZCoordinate(trimmedSweepAngleData[index], distance, floorToSensorOffset).toFixed(2)),
+        ])
+      );
+    });
+
+    console.log(meshPoints);
+
+    meshPoints.forEach((samplePlane, index) => {
+      if (index < 4) {
+        samplePlane.forEach((coordinate, coordinateIndex) => {
+          if (coordinateIndex <= samplePlane.length - 2) {
+
+            const planePoints = [
+              coordinate,
+              samplePlane[coordinateIndex + 1],
+              meshPoints[index + 1][coordinateIndex],
+              meshPoints[index + 1][coordinateIndex + 1]
+            ];
+
+            console.log(planePoints);
+
+            plotFourPointsAsPlane(planePoints);
+          }
+        });
+      }
+    });
+
+      // plotFourPointsAsPlane([
+      //   [10.15,-20.81,13.53],
+      //   [0,-22.87,3.38],
+      //   [0,-37.17,3.38],
+      //   [0,-37.17,3.38]
+      // ])
 
     renderer.render(scene, camera);
     animate();

@@ -34,40 +34,17 @@ const getXCoordinate = (sweepAngle, distance) => {
     : xCoordinate * -1;
 }
 
-const getYCoordinate = (tiltAngle, distance) => {
+const getZCoordinate = (tiltAngle, distance, offset = 0) => {
   const distanceRadians = degreesToRadians(Math.abs(parseInt(tiltAngle)));
-  const yCoordinate = parseFloat((distance * Math.sin(distanceRadians)).toFixed(2));
+  let yCoordinate = parseFloat((distance * Math.sin(distanceRadians)).toFixed(2));
+  yCoordinate += offset;
+
   return tiltAngle > 0
     ? yCoordinate
     : yCoordinate * -1;
 }
 
-const getZCoordinate = (sweepAngle, distance) => {
+const getYCoordinate = (sweepAngle, distance) => {
   const distanceRadians = degreesToRadians(Math.abs(parseInt(sweepAngle)));
   return -1 * parseFloat((distance * Math.cos(distanceRadians)).toFixed(2));
-}
-
-// end result would be a plottable plane
-// @param {object} cluSensorMEeasurements - object with tilt angle as key and
-// array of sweep sample ToF measurements
-const getCoordinates = (cluSensorMeasurements) => {
-  const meshCoordinateSets = {}; // use object to force order
-  const sweepAngles = Array.from(Object.keys(cluSensorMeasurements).map(tiltAngle => parseInt(tiltAngle))).sort();
-  
-  Object.keys(cluSensorMeasurements).forEach((tilt) => {
-    const sweepMeasurements = cluSensorMeasurements[tilt];
-    const innerMeshSet = [];
-    
-    sweepMeasurements.forEach((measurement, index) => {
-      innerMeshSet.push([
-        getXCoordinate(sweepAngles[index], measurement),
-        getYCoordinate(tilt, measurement),
-        getZCoordinate(sweepAngles[index], measurement)
-      ]);
-    });
-    
-    meshCoordinateSets[tilt] = [...innerMeshSet];
-  });
-  
-  return meshCoordinateSets;
 }

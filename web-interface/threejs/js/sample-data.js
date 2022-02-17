@@ -1,6 +1,7 @@
 const sensorSamples = {
   "tilt-up-2": {
     "angle": 12.3,
+    "trim": 'beginning',
     "tof-samples": `27.87
     28.7
     27.64
@@ -507,6 +508,7 @@ const sensorSamples = {
   },
   "level": {
     "angle": 0,
+    "trim": 'end',
     "tof-samples": `18.39
     18.39
     18.35
@@ -810,6 +812,7 @@ const sensorSamples = {
   },
   "tilt-down-1": {
     "angle": -7.4,
+    "trim": 'beginning',
     "tof-samples": `19.61
     19.61
     19.13
