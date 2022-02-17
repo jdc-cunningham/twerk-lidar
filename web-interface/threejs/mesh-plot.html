@@ -19,8 +19,8 @@
   <script src="js/utils.js"></script>
   <script src="js/sample-data.js"></script>
   <script>
-// https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
-THREE.Object3D.DefaultUp.set(0, 0, 1);
+    // https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
+    THREE.Object3D.DefaultUp.set(0, 0, 1);
     const scene = new THREE.Scene();
     // 10 z distanece
     const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -94,9 +94,45 @@ THREE.Object3D.DefaultUp.set(0, 0, 1);
       scene.add(mesh);
     }
 
-    const floorToSensorOffset = 3.38;
-    const processOrder = ['tilt-up-2', 'tilt-up-1', 'level', 'tilt-up-1', 'tilt-up-2'];
     const meshPoints = [];
+    const floorToSensorOffset = 3.38;
+    const processOrder = ['tilt-up-2', 'tilt-up-1', 'level', 'tilt-down-1', 'tilt-down-2'];
+    const tiltMap = {
+      'tilt-up-2': 12.3,
+      'tilt-up-1': 6,
+      'level': 0,
+      'tilt-down-1': -7.4,
+      'tilt-down-2': -13.9
+    };
+
+    /**
+     * start means from the direction it's rotating from is 0 deg 
+     * end is the last part of the rotation (pos or neg)
+     * current is the sample to be converted for trig to get x,y values
+     */
+    const getAdjustedAngle = (start, end, current) => {
+      const median = (end - start) / 2;
+      const posMedian = median < -1 ? median * -1 : median;
+
+      // counter-clockwise from my video/measurements
+      if (end < -1) {
+        if (current > median) {
+          return current - median;
+        } else if (current < median) {
+          return current - median;
+        } else {
+          return 0;
+        }
+      } else {
+        if (current < posMedian) {
+          return posMedian - current;
+        } else if (current > posMedian) {
+          return current - posMedian;
+        } else {
+          return 0;
+        }
+      }
+    }
 
     processOrder.forEach(sampleKey => {
       const preppedTofData = sensorSamples[sampleKey]['tof-samples'].split('\n').map(s => s.trim());
@@ -124,16 +160,38 @@ THREE.Object3D.DefaultUp.set(0, 0, 1);
       trimmedTofData = trimmedTofData.splice(0, 96);
       trimmedSweepAngleData = trimmedSweepAngleData.splice(0, 96);
 
+      if (sampleKey === 'tilt-up-1' || sampleKey === 'tilt-down-1') {
+        trimmedTofData = trimmedTofData.reverse();
+        trimmedSweepAngleData = trimmedSweepAngleData.reverse().map(val => val * -1);
+      }
+
       meshPoints.push(
-        trimmedTofData.map((distance, index) => [
-          parseFloat(getXCoordinate(trimmedSweepAngleData[index], distance).toFixed(2)),
-          parseFloat(getYCoordinate(trimmedSweepAngleData[index], distance).toFixed(2)),
-          parseFloat(getZCoordinate(trimmedSweepAngleData[index], distance, floorToSensorOffset).toFixed(2)),
-        ])
+        trimmedTofData.map((distance, index) => {
+          const adjustedAngle = getAdjustedAngle(
+            trimmedSweepAngleData[0],
+            trimmedSweepAngleData[trimmedSweepAngleData.length - 1],
+            trimmedSweepAngleData[index]
+          );
+
+          return [
+            parseFloat(getXCoordinate(adjustedAngle, distance).toFixed(2)),
+            parseFloat(getYCoordinate(adjustedAngle, distance).toFixed(2)),
+            parseFloat(getZCoordinate(tiltMap[sampleKey], distance, floorToSensorOffset).toFixed(2))
+          ];
+        })
       );
     });
 
     console.log(meshPoints);
+
+    // plotFourPointsAsPlane([
+    //   [5.36, 23.21, 8.33],
+    //   [5.71, 22.92, 8.29],
+    //   [12.45, 14.84, 5.4],
+    //   [12.63, 15.05, 5.43]
+    //   // [4.36,-18.87,5.4],
+    //   // [4.42,-19.15,5.43]
+    // ]);
 
     meshPoints.forEach((samplePlane, index) => {
       if (index < 4) {
@@ -154,13 +212,6 @@ THREE.Object3D.DefaultUp.set(0, 0, 1);
         });
       }
     });
-
-      // plotFourPointsAsPlane([
-      //   [10.15,-20.81,13.53],
-      //   [0,-22.87,3.38],
-      //   [0,-37.17,3.38],
-      //   [0,-37.17,3.38]
-      // ])
 
     renderer.render(scene, camera);
     animate();
