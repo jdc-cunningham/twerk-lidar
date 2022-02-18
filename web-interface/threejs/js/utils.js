@@ -27,7 +27,7 @@ const degreesToRadians = (degrees) => {
 }
 
 const getXCoordinate = (sweepAngle, distance) => {
-  const distanceRadians = degreesToRadians(Math.abs(parseInt(sweepAngle)));
+  const distanceRadians = degreesToRadians(Math.abs(parseFloat(sweepAngle)));
   const xCoordinate = parseFloat((distance * Math.sin(distanceRadians)).toFixed(2));
   return sweepAngle > 0
     ? xCoordinate
@@ -35,17 +35,14 @@ const getXCoordinate = (sweepAngle, distance) => {
 }
 
 const getYCoordinate = (sweepAngle, distance) => {
-  const distanceRadians = degreesToRadians(Math.abs(parseInt(sweepAngle)));
+  const distanceRadians = degreesToRadians(Math.abs(parseFloat(sweepAngle)));
   return parseFloat((distance * Math.cos(distanceRadians)).toFixed(2));
 }
 
 const getZCoordinate = (tiltAngle, distance, offset = 0) => {
-  const distanceRadians = degreesToRadians(Math.abs(parseInt(tiltAngle)));
+  const distanceRadians = degreesToRadians(Math.abs(parseFloat(tiltAngle)));
   let zCoordinate = parseFloat((distance * Math.sin(distanceRadians)).toFixed(2));
-  zCoordinate += offset;
-
-  return tiltAngle >= 0
-    ? zCoordinate
-    : zCoordinate * -1;
+  
+  return tiltAngle >= 0 ? zCoordinate += offset : 0;
 }
 

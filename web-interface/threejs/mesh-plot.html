@@ -85,6 +85,7 @@
     // plot mesh
     const plotFourPointsAsPlane = (planePoints) => {
       let points = [];
+      console.log(planePoints);
       planePoints.forEach((panelPoint) => {
         points.push(new THREE.Vector3(panelPoint[0], panelPoint[1], panelPoint[2]));
       });
@@ -105,42 +106,21 @@
       'tilt-down-2': -13.9
     };
 
-    /**
-     * start means from the direction it's rotating from is 0 deg 
-     * end is the last part of the rotation (pos or neg)
-     * current is the sample to be converted for trig to get x,y values
-     */
-    // const getAdjustedAngle = (start, end, current) => {
-    //   const median = (end - start) / 2;
-    //   const posMedian = median < -1 ? median * -1 : median;
-
-    //   // counter-clockwise from my video/measurements
-    //   if (end < 0) {
-    //     if (current > median) {
-    //       return current - median;
-    //     } else if (current < median) {
-    //       return current - median;
-    //     } else {
-    //       return 0;
-    //     }
-    //   } else {
-    //     if (current < posMedian) {
-    //       return posMedian - current;
-    //     } else if (current > posMedian) {
-    //       return current - posMedian;
-    //     } else {
-    //       return 0;
-    //     }
-    //   }
-    // }
-
-    const getAdjustedAngle = (measurements, end, currentIndex, beyondMidpoint) => {
+    const getAdjustedAngle = (measurements, end, currentIndex, beyondMidpoint, sampleKey) => {
       // counter clockwise direction eg. right to left
-      if (end < 0 && !beyondMidpoint) {
-        const flippedArray = measurements.reverse();
-        return parseFloat(flippedArray[currentIndex]) * -1;
+      if (sampleKey === 'tilt-up-2' || sampleKey === 'level' || sampleKey === 'tilt-down-1') {
+        if (end < 0 && !beyondMidpoint) {
+          const flippedArray = measurements.reverse();
+          return parseFloat(flippedArray[currentIndex]) * -1;
+        } else {
+          return parseFloat(measurements[currentIndex]);
+        }
       } else {
-        return parseFloat(measurements[currentIndex]);
+        if (!beyondMidpoint) {
+          return measurements.reverse()[currentIndex] * -1;
+        } else {
+          return measurements[currentIndex];
+        }
       }
     }
 
@@ -164,22 +144,6 @@
         trimmedSweepAngleData = preppedSweepAngleData;
       }
 
-      // if (sampleKey === 'level') {
-      //   console.log(trimmedSweepAngleData.slice(0, 50));
-      //   console.log(trimmedTofData.slice(0, 50));
-      // }
-
-      // remove two points from each side
-      // trimmedTofData = trimmedTofData.splice(2, 100);
-      // trimmedSweepAngleData = trimmedSweepAngleData.splice(2, 100);
-      // trimmedTofData = trimmedTofData.splice(0, 96);
-      // trimmedSweepAngleData = trimmedSweepAngleData.splice(0, 96);
-
-      // if (sampleKey !== 'tilt-up-1' || sampleKey !== 'tilt-down-1') {
-      //   trimmedTofData = trimmedTofData.reverse();
-      //   trimmedSweepAngleData = trimmedSweepAngleData.reverse();
-      // }
-
       meshPoints.push(
         trimmedTofData.map((distance, index) => {
           const adjustedAngle = getAdjustedAngle(
@@ -191,10 +155,6 @@
             index > 49 ? true : false
           );
 
-          if (sampleKey === 'level') {
-            console.log(adjustedAngle);
-          }
-
           return [
             parseFloat(getXCoordinate(adjustedAngle, distance).toFixed(2)),
             parseFloat(getYCoordinate(adjustedAngle, distance).toFixed(2)),
@@ -204,43 +164,28 @@
       );
     });
 
-    // meshPoints[2] = meshPoints[2].slice(0, 50);
-
-    // console.log(meshPoints[2]);
-
-    // plotFourPointsAsPlane([
-    //   [5.36, 23.21, 8.33],
-    //   [5.71, 22.92, 8.29],
-    //   [12.45, 14.84, 5.4],
-    //   [12.63, 15.05, 5.43]
-    //   // [4.36,-18.87,5.4],
-    //   // [4.42,-19.15,5.43]
-    // ]);
+    const rangeFilterOff = true;
 
     meshPoints.forEach((samplePlane, index) => {
-      if (index === 2) {
+      if (index < 2) {
         const points = [];
         samplePlane.forEach((coordinate, coordinateIndex) => {
-          // console.log('plot', coordinateIndex);
-          // const planePoints = [
-          //   coordinate,
-          //   samplePlane[coordinateIndex + 1],
-          //   meshPoints[index + 1][coordinateIndex],
-          //   meshPoints[index + 1][coordinateIndex + 1]
-          // ];
+          if (index < 99 && coordinateIndex < 99) {
+            const planePoints = [
+              coordinate,
+              samplePlane[coordinateIndex + 1],
+              (samplePlane === 'tilt-up-1' || samplePlane === 'tilt-down-1')
+                ? meshPoints[index + 1][coordinateIndex]
+                : meshPoints[index + 1].reverse()[coordinateIndex],
+              (samplePlane === 'tilt-up-1' || samplePlane === 'tilt-down-1')
+                ? meshPoints[index + 1][coordinateIndex + 1]
+                : meshPoints[index + 1].reverse()[coordinateIndex + 1]
+            ];
 
-          // const planePoints = [
-          //   coordinate,
-          //   samplePlane[coordinateIndex + 1],
-          //   meshPoints[index + 1][coordinateIndex],
-          //   meshPoints[index + 1][coordinateIndex + 1]
-          // ];
+            plotFourPointsAsPlane(planePoints);
 
-          // console.log(planePoints);
-
-          // plotFourPointsAsPlane(planePoints);
-
-          points.push(new THREE.Vector3(coordinate[0], coordinate[1], coordinate[2]));
+            points.push(new THREE.Vector3(coordinate[0], coordinate[1], coordinate[2]));
+          }
         });
         
         const geometry = new THREE.BufferGeometry().setFromPoints( points );
