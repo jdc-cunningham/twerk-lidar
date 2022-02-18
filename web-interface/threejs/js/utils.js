@@ -44,7 +44,7 @@ const getZCoordinate = (tiltAngle, distance, offset = 0) => {
   let zCoordinate = parseFloat((distance * Math.sin(distanceRadians)).toFixed(2));
   zCoordinate += offset;
 
-  return tiltAngle > 0
+  return tiltAngle >= 0
     ? zCoordinate
     : zCoordinate * -1;
 }

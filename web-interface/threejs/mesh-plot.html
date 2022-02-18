@@ -110,27 +110,37 @@
      * end is the last part of the rotation (pos or neg)
      * current is the sample to be converted for trig to get x,y values
      */
-    const getAdjustedAngle = (start, end, current) => {
-      const median = (end - start) / 2;
-      const posMedian = median < -1 ? median * -1 : median;
+    // const getAdjustedAngle = (start, end, current) => {
+    //   const median = (end - start) / 2;
+    //   const posMedian = median < -1 ? median * -1 : median;
 
-      // counter-clockwise from my video/measurements
-      if (end < 0) {
-        if (current > median) {
-          return current - median;
-        } else if (current < median) {
-          return current - median;
-        } else {
-          return 0;
-        }
+    //   // counter-clockwise from my video/measurements
+    //   if (end < 0) {
+    //     if (current > median) {
+    //       return current - median;
+    //     } else if (current < median) {
+    //       return current - median;
+    //     } else {
+    //       return 0;
+    //     }
+    //   } else {
+    //     if (current < posMedian) {
+    //       return posMedian - current;
+    //     } else if (current > posMedian) {
+    //       return current - posMedian;
+    //     } else {
+    //       return 0;
+    //     }
+    //   }
+    // }
+
+    const getAdjustedAngle = (measurements, end, currentIndex, beyondMidpoint) => {
+      // counter clockwise direction eg. right to left
+      if (end < 0 && !beyondMidpoint) {
+        const flippedArray = measurements.reverse();
+        return parseFloat(flippedArray[currentIndex]) * -1;
       } else {
-        if (current < posMedian) {
-          return posMedian - current;
-        } else if (current > posMedian) {
-          return current - posMedian;
-        } else {
-          return 0;
-        }
+        return parseFloat(measurements[currentIndex]);
       }
     }
 
@@ -146,32 +156,44 @@
           trimmedTofData = preppedTofData.slice(0, 100);
           trimmedSweepAngleData = preppedSweepAngleData.slice(0, 100);
         } else {
-          trimmedTofData = preppedTofData.slice(49, preppedTofData.length - 1);
-          trimmedSweepAngleData = preppedSweepAngleData.slice(49, preppedTofData.length - 1);
+          trimmedTofData = preppedTofData.slice(50, preppedTofData.length);
+          trimmedSweepAngleData = preppedSweepAngleData.slice(50, preppedTofData.length);
         }
       } else {
         trimmedTofData = preppedTofData;
         trimmedSweepAngleData = preppedSweepAngleData;
       }
 
-      // remove two points from each side
-      trimmedTofData = trimmedTofData.splice(2, 100);
-      trimmedSweepAngleData = trimmedSweepAngleData.splice(2, 100);
-      trimmedTofData = trimmedTofData.splice(0, 96);
-      trimmedSweepAngleData = trimmedSweepAngleData.splice(0, 96);
+      // if (sampleKey === 'level') {
+      //   console.log(trimmedSweepAngleData.slice(0, 50));
+      //   console.log(trimmedTofData.slice(0, 50));
+      // }
 
-      if (sampleKey !== 'tilt-up-1' || sampleKey !== 'tilt-down-1') {
-        trimmedTofData = trimmedTofData.reverse();
-        trimmedSweepAngleData = trimmedSweepAngleData.reverse();
-      }
+      // remove two points from each side
+      // trimmedTofData = trimmedTofData.splice(2, 100);
+      // trimmedSweepAngleData = trimmedSweepAngleData.splice(2, 100);
+      // trimmedTofData = trimmedTofData.splice(0, 96);
+      // trimmedSweepAngleData = trimmedSweepAngleData.splice(0, 96);
+
+      // if (sampleKey !== 'tilt-up-1' || sampleKey !== 'tilt-down-1') {
+      //   trimmedTofData = trimmedTofData.reverse();
+      //   trimmedSweepAngleData = trimmedSweepAngleData.reverse();
+      // }
 
       meshPoints.push(
         trimmedTofData.map((distance, index) => {
           const adjustedAngle = getAdjustedAngle(
-            trimmedSweepAngleData[0],
-            trimmedSweepAngleData[trimmedSweepAngleData.length - 1],
-            trimmedSweepAngleData[index]
+            (index < 50)
+              ? trimmedSweepAngleData.slice(0, 50)
+              : trimmedSweepAngleData.slice(50, trimmedSweepAngleData.length),
+            trimmedSweepAngleData[49],
+            (index < 50) ? index : (index - 50),
+            index > 49 ? true : false
           );
+
+          if (sampleKey === 'level') {
+            console.log(adjustedAngle);
+          }
 
           return [
             parseFloat(getXCoordinate(adjustedAngle, distance).toFixed(2)),
@@ -182,7 +204,9 @@
       );
     });
 
-    console.log(meshPoints);
+    // meshPoints[2] = meshPoints[2].slice(0, 50);
+
+    // console.log(meshPoints[2]);
 
     // plotFourPointsAsPlane([
     //   [5.36, 23.21, 8.33],
@@ -194,31 +218,29 @@
     // ]);
 
     meshPoints.forEach((samplePlane, index) => {
-      if (index < 5) {
+      if (index === 2) {
         const points = [];
         samplePlane.forEach((coordinate, coordinateIndex) => {
-          if (coordinateIndex <= samplePlane.length - 2) {
+          // console.log('plot', coordinateIndex);
+          // const planePoints = [
+          //   coordinate,
+          //   samplePlane[coordinateIndex + 1],
+          //   meshPoints[index + 1][coordinateIndex],
+          //   meshPoints[index + 1][coordinateIndex + 1]
+          // ];
 
-            // const planePoints = [
-            //   coordinate,
-            //   samplePlane[coordinateIndex + 1],
-            //   meshPoints[index + 1][coordinateIndex],
-            //   meshPoints[index + 1][coordinateIndex + 1]
-            // ];
+          // const planePoints = [
+          //   coordinate,
+          //   samplePlane[coordinateIndex + 1],
+          //   meshPoints[index + 1][coordinateIndex],
+          //   meshPoints[index + 1][coordinateIndex + 1]
+          // ];
 
-            // const planePoints = [
-            //   coordinate,
-            //   samplePlane[coordinateIndex + 1],
-            //   meshPoints[index + 1][coordinateIndex],
-            //   meshPoints[index + 1][coordinateIndex + 1]
-            // ];
+          // console.log(planePoints);
 
-            // console.log(planePoints);
+          // plotFourPointsAsPlane(planePoints);
 
-            // plotFourPointsAsPlane(planePoints);
-
-            points.push(new THREE.Vector3(coordinate[0], coordinate[1], coordinate[2]));
-          }
+          points.push(new THREE.Vector3(coordinate[0], coordinate[1], coordinate[2]));
         });
         
         const geometry = new THREE.BufferGeometry().setFromPoints( points );
