@@ -65,13 +65,17 @@
 
     // line material
     let material = new THREE.LineBasicMaterial({ color: 0x00FF00 });
+    let lineMaterial = new THREE.LineBasicMaterial({ color: 0x0000FF }); // FF0000 red
 
     const blue = 0x0000FF;
     const red = 0xFF0000;
     const green = 0x00FF00;
 
     // to make distinguishable panels, will eventually add a nice color pallete/ranging
-    const getRandomHex = () => {
+    const getRandomHex = (returnRandom = true) => {
+      if (!returnRandom) {
+        return '#B6B6B6';
+      }
       // https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
       var result           = '';
       var characters       = 'abcdef0123456789';
@@ -95,7 +99,7 @@
       scene.add(mesh);
     }
 
-    const meshPoints = [];
+    const meshPoints = {};
     const floorToSensorOffset = 3.38;
     const processOrder = ['tilt-up-2', 'tilt-up-1', 'level', 'tilt-down-1', 'tilt-down-2'];
     const tiltMap = {
@@ -144,7 +148,7 @@
         trimmedSweepAngleData = preppedSweepAngleData;
       }
 
-      meshPoints.push(
+      meshPoints[sampleKey] = (
         trimmedTofData.map((distance, index) => {
           const adjustedAngle = getAdjustedAngle(
             (index < 50)
@@ -166,30 +170,38 @@
 
     const rangeFilterOff = true;
 
-    meshPoints.forEach((samplePlane, index) => {
-      if (index < 2) {
-        const points = [];
+    console.log(meshPoints);
+
+    Object.keys(meshPoints).forEach((sampleKey, sampleKeyIndex) => {
+      if (sampleKey !== 'tilt-down-2') {
+        const points = []; // for line
+        const samplePlane = meshPoints[sampleKey];
+
+        let nextPoints;
+            
+        if (sampleKey === 'tilt-up-2' || sampleKey === 'tilt-down-1') {
+          nextPoints = meshPoints[processOrder[sampleKeyIndex + 1]].reverse();
+        } else {
+          nextPoints = meshPoints[processOrder[sampleKeyIndex + 1]];
+        }
+
         samplePlane.forEach((coordinate, coordinateIndex) => {
-          if (index < 99 && coordinateIndex < 99) {
+          if (coordinateIndex < samplePlane.length - 1) {
             const planePoints = [
               coordinate,
               samplePlane[coordinateIndex + 1],
-              (samplePlane === 'tilt-up-1' || samplePlane === 'tilt-down-1')
-                ? meshPoints[index + 1][coordinateIndex]
-                : meshPoints[index + 1].reverse()[coordinateIndex],
-              (samplePlane === 'tilt-up-1' || samplePlane === 'tilt-down-1')
-                ? meshPoints[index + 1][coordinateIndex + 1]
-                : meshPoints[index + 1].reverse()[coordinateIndex + 1]
+              nextPoints[coordinateIndex],
+              nextPoints[coordinateIndex + 1]
             ];
 
             plotFourPointsAsPlane(planePoints);
-
-            points.push(new THREE.Vector3(coordinate[0], coordinate[1], coordinate[2]));
           }
+
+          points.push(new THREE.Vector3(coordinate[0], coordinate[1], coordinate[2]));
         });
         
         const geometry = new THREE.BufferGeometry().setFromPoints( points );
-        const line = new THREE.Line( geometry, material );
+        const line = new THREE.Line( geometry, lineMaterial );
         scene.add( line );
       }
     });
