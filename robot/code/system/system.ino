@@ -38,8 +38,14 @@ void setup()
   setupEspSerial();
   setupTof();
   setupImu();
+
+  blueLedOn();
+  delay(1000);
+  blueLedOff();
   
-  delay(10000);
+  delay(9000);
+
+  // delay(10000);
 
   // performFullScan();
 
@@ -80,5 +86,5 @@ void setup()
 
 void loop()
 {
-  
+  moveForward3(); 
 }
