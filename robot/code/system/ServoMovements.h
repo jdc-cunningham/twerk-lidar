@@ -187,6 +187,13 @@ void moveForward4()
 
   moveServos(servoGroupArr, 1, servoMotionDelay);
 
+  // move front right outer outwards
+  int servoGroupArrA[][3] = {
+    {2, 105, 85} // front right middle
+  };
+
+  moveServos(servoGroupArrA, 1, servoMotionDelay);
+
   int servoGroupArr1[][3] = {
     {7, 95, 115} // front left middle
   };

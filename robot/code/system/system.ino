@@ -38,7 +38,7 @@ void setup()
   setupImu();
 
   delay(3000);
-  // moveForward4();
+  moveForward4();
 }
 
 void loop()
