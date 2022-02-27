@@ -171,7 +171,7 @@ void centerAllLegs()
   backRightOuterServo.write(65);
   frontLeftInnerServo.write(70);
   frontLeftMiddleServo.write(95);
-  frontLeftOuterServo.write(75);
+  frontLeftOuterServo.write(80);
   backLeftInnerServo.write(95);
   backLeftMiddleServo.write(70);
   backLeftOuterServo.write(100);
@@ -179,56 +179,117 @@ void centerAllLegs()
 
 void moveForward4()
 {
-  int singleServoDelay = servoMotionDelay * 20; // 20 deg apart
+  // 1, 4, 7, 10 middle servos
   // move front-left leg forward
-  frontRightMiddleServo.write(100);
-  delay(singleServoDelay);
-  frontLeftMiddleServo.write(115);
-  delay(singleServoDelay);
-  frontLeftInnerServo.write(30);
-  delay(singleServoDelay);
-  frontLeftMiddleServo.write(95);
-  delay(singleServoDelay);
-  frontRightMiddleServo.write(80);
-  delay(singleServoDelay);
+  int servoGroupArr[][3] = {
+    {1, 80, 120} // front right middle
+  };
+
+  moveServos(servoGroupArr, 1, servoMotionDelay);
+
+  int servoGroupArr1[][3] = {
+    {7, 95, 115} // front left middle
+  };
+
+  moveServos(servoGroupArr1, 1, servoMotionDelay);
+
+  int servoGroupArr2[][3] = {
+    {6, 70, 30} // front left inner
+  };
+
+  moveServos(servoGroupArr2, 1, servoMotionDelay);
+
+  int servoGroupArr3[][3] = {
+    {7, 115, 95} // front left middle
+  };
+
+  moveServos(servoGroupArr3, 1, servoMotionDelay);
+
+  int servoGroupArr4[][3] = {
+    {1, 120, 80} // front right middle
+  };
+
+  moveServos(servoGroupArr4, 1, servoMotionDelay);
 
   // move front-right leg forward
-  frontLeftMiddleServo.write(75);
-  delay(singleServoDelay);
-  frontRightMiddleServo.write(60);
-  delay(singleServoDelay);
-  frontRightInnerServo.write(105);
-  delay(singleServoDelay);
-  frontRightMiddleServo.write(80);
-  delay(singleServoDelay);
-  frontLeftMiddleServo.write(95);
-  delay(singleServoDelay);
+  int servoGroupArr5[][3] = {
+    {7, 95, 75} // front left middle
+  };
+
+  moveServos(servoGroupArr5, 1, servoMotionDelay);
+
+  int servoGroupArr6[][3] = {
+    {1, 80, 40} // front right middle
+  };
+
+  moveServos(servoGroupArr6, 1, servoMotionDelay);
+
+  int servoGroupArr7[][3] = {
+    {0, 65, 105} // front right inner
+  };
+
+  moveServos(servoGroupArr7, 1, servoMotionDelay);
+
+  int servoGroupArr8[][3] = {
+    {1, 40, 80} // front right middle
+  };
+
+  moveServos(servoGroupArr8, 1, servoMotionDelay);
+
+  // frontLeftMiddleServo.write(95);
+  int servoGroupArr9[][3] = {
+    {7, 75, 95} // front left middle
+  };
+
+  moveServos(servoGroupArr9, 1, servoMotionDelay);
 
   // move all for forward
-  int servoGroupArr[][3] = {
+  int servoGroupArr10[][3] = {
     {6, 30, 70},
     {0, 105, 65},
     {9, 95, 135},
     {3, 80, 40}
   };
 
-  moveServos(servoGroupArr, 4, servoMotionDelay);
+  moveServos(servoGroupArr10, 4, servoMotionDelay);
 
   // move back-right leg forwrard
-  backRightMiddleServo.write(115);
-  delay(singleServoDelay);
-  backRightInnerServo.write(80);
-  delay(singleServoDelay);
-  backRightMiddleServo.write(95);
-  delay(singleServoDelay);
+  int servoGroupArr11[][3] = {
+    {4, 95, 115} // back right middle
+  };
 
-  // move back left leg forward
-  frontRightMiddleServo.write(60);
-  delay(singleServoDelay);
-  backLeftInnerServo.write(95);
-  delay(singleServoDelay);
-  frontRightMiddleServo.write(80);
-  delay(singleServoDelay);
+  moveServos(servoGroupArr11, 1, servoMotionDelay);
+
+  int servoGroupArr12[][3] = {
+    {3, 40, 80} // back right inner
+  };
+
+  moveServos(servoGroupArr12, 1, servoMotionDelay);
+
+  int servoGroupArr13[][3] = {
+    {4, 115, 95} // back right middle
+  };
+
+  moveServos(servoGroupArr13, 1, servoMotionDelay);
+
+  // // move back left leg forward
+  int servoGroupArr15[][3] = {
+    {1, 80, 60} // front right middle
+  };
+
+  moveServos(servoGroupArr15, 1, servoMotionDelay);
+
+  int servoGroupArr16[][3] = {
+    {9, 115, 95} // back left inner
+  };
+
+  moveServos(servoGroupArr16, 1, servoMotionDelay);
+
+  int servoGroupArr17[][3] = {
+    {1, 60, 80} // front right middle
+  };
+
+  moveServos(servoGroupArr17, 1, servoMotionDelay);
 }
 
 /**
