@@ -163,18 +163,72 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
 
 void centerAllLegs()
 {
-  frontRightInnerServo.write(85); // +40
-  frontRightMiddleServo.write(80); // -10
-  frontRightOuterServo.write(95); // +5
-  backRightInnerServo.write(80); // -30
-  backRightMiddleServo.write(105); // +10
-  backRightOuterServo.write(70); // -15
-  frontLeftInnerServo.write(50); // -30
-  frontLeftMiddleServo.write(100); // +10
-  frontLeftOuterServo.write(75); // -5
-  backLeftInnerServo.write(130); // +30
-  backLeftMiddleServo.write(70); // -10
-  backLeftOuterServo.write(95); // +5
+  frontRightInnerServo.write(65);
+  frontRightMiddleServo.write(80);
+  frontRightOuterServo.write(105);
+  backRightInnerServo.write(80);
+  backRightMiddleServo.write(95);
+  backRightOuterServo.write(65);
+  frontLeftInnerServo.write(70);
+  frontLeftMiddleServo.write(95);
+  frontLeftOuterServo.write(75);
+  backLeftInnerServo.write(95);
+  backLeftMiddleServo.write(70);
+  backLeftOuterServo.write(100);
+}
+
+void moveForward4()
+{
+  int singleServoDelay = servoMotionDelay * 20; // 20 deg apart
+  // move front-left leg forward
+  frontRightMiddleServo.write(100);
+  delay(singleServoDelay);
+  frontLeftMiddleServo.write(115);
+  delay(singleServoDelay);
+  frontLeftInnerServo.write(30);
+  delay(singleServoDelay);
+  frontLeftMiddleServo.write(95);
+  delay(singleServoDelay);
+  frontRightMiddleServo.write(80);
+  delay(singleServoDelay);
+
+  // move front-right leg forward
+  frontLeftMiddleServo.write(75);
+  delay(singleServoDelay);
+  frontRightMiddleServo.write(60);
+  delay(singleServoDelay);
+  frontRightInnerServo.write(105);
+  delay(singleServoDelay);
+  frontRightMiddleServo.write(80);
+  delay(singleServoDelay);
+  frontLeftMiddleServo.write(95);
+  delay(singleServoDelay);
+
+  // move all for forward
+  int servoGroupArr[][3] = {
+    {6, 30, 70},
+    {0, 105, 65},
+    {9, 95, 135},
+    {3, 80, 40}
+  };
+
+  moveServos(servoGroupArr, 4, servoMotionDelay);
+
+  // move back-right leg forwrard
+  backRightMiddleServo.write(115);
+  delay(singleServoDelay);
+  backRightInnerServo.write(80);
+  delay(singleServoDelay);
+  backRightMiddleServo.write(95);
+  delay(singleServoDelay);
+
+  // move back left leg forward
+  frontRightMiddleServo.write(60);
+  delay(singleServoDelay);
+  backLeftInnerServo.write(95);
+  delay(singleServoDelay);
+  frontRightMiddleServo.write(80);
+  delay(singleServoDelay);
 }
 
 /**
