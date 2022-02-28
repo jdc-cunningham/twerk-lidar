@@ -131,7 +131,7 @@ float radianToDegree(float rad)
 
 void setupImu() {
   Serial.begin(115200);
-  while(!Serial) {}
+  // while(!Serial) {}
   Wire1.begin();
   Wire1.setClock(400000);
   /* Initialize and configure IMU */

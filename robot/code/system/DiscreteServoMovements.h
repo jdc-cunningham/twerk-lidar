@@ -74,10 +74,11 @@ void mf4MoveFrontRightLegForward()
 void mf4MoveFrontLeftLegUp()
 {
   int servoGroupArr[][3] = {
-    {7, 95, 115} // front left middle
+    {7, 95, 115}, // front left middle
+    {8, 80, 60}
   };
 
-  moveServos(servoGroupArr, 1, servoMotionDelay);
+  moveServos(servoGroupArr, 2, servoMotionDelay);
 }
 
 void mf4MoveFrontLeftLegForward()
@@ -92,10 +93,11 @@ void mf4MoveFrontLeftLegForward()
 void mf4MoveFrontLeftLegDownFromUp()
 {
   int servoGroupArr[][3] = {
-    {7, 115, 95} // front left middle
+    {7, 115, 95}, // front left middle
+    {8, 60, 80}
   };
 
-  moveServos(servoGroupArr, 1, servoMotionDelay);
+  moveServos(servoGroupArr, 2, servoMotionDelay);
 }
 
 void mf4MoveFrontLeftLegDown()

@@ -37,7 +37,7 @@ void setup()
   setupTof();
   setupImu();
 
-  // indicates setup
+  // indicates setup is done
   blueLedOn();
   delay(500);
   blueLedOff();
