@@ -141,42 +141,13 @@ void moveForward4()
   // mf4MoveFrontRightLegUpFromDown();
 
   // move front right leg forward
-  mf4MoveFrontLeftLegDown();
+  // mf4MoveFrontLeftLegDown();
+  // mf4MoveFrontRightLegUp();
+  // mf4MoveFrontRightLegForward();
+  // mf4MoveFrontRightLegDownFromUp();
+  // mf4MoveFrontLeftLegUpFromDown();
 
-  // int servoGroupArr6[][3] = {
-  //   {1, 80, 40} // front right middle
-  // };
-
-  // moveServos(servoGroupArr6, 1, servoMotionDelay);
-
-  // int servoGroupArr7[][3] = {
-  //   {0, 65, 105} // front right inner
-  // };
-
-  // moveServos(servoGroupArr7, 1, servoMotionDelay);
-
-  // int servoGroupArr8[][3] = {
-  //   {1, 40, 80} // front right middle
-  // };
-
-  // moveServos(servoGroupArr8, 1, servoMotionDelay);
-
-  // // frontLeftMiddleServo.write(95);
-  // int servoGroupArr9[][3] = {
-  //   {7, 75, 95} // front left middle
-  // };
-
-  // moveServos(servoGroupArr9, 1, servoMotionDelay);
-
-  // // move all for forward
-  // int servoGroupArr10[][3] = {
-  //   {6, 30, 70},
-  //   {0, 105, 65},
-  //   {9, 95, 135},
-  //   {3, 80, 40}
-  // };
-
-  // moveServos(servoGroupArr10, 4, servoMotionDelay);
+  // mf4MoveAllForward();
 
   // // move back-right leg forwrard
   // int servoGroupArr11[][3] = {
