@@ -134,58 +134,32 @@ void performFullScan()
 void moveForward4()
 {
   // move front left leg forward
-  // mf4MoveFrontRightLegDown();
-  // mf4MoveFrontLeftLegUp();
-  // mf4MoveFrontLeftLegForward();
-  // mf4MoveFrontLeftLegDownFromUp();
-  // mf4MoveFrontRightLegUpFromDown();
+  mf4MoveFrontRightLegDown();
+  mf4MoveFrontLeftLegUp();
+  mf4MoveFrontLeftLegForward();
+  mf4MoveFrontLeftLegDownFromUp();
+  mf4MoveFrontRightLegUpFromDown();
 
   // move front right leg forward
-  // mf4MoveFrontLeftLegDown();
-  // mf4MoveFrontRightLegUp();
-  // mf4MoveFrontRightLegForward();
-  // mf4MoveFrontRightLegDownFromUp();
-  // mf4MoveFrontLeftLegUpFromDown();
+  mf4MoveFrontLeftLegDown();
+  mf4MoveFrontRightLegUp();
+  mf4MoveFrontRightLegForward();
+  mf4MoveFrontRightLegDownFromUp();
+  mf4MoveFrontLeftLegUpFromDown();
 
-  // mf4MoveAllForward();
+  mf4MoveAllForward();
 
-  // // move back-right leg forwrard
-  // int servoGroupArr11[][3] = {
-  //   {4, 95, 115} // back right middle
-  // };
+  // move back-right leg forwrard
+  mf4MoveBackRightLegUp();
+  mf4MoveBackRightLegForward();
+  mf4MoveBackRightLegDownFromUp();
 
-  // moveServos(servoGroupArr11, 1, servoMotionDelay);
-
-  // int servoGroupArr12[][3] = {
-  //   {3, 40, 80} // back right inner
-  // };
-
-  // moveServos(servoGroupArr12, 1, servoMotionDelay);
-
-  // int servoGroupArr13[][3] = {
-  //   {4, 115, 95} // back right middle
-  // };
-
-  // moveServos(servoGroupArr13, 1, servoMotionDelay);
-
-  // // // move back left leg forward
-  // int servoGroupArr15[][3] = {
-  //   {1, 80, 60} // front right middle
-  // };
-
-  // moveServos(servoGroupArr15, 1, servoMotionDelay);
-
-  // int servoGroupArr16[][3] = {
-  //   {9, 115, 95} // back left inner
-  // };
-
-  // moveServos(servoGroupArr16, 1, servoMotionDelay);
-
-  // int servoGroupArr17[][3] = {
-  //   {1, 60, 80} // front right middle
-  // };
-
-  // moveServos(servoGroupArr17, 1, servoMotionDelay);
+  // move back left leg forward
+  mf4MoveFrontRightLegUpOuterFlipped();
+  mf4MoveBackLeftLegUp();
+  mf4MoveBackLeftLegForward();
+  mf4MoveBackLeftLegDownFromUp();
+  mf4MoveFrontRightLegDownFromUpOuterFlipped();
 }
 
 void moveForward3()

@@ -37,8 +37,13 @@ void setup()
   setupTof();
   setupImu();
 
-  delay(3000);
-  moveForward4();
+  // indicates setup
+  blueLedOn();
+  delay(500);
+  blueLedOff();
+
+  delay(5000);
+  // moveForward4();
 }
 
 void loop()
