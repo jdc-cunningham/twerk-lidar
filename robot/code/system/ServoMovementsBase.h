@@ -12,7 +12,7 @@ Servo backLeftMiddleServo;
 Servo backLeftInnerServo;
 
 bool motionInProgress = false;
-int servoMotionDelay = 4; // min 1 ms
+int servoMotionDelay = 25; // min 1 ms
 int stepDelay = 0; // ms usually a second or more
 
 bool sampleDepth = false;
@@ -357,10 +357,10 @@ void moveBackLeftLegBack()
 void pivotLeft()
 {
   int servoGroupArr[][3] = {
-    {6, 50, 0},
-    {9, 130, 80},
-    {0, 85, 35},
-    {3, 80, 30}
+    {6, 40, 0},
+    {9, 125, 85},
+    {0, 65, 25},
+    {3, 80, 40}
   };
 
   moveServos(servoGroupArr, 4, servoMotionDelay);
@@ -369,10 +369,10 @@ void pivotLeft()
 void pivotCenterFromLeft()
 {
   int servoGroupArr[][3] = {
-    {6, 0, 50},
-    {9, 80, 130},
-    {0, 35, 85},
-    {3, 30, 80}
+    {6, 0, 40},
+    {9, 85, 125},
+    {0, 25, 65},
+    {3, 40, 80}
   };
 
   moveServos(servoGroupArr, 4, servoMotionDelay);
@@ -381,10 +381,10 @@ void pivotCenterFromLeft()
 void pivotRight()
 {
   int servoGroupArr[][3] = {
-    {6, 50, 100},
-    {9, 130, 180},
-    {0, 85, 135},
-    {3, 80, 130}
+    {6, 40, 80},
+    {9, 125, 165},
+    {0, 65, 105},
+    {3, 80, 120}
   };
 
   moveServos(servoGroupArr, 4, servoMotionDelay);
@@ -393,10 +393,10 @@ void pivotRight()
 void pivotCenterFromRight()
 {
   int servoGroupArr[][3] = {
-    {6, 100, 50},
-    {9, 180, 130},
-    {0, 135, 85},
-    {3, 130, 80}
+    {6, 80, 40},
+    {9, 165, 125},
+    {0, 105, 65},
+    {3, 120, 80}
   };
 
   moveServos(servoGroupArr, 4, servoMotionDelay);
