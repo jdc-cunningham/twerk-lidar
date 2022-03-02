@@ -4,6 +4,7 @@
 #include <math.h>
 #include "ServoMovementsBase.h"
 #include "DiscreteServoMovements.h"
+#include "DiscreteServoMovements2.h"
 
 void dumpData()
 {
@@ -177,4 +178,23 @@ void moveForward3()
   moveBackRightLegUp();
   moveBackRightLegForward();
   moveBackRightLegDown();
+}
+
+void moveForward5()
+{
+  mf5MoveFrontRightLegUp();
+  mf5MoveFrontRightLegForward();
+  mf5MoveFrontRightLegDownFromUp();
+
+  mf5PullForwardRight();
+
+  mf5MoveBackLeftLegUp();
+  mf5MoveBackLeftLegForward();
+  mf5MoveBackLeftLegDownFromUp();
+
+  mf5MoveFrontLeftLegUp();
+  mf5MoveFrontLeftLegForward();
+  mf5MoveFrontLeftLegDownFromUp();
+
+  mf5PullForwardLeft();
 }
