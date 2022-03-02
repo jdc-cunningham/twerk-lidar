@@ -111,25 +111,25 @@ void performSweep()
 
 void performFullScan()
 {
-  // tiltUp1();
-  // tiltUp2();
+  tiltUp1();
+  tiltUp2();
   sweep(1);
   // delay(10000);
-  // tiltCenterFromUp2();
+  tiltCenterFromUp2();
   sweep(2);
   // delay(10000);
-  // tiltCenterFromUp1();
+  tiltCenterFromUp1();
   sweep(3);
   // delay(10000);
-  // tiltDown1();
-  // sweep(1);
+  tiltDown1();
+  sweep(1);
   // delay(10000);
-  // tiltDown2();
-  // sweep(2);
+  tiltDown2();
+  sweep(2);
   // delay(10000);
-  // tiltCenterFromDown2();
-  // tiltCenterFromDown1();
-  // sweep(3, true);
+  tiltCenterFromDown2();
+  tiltCenterFromDown1();
+  sweep(3, true);
 }
 
 void moveForward4()
