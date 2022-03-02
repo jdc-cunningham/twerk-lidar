@@ -180,6 +180,7 @@ void moveForward3()
   moveBackRightLegDown();
 }
 
+// based on visual observation of Regis Hsu 2017 spider bot
 void moveForward5()
 {
   mf5MoveFrontRightLegUp();
@@ -201,4 +202,36 @@ void moveForward5()
   mf5MoveBackRightLegUp();
   mf5MoveBackRightLegForward();
   mf5MoveBackRightLegDownFromUp();
+}
+
+// also inspired by Regis Hsu 2017 spider robot turn gait
+void turnLeft()
+{
+  mf5MoveFrontRightLegUp();
+  leftTurnPivot();
+  mf5MoveFrontRightLegDownFromUp();
+
+  // mf5MoveFrontRightLegUp();
+  mf5MoveFrontLeftLegUp();
+  leftTurnPivot2();
+  mf5MoveFrontLeftLegDownFromUp();
+
+  mf5MoveBackLeftLegUp();
+  leftTurnPivot3();
+  mf5MoveBackLeftLegDownFromUp();
+
+  // at 45 deg here
+  // rest below returns to neutral
+
+  mf5MoveBackRightLegUp();
+  ltp3ToNeutral();
+  mf5MoveBackRightLegDownFromUp();
+
+  mf5MoveFrontRightLegUp();
+  ltp3ToNeutral2();
+  mf5MoveFrontRightLegDownFromUp();
+
+  // mf5MoveBackLeftLegUp();
+  // ltp3ToNeutral3();
+  // mf5MoveBackLeftLegDownFromUp();
 }

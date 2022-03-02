@@ -169,3 +169,12 @@ void mf5MoveFrontLeftLegDownFromUpHalf()
 
   moveServos(servoGroupArr, 1, servoMotionDelay);
 }
+
+void mf5MoveBackLeftLegBackward()
+{
+  int servoGroupArr[][3] = {
+    {9, 95, 125} // front left middle
+  };
+
+  moveServos(servoGroupArr, 1, servoMotionDelay);
+}
