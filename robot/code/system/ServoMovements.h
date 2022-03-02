@@ -188,13 +188,21 @@ void moveForward5()
 
   mf5PullForwardRight();
 
+  // mf5MoveFrontRightLegUpHalf();
   mf5MoveBackLeftLegUp();
   mf5MoveBackLeftLegForward();
   mf5MoveBackLeftLegDownFromUp();
+  // mf5MoveFrontRightLegDownFromUpHalf();
 
   mf5MoveFrontLeftLegUp();
   mf5MoveFrontLeftLegForward();
   mf5MoveFrontLeftLegDownFromUp();
 
   mf5PullForwardLeft();
+
+  // mf5MoveFrontLeftLegUpHalf();
+  mf5MoveBackRightLegUp();
+  mf5MoveBackRightLegForward();
+  mf5MoveBackRightLegDownFromUp();
+  // mf5MoveFrontLeftLegDownFromUpHalf();
 }
