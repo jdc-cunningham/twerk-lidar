@@ -9,8 +9,8 @@
 ### Total weight
 9.8oz
 
-### Rough dimensions
-8.5" x 8" x 8"
+### Rough dimensions (due to front weight)
+10" x 10" x 10"
 
 ### ToF sensor height from floor
 3" and 6.5/16" or 3.38"
