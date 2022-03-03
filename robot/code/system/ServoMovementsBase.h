@@ -18,11 +18,15 @@ int stepDelay = 0; // ms usually a second or more
 bool sampleDepth = false;
 bool sampleGyroZ = false; // yaw
 bool sampleGyroX = false; // pitch
+bool sampleYAccel = false;
+bool sampleXAccel = false;
 
 // these use time from millis() as a shared key to sync the data
 std::map<int, float> gyroVals = {};
 std::map<int, int> servoPosVals = {};
 std::map<int, float> depthVals = {};
+std::map<int, float> xAccelVals = {};
+std::map<int, float> yAccelVals = {};
 
 /**
  * @brief Get the Servo By Pin object
@@ -143,6 +147,16 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
       if (sampleGyroZ)
       {
         gyroVals[timeNow] = radianToDegree(imu.gyro_z_radps());
+      }
+
+      if (sampleYAccel)
+      {
+        yAccelVals[timeNow] = imu.accel_y_mps2();
+      }
+
+      if (sampleXAccel)
+      {
+        xAccelVals[timeNow] = imu.accel_x_mps2();
       }
     }
 

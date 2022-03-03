@@ -42,12 +42,26 @@ void setup()
   delay(500);
   blueLedOff();
 
-  delay(10000);
+  delay(5000);
   // moveForward5();
-  performFullScan();
+  // performSweep();
+  // performFullScan();
+
+  sampleYAccel = true;
+  moveForward5();
+  moveForward5();
+  moveForward5();
+  moveForward5();
+  moveForward5();
+  sampleYAccel = false;
+  dumpData();
 }
 
 void loop()
 {
+  // moveForward5();
+  // moveForward5();
+  // moveForward5();
+  // moveForward5();
   // moveForward5();
 }

@@ -16,6 +16,8 @@ float bodyLargestDimension = 10; // but treated as cube
 float robotTofSensorHeight = 3.31;
 float minDistance = 4.25; // room for legs to move forward from ToF sensor
 float minScanDistance = 12.75; // one body length + minDistance
+float sensorToMiddleOfBody = 2.5;
+
 // angles
 // tilt up11 7.2
 // tilt up2 15.3

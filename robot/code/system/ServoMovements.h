@@ -45,9 +45,22 @@ void dumpData()
     Serial.println(it->second);
   }
 
+  Serial.println("aY");
+  for (auto it = yAccelVals.cbegin(); it != yAccelVals.cend(); ++it)
+  {
+    Serial.println(it->first);
+  }
+
+  for (auto it = yAccelVals.cbegin(); it != yAccelVals.cend(); ++it)
+  {
+    Serial.println(it->second);
+  }
+
   gyroVals = {};
   servoPosVals = {};
   depthVals = {};
+  yAccelVals = {};
+  xAccelVals = {};
 }
 
 /**
@@ -105,8 +118,10 @@ void sweep(int runCount, bool noScan = false)
 void performSweep()
 {
   sweep(1);
-  // sweep(2);
-  // sweep(3);
+  delay(1000);
+  sweep(2);
+  delay(1000);
+  sweep(3);
 }
 
 void performFullScan()
