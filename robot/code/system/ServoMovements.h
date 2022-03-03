@@ -242,7 +242,9 @@ void moveForward5()
 void turnLeft()
 {
   mf5MoveFrontRightLegUp();
+  sampleGyroZ = true;
   leftTurnPivot();
+  sampleGyroZ = false;
   mf5MoveFrontRightLegDownFromUp();
 
   // mf5MoveFrontRightLegUp();
@@ -251,7 +253,9 @@ void turnLeft()
   mf5MoveFrontLeftLegDownFromUp();
 
   mf5MoveBackLeftLegUp();
+  sampleGyroZ = true;
   leftTurnPivot3();
+  sampleGyroZ = false;
   mf5MoveBackLeftLegDownFromUp();
 
   // at 45 deg here
@@ -264,8 +268,4 @@ void turnLeft()
   mf5MoveFrontRightLegUp();
   ltp3ToNeutral2();
   mf5MoveFrontRightLegDownFromUp();
-
-  // mf5MoveBackLeftLegUp();
-  // ltp3ToNeutral3();
-  // mf5MoveBackLeftLegDownFromUp();
 }

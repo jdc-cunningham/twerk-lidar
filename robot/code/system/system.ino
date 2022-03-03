@@ -47,7 +47,8 @@ void setup()
   // performSweep();
   // performFullScan();
 
-  moveForward5();
+  // turnLeft();
+  turnLeft();
   dumpData();
 }
 
