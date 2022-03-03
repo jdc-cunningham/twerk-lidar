@@ -160,7 +160,7 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
       }
     }
 
-    if (sampleDepth || sampleGyroX || sampleGyroZ)
+    if (sampleDepth || sampleGyroX || sampleGyroZ || sampleYAccel || sampleXAccel)
     {
       servoPosVals[timeNow] = pos;
     }

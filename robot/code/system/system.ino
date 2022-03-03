@@ -47,13 +47,7 @@ void setup()
   // performSweep();
   // performFullScan();
 
-  sampleYAccel = true;
   moveForward5();
-  moveForward5();
-  moveForward5();
-  moveForward5();
-  moveForward5();
-  sampleYAccel = false;
   dumpData();
 }
 

@@ -217,7 +217,9 @@ void moveForward5()
   mf5MoveFrontRightLegForward();
   mf5MoveFrontRightLegDownFromUp();
 
+  sampleYAccel = true;
   mf5PullForwardRight();
+  sampleYAccel = false;
 
   mf5MoveBackLeftLegUp();
   mf5MoveBackLeftLegForward();
@@ -227,7 +229,9 @@ void moveForward5()
   mf5MoveFrontLeftLegForward();
   mf5MoveFrontLeftLegDownFromUp();
 
+  sampleYAccel = true;
   mf5PullForwardLeft();
+  sampleYAccel = false;
 
   mf5MoveBackRightLegUp();
   mf5MoveBackRightLegForward();
