@@ -131,31 +131,31 @@ void performFullScan()
   delay(1000); // wait to stop moving
   sweep(1);
 
-  // delay(10000);
+  delay(10000); // for manual serial dump copy paste into excel
 
   tiltCenterFromUp2();
   delay(1000); // wait to stop moving
   sweep(2);
 
-  // delay(10000); // copy paste delay
+  delay(10000);
 
   tiltCenterFromUp1();
   delay(1000); // wait to stop moving
   sweep(3);
 
-  // delay(10000);
+  delay(10000);
 
   tiltDown1();
   delay(1000); // wait to stop moving
   sweep(1);
 
-  // delay(10000);
+  delay(10000);
 
   tiltDown2();
   delay(1000); // wait to stop moving
   sweep(2);
 
-  // delay(10000);
+  delay(10000);
 
   tiltCenterFromDown2();
   tiltCenterFromDown1();

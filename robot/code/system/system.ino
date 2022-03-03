@@ -45,11 +45,11 @@ void setup()
   delay(5000);
   // moveForward5();
   // performSweep();
-  // performFullScan();
+  performFullScan();
 
   // turnLeft();
-  turnLeft();
-  dumpData();
+  // turnLeft();
+  // dumpData();
 }
 
 void loop()

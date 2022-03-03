@@ -18,6 +18,9 @@ float minDistance = 4.25; // room for legs to move forward from ToF sensor
 float minScanDistance = 12.75; // one body length + minDistance
 float sensorToMiddleOfBody = 2.5;
 float extVerRotationAngle = 37.5; // external verified
+float minScanDistance = 14.62;
+
+
 
 // angles
 // tilt up11 7.2
