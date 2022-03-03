@@ -34,9 +34,19 @@ const getXCoordinate = (sweepAngle, distance) => {
     : xCoordinate * -1;
 }
 
-const getYCoordinate = (sweepAngle, distance) => {
+const getYCoordinate = (sweepAngle, distance, sampleKey) => {
+  let yOffset = 0;
+
+  if (sampleKey === 'tilt-up-1') {
+    yOffset = -0.22;
+  }
+
+  if (sampleKey === 'tilt-up-2') {
+    yOffset = -0.76;
+  }
+
   const distanceRadians = degreesToRadians(Math.abs(parseFloat(sweepAngle)));
-  return parseFloat((distance * Math.cos(distanceRadians)).toFixed(2));
+  return parseFloat(((distance * Math.cos(distanceRadians)) + yOffset).toFixed(2));
 }
 
 const getZCoordinate = (tiltAngle, distance, offset = 0) => {

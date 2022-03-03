@@ -103,11 +103,11 @@
     const floorToSensorOffset = 3.38;
     const processOrder = ['tilt-up-2', 'tilt-up-1', 'level', 'tilt-down-1', 'tilt-down-2'];
     const tiltMap = {
-      'tilt-up-2': 12.3,
-      'tilt-up-1': 6,
+      'tilt-up-2': 15.3,
+      'tilt-up-1': 7.2,
       'level': 0,
-      'tilt-down-1': -7.4,
-      'tilt-down-2': -13.9
+      'tilt-down-1': -6.8,
+      'tilt-down-2': -16.1
     };
 
     const getAdjustedAngle = (measurements, end, currentIndex, beyondMidpoint, sampleKey) => {
@@ -137,11 +137,11 @@
 
       if (sensorSamples[sampleKey]?.trim) {
         if (sensorSamples[sampleKey].trim === 'end') {
-          trimmedTofData = preppedTofData.slice(0, 100);
-          trimmedSweepAngleData = preppedSweepAngleData.slice(0, 100);
+          trimmedTofData = preppedTofData.slice(0, 80);
+          trimmedSweepAngleData = preppedSweepAngleData.slice(0, 80);
         } else {
-          trimmedTofData = preppedTofData.slice(50, preppedTofData.length);
-          trimmedSweepAngleData = preppedSweepAngleData.slice(50, preppedTofData.length);
+          trimmedTofData = preppedTofData.slice(40, preppedTofData.length);
+          trimmedSweepAngleData = preppedSweepAngleData.slice(40, preppedTofData.length);
         }
       } else {
         trimmedTofData = preppedTofData;
@@ -151,17 +151,17 @@
       meshPoints[sampleKey] = (
         trimmedTofData.map((distance, index) => {
           const adjustedAngle = getAdjustedAngle(
-            (index < 50)
-              ? trimmedSweepAngleData.slice(0, 50)
-              : trimmedSweepAngleData.slice(50, trimmedSweepAngleData.length),
-            trimmedSweepAngleData[49],
-            (index < 50) ? index : (index - 50),
-            index > 49 ? true : false
+            (index < 40)
+              ? trimmedSweepAngleData.slice(0, 40)
+              : trimmedSweepAngleData.slice(40, trimmedSweepAngleData.length),
+            trimmedSweepAngleData[39],
+            (index < 40) ? index : (index - 40),
+            index > 39 ? true : false
           );
 
           return [
             parseFloat(getXCoordinate(adjustedAngle, distance).toFixed(2)),
-            parseFloat(getYCoordinate(adjustedAngle, distance).toFixed(2)),
+            parseFloat(getYCoordinate(adjustedAngle, distance, sampleKey).toFixed(2)),
             parseFloat(getZCoordinate(tiltMap[sampleKey], distance, floorToSensorOffset).toFixed(2))
           ];
         })
