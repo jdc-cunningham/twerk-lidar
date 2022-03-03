@@ -44,7 +44,7 @@ void setup()
 
   delay(5000);
   // moveForward5();
-  performFullScan();
+  // performFullScan();
 }
 
 void loop()
