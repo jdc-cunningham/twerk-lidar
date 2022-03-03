@@ -113,20 +113,35 @@ void performFullScan()
 {
   tiltUp1();
   tiltUp2();
+  delay(1000); // wait to stop moving
   sweep(1);
+
   // delay(10000);
+
   tiltCenterFromUp2();
+  delay(1000); // wait to stop moving
   sweep(2);
-  // delay(10000);
+
+  // delay(10000); // copy paste delay
+
   tiltCenterFromUp1();
+  delay(1000); // wait to stop moving
   sweep(3);
+
   // delay(10000);
+
   tiltDown1();
+  delay(1000); // wait to stop moving
   sweep(1);
+
   // delay(10000);
+
   tiltDown2();
+  delay(1000); // wait to stop moving
   sweep(2);
+
   // delay(10000);
+
   tiltCenterFromDown2();
   tiltCenterFromDown1();
   sweep(3, true);

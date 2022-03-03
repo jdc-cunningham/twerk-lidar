@@ -42,9 +42,9 @@ void setup()
   delay(500);
   blueLedOff();
 
-  delay(5000);
+  delay(10000);
   // moveForward5();
-  // performFullScan();
+  performFullScan();
 }
 
 void loop()

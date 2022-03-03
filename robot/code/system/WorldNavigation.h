@@ -17,10 +17,10 @@ float robotTofSensorHeight = 3.31;
 float minDistance = 4.25; // room for legs to move forward from ToF sensor
 float minScanDistance = 12.75; // one body length + minDistance
 // angles
-// tilt up 1 6.7
-// tilt up 2 13.5
-// down 1 -8.4
-// down 2 -17.3
+// tilt up11 7.2
+// tilt up2 15.3
+// down1 6.8
+// down2 16.1
 
 // for 3D collision check
 std::vector<std::vector <float>> robotCube = {
