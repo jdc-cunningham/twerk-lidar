@@ -15,11 +15,12 @@
 float bodyLargestDimension = 10; // but treated as cube
 float robotTofSensorHeight = 3.31;
 float minDistance = 4.25; // room for legs to move forward from ToF sensor
-float minScanDistance = 12.75; // one body length + minDistance
 float sensorToMiddleOfBody = 2.5;
 float extVerRotationAngle = 37.5; // external verified
 float minScanDistance = 14.62;
+float imuFromFloorHeight = 3.5;
 
+std::vector<float> robotCurPos = {0, 0, 0};
 
 
 // angles
@@ -31,13 +32,13 @@ float minScanDistance = 14.62;
 // for 3D collision check
 std::vector<std::vector <float>> robotCube = {
   {0, 0, 0},
-  {8.5, 0, 0},
-  {8.5, 8.5, 0},
-  {0, 0, 8.5},
-  {0, 8.5, 0},
-  {8.5, 8.5, 0},
-  {0, 8.5, 8.5},
-  {8.5, 8.5, 8.5}
+  {10, 0, 0},
+  {10, 10, 0},
+  {0, 0, 10},
+  {0, 10, 0},
+  {10, 10, 0},
+  {0, 10, 10},
+  {10, 10, 10}
 };
 
 // what is being compared?
@@ -45,4 +46,9 @@ std::vector<std::vector <float>> robotCube = {
 bool collisionCheck(std::vector<std::vector <float>>)
 {
   return false;
+}
+
+void initRobotPos()
+{
+
 }
