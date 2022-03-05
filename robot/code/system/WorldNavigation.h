@@ -24,6 +24,7 @@ std::vector<float> robotCurPos = {0, 0, 0};
 
 // each walk forward step time is 2.5s
 // it covers about 2 inches so 0.8in/s or 4ft/min
+// leg clearance 0.78" lowest clearance
 
 // angles
 // tilt up11 7.2
