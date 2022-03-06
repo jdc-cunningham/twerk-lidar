@@ -51,6 +51,8 @@ void setup()
   // turnLeft();
   // dumpData();
   // mf5MoveBackRightLegUp();
+
+  sweep(3);
 }
 
 void loop()

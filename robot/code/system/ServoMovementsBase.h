@@ -133,8 +133,9 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
     {
       if (sampleDepth)
       {
-        float distSample = sensor.readRangeSingleMillimeters() * 0.0393701;
-        depthVals[timeNow] = distSample;
+        float distSample = sensor.readRangeSingleMillimeters();
+        float distSampleIn = distSample * 0.0393701;
+        depthVals[timeNow] = distSampleIn;
       }
 
       // pitch angle rate
