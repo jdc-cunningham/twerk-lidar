@@ -176,7 +176,7 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
 void centerAllLegs()
 {
   frontRightInnerServo.write(65);
-  frontRightMiddleServo.write(80);
+  frontRightMiddleServo.write(90);
   frontRightOuterServo.write(105);
   backRightInnerServo.write(80);
   backRightMiddleServo.write(95);
