@@ -135,7 +135,15 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
       {
         float distSample = sensor.readRangeSingleMillimeters();
         float distSampleIn = (distSample * 0.0393701) - 0.5; // due to sway forward
-        depthVals[timeNow] = distSampleIn;
+        
+        // this catches bad measurements
+        // something can't be this close due to the allen wrench counter weight
+        if (distSampleIn == 0 || distSampleIn <= 3)
+        {
+          depthVals[timeNow] = 47;
+        } else {
+          depthVals[timeNow] = distSampleIn;
+        }
       }
 
       // pitch angle rate

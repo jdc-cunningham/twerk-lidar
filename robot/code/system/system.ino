@@ -47,8 +47,8 @@ void setup()
   // performSweep();
 
   preSweepSwayForward(); // moves ToF sensor away from legs, 0.5" forward
-  // performFullScan();
-  // postSweepSwayForward(); // return
+  performFullScan();
+  postSweepSwayForward(); // return
 
   // turnLeft();
   // turnLeft();
