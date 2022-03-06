@@ -45,19 +45,29 @@ void setup()
   delay(5000);
   // moveForward5();
   // performSweep();
+
+  preSweepSwayForward(); // moves ToF sensor away from legs, 0.5" forward
   // performFullScan();
+  // postSweepSwayForward(); // return
 
   // turnLeft();
   // turnLeft();
   // dumpData();
   // mf5MoveFrontRightLegUp();
 
-  // sweep(3);
+  // preSweepSwayForward();
+
+  // {6, 40, 50},
+  // {0, 65, 55},
+  // {9, 125, 135},
+  // {3, 80, 70}
+
+  // sweep(1);
 }
 
 void loop()
 {
-  moveForward5();
+  // moveForward5();
   // moveForward5();
   // moveForward5();
   // moveForward5();
