@@ -43,7 +43,7 @@ void setup()
   blueLedOff();
 
   delay(5000);
-  // moveForward5();
+  moveForward5();
   // performSweep();
   // performFullScan();
 

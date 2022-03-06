@@ -225,17 +225,17 @@ void moveForward5()
   mf5MoveBackLeftLegForward();
   mf5MoveBackLeftLegDownFromUp();
 
-  mf5MoveFrontLeftLegUp();
-  mf5MoveFrontLeftLegForward();
-  mf5MoveFrontLeftLegDownFromUp();
+  // mf5MoveFrontLeftLegUp();
+  // mf5MoveFrontLeftLegForward();
+  // mf5MoveFrontLeftLegDownFromUp();
 
-  sampleYAccel = true;
-  mf5PullForwardLeft();
-  sampleYAccel = false;
+  // sampleYAccel = true;
+  // mf5PullForwardLeft();
+  // sampleYAccel = false;
 
-  mf5MoveBackRightLegUp();
-  mf5MoveBackRightLegForward();
-  mf5MoveBackRightLegDownFromUp();
+  // mf5MoveBackRightLegUp();
+  // mf5MoveBackRightLegForward();
+  // mf5MoveBackRightLegDownFromUp();
 }
 
 // also inspired by Regis Hsu 2017 spider robot turn gait

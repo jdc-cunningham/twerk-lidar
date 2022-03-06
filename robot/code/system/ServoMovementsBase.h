@@ -181,7 +181,7 @@ void centerAllLegs()
   backRightInnerServo.write(80);
   backRightMiddleServo.write(95);
   backRightOuterServo.write(65);
-  frontLeftInnerServo.write(40);
+  frontLeftInnerServo.write(50);
   frontLeftMiddleServo.write(95);
   frontLeftOuterServo.write(80);
   backLeftInnerServo.write(125);
@@ -333,7 +333,7 @@ void moveBackRightLegDown()
 void moveAllFourLegsBack()
 {
   int servoGroupArr[][3] = {
-    {6, 20, 40},
+    {6, 30, 50},
     {0, 135, 105},
     {9, 100, 130},
     {3, 80, 50}
@@ -354,7 +354,7 @@ void moveFrontRightLegBack()
 void moveFrontLeftLegBack()
 {
   int servoGroupArr[][3] = {
-    {6, 40, 80}
+    {6, 50, 90}
   };
 
   moveServos(servoGroupArr, 1, servoMotionDelay);
@@ -372,7 +372,7 @@ void moveBackLeftLegBack()
 void pivotLeft()
 {
   int servoGroupArr[][3] = {
-    {6, 40, 0},
+    {6, 50, 10},
     {9, 125, 85},
     {0, 65, 25},
     {3, 80, 40}
@@ -384,7 +384,7 @@ void pivotLeft()
 void pivotCenterFromLeft()
 {
   int servoGroupArr[][3] = {
-    {6, 0, 40},
+    {6, 10, 50},
     {9, 85, 125},
     {0, 25, 65},
     {3, 40, 80}
@@ -396,7 +396,7 @@ void pivotCenterFromLeft()
 void pivotRight()
 {
   int servoGroupArr[][3] = {
-    {6, 40, 80},
+    {6, 50, 90},
     {9, 125, 165},
     {0, 65, 105},
     {3, 80, 120}
@@ -408,7 +408,7 @@ void pivotRight()
 void pivotCenterFromRight()
 {
   int servoGroupArr[][3] = {
-    {6, 80, 40},
+    {6, 90, 50},
     {9, 165, 125},
     {0, 105, 65},
     {3, 120, 80}
@@ -644,7 +644,7 @@ void leftTurnPivot2()
 void leftTurnPivot3()
 {
   int servoGroupArr[][3] = {
-    {6, 70, 40}, // front left inner
+    {6, 80, 50}, // front left inner
     {9, 65, 125}, // back left inner
     {3, 20, 0}, // back right inner
     {0, 65, 35}
