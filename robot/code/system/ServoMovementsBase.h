@@ -12,7 +12,7 @@ Servo backLeftMiddleServo;
 Servo backLeftInnerServo;
 
 bool motionInProgress = false;
-int servoMotionDelay = 4; // min 1 ms
+int servoMotionDelay = 0; // min 1 ms
 int stepDelay = 0; // ms usually a second or more
 
 bool sampleDepth = false;
@@ -175,10 +175,10 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
 
 void centerAllLegs()
 {
-  frontRightInnerServo.write(65);
+  frontRightInnerServo.write(60);
   frontRightMiddleServo.write(90);
-  frontRightOuterServo.write(105);
-  backRightInnerServo.write(80);
+  frontRightOuterServo.write(100);
+  backRightInnerServo.write(85);
   backRightMiddleServo.write(95);
   backRightOuterServo.write(65);
   frontLeftInnerServo.write(50);
