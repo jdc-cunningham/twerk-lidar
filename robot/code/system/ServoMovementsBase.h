@@ -182,7 +182,7 @@ void centerAllLegs()
   backRightMiddleServo.write(95);
   backRightOuterServo.write(65);
   frontLeftInnerServo.write(40);
-  frontLeftMiddleServo.write(95);
+  frontLeftMiddleServo.write(90);
   frontLeftOuterServo.write(80);
   backLeftInnerServo.write(135);
   backLeftMiddleServo.write(70);
