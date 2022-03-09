@@ -17,6 +17,8 @@
   <script src="js/ConvexGeometry.js"></script>
   <script src="js/GetCoordinates.js"></script>
   <script>
+    const robotPos = new THREE.Vector3(0, 0, 3.5); // IMU is 3.5" from floor
+
     // https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
     THREE.Object3D.DefaultUp.set(0, 0, 1);
     const scene = new THREE.Scene();
@@ -78,6 +80,7 @@
     const blue = 0x0000FF;
     const red = 0xFF0000;
     const green = 0x00FF00;
+    const purple = 0x6A0DAD;
 
     const plotVectors = (vectors) => {
       let points = [];
@@ -145,6 +148,18 @@
     // render scene
     renderer.render(scene, camera);
     animate();
+
+    const plotRobotPos = (robotMsg) => {
+      const points = [robotPos];
+      const newRobotPos = robotMsg.split('pos update, ')[1].split(',').map(point => parseFloat(point));
+      const newRobotPosVector = new THREE.Vector3(newRobotPos[0], newRobotPos[1], newRobotPos[2]);
+      points.push(newRobotPosVector);
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      const material = new THREE.LineBasicMaterial({ color: purple });
+      const line = new THREE.Line( geometry, material );
+      scene.add(line);
+      controls.update();
+    }
 
     // socket feed
     // Create WebSocket connection.
@@ -237,17 +252,20 @@
 
     // Listen for messages
     socket.addEventListener('message', function (event) {
-      const imuStream = event.data;
-      const imuStreamVectors = parseImuStream(event.data);
+      const robotMsg = event.data;
 
-      console.log(event);
-
-      if (imuStreamVectors.length) {
-        const ned = getNed(imuStreamVectors);
-        clearScreen();
-        plotVectors(ned);
-        controls.update();
+      if (robotMsg.indexOf('pos update,') !== -1) {
+        plotRobotPos(robotMsg);
       }
+
+      // const imuStreamVectors = parseImuStream(event.data);
+
+      // if (imuStreamVectors.length) {
+      //   const ned = getNed(imuStreamVectors);
+      //   clearScreen();
+      //   plotVectors(ned);
+      //   controls.update();
+      // }
     });
 
     socket.addEventListener('error', function (event) {
