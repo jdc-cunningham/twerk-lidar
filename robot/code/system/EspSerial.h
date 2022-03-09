@@ -21,3 +21,18 @@ String getEspSerialMsg() {
 
   return "";
 }
+
+void writeToEsp(String msg)
+{
+  if (curEspMsg.length() == 0)
+  {
+    Serial.println("write");
+    curEspMsg = msg;
+    ESPSERIAL.print(msg);
+    ESPSERIAL.flush();
+    curEspMsg = "";
+  } else
+  {
+    Serial.println("esp write err");
+  }
+}

@@ -53,6 +53,7 @@ void loop()
         if (Serial.available() > 0)
         {
           client.send(Serial.readString());
+          Serial.flush(); // this does nothing
         }
       }
       delay(1);

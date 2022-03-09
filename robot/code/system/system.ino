@@ -18,14 +18,16 @@
  *    BLO                           BRO
  */
 
+#include "Variables.h"
 #include "BlueLed.h"
 #include "ToFSensor.h"
-#include "IMU.h"
-#include "ServoMovements.h"
-#include "Misc.h"
 #include "EspSerial.h"
+#include "IMU.h"
+#include "Misc.h"
 #include "WorldNavigation.h"
 #include "Orientation.h"
+#include "Telemetry.h"
+#include "ServoMovements.h"
 
 void setup()
 {
@@ -43,12 +45,16 @@ void setup()
   blueLedOff();
 
   delay(5000);
-  // moveForward5();
+
+  // updateTelemetry("mf");
+  moveForward5();
   // performSweep();
 
-  preSweepSwayForward(); // moves ToF sensor away from legs, 0.5" forward
-  performFullScan();
-  postSweepSwayForward(); // return
+
+  // preSweepSwayForward(); // moves ToF sensor away from legs, 0.5" forward
+  // performFullScan();
+  // postSweepSwayForward(); // return
+
 
   // turnLeft();
   // turnLeft();
@@ -67,6 +73,8 @@ void setup()
 
 void loop()
 {
+
+  delay(5000);
   // moveForward5();
   // moveForward5();
   // moveForward5();

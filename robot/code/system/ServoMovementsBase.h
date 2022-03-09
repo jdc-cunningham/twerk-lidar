@@ -1,33 +1,3 @@
-Servo frontRightOuterServo;
-Servo frontRightMiddleServo;
-Servo frontRightInnerServo;
-Servo backRightOuterServo;
-Servo backRightMiddleServo;
-Servo backRightInnerServo;
-Servo frontLeftOuterServo;
-Servo frontLeftMiddleServo;
-Servo frontLeftInnerServo;
-Servo backLeftOuterServo;
-Servo backLeftMiddleServo;
-Servo backLeftInnerServo;
-
-bool motionInProgress = false;
-int servoMotionDelay = 4; // min 1 ms
-int stepDelay = 0; // ms usually a second or more
-
-bool sampleDepth = false;
-bool sampleGyroZ = false; // yaw
-bool sampleGyroX = false; // pitch
-bool sampleYAccel = false;
-bool sampleXAccel = false;
-
-// these use time from millis() as a shared key to sync the data
-std::map<int, float> gyroVals = {};
-std::map<int, int> servoPosVals = {};
-std::map<int, float> depthVals = {};
-std::map<int, float> xAccelVals = {};
-std::map<int, float> yAccelVals = {};
-
 /**
  * @brief Get the Servo By Pin object
  * 

@@ -1,67 +1,6 @@
-#include <Servo.h>
-#include <map>
-#include <vector>
-#include <math.h>
 #include "ServoMovementsBase.h"
 #include "DiscreteServoMovements.h"
 #include "DiscreteServoMovements2.h"
-
-void dumpData()
-{
-  Serial.println(gyroVals.size());
-
-  // https://stackoverflow.com/a/14070977/2710227
-  // sucks but easier to copy-paste into excel
-  Serial.println("s");
-  for (auto it = servoPosVals.cbegin(); it != servoPosVals.cend(); ++it)
-  {
-    Serial.println(it->first);
-  }
-
-  for (auto it = servoPosVals.cbegin(); it != servoPosVals.cend(); ++it)
-  {
-    Serial.println(it->second);
-  }
-
-  Serial.println("g");
-  for (auto it = gyroVals.cbegin(); it != gyroVals.cend(); ++it)
-  {
-    Serial.println(it->first);
-  }
-
-  for (auto it = gyroVals.cbegin(); it != gyroVals.cend(); ++it)
-  {
-    Serial.println(it->second);
-  }
-
-  Serial.println("d");
-  for (auto it = depthVals.cbegin(); it != depthVals.cend(); ++it)
-  {
-    Serial.println(it->first);
-  }
-
-  for (auto it = depthVals.cbegin(); it != depthVals.cend(); ++it)
-  {
-    Serial.println(it->second);
-  }
-
-  Serial.println("aY");
-  for (auto it = yAccelVals.cbegin(); it != yAccelVals.cend(); ++it)
-  {
-    Serial.println(it->first);
-  }
-
-  for (auto it = yAccelVals.cbegin(); it != yAccelVals.cend(); ++it)
-  {
-    Serial.println(it->second);
-  }
-
-  gyroVals = {};
-  servoPosVals = {};
-  depthVals = {};
-  yAccelVals = {};
-  xAccelVals = {};
-}
 
 /**
  * @brief runCount is referring to which sweep is running
@@ -236,6 +175,8 @@ void moveForward5()
   mf5MoveBackRightLegUp();
   mf5MoveBackRightLegForward();
   mf5MoveBackRightLegDownFromUp();
+
+  updateTelemetry("mf");
 }
 
 // also inspired by Regis Hsu 2017 spider robot turn gait

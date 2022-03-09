@@ -19,8 +19,9 @@ float sensorToMiddleOfBody = 2.5;
 float extVerRotationAngle = 37.5; // external verified
 float minScanDistance = 14.62;
 float imuFromFloorHeight = 3.5;
+bool movedForward = true;
 
-std::vector<float> robotCurPos = {0, 0, 0};
+std::vector<float> robotWorldPos = {0, 0, 0};
 
 // each walk forward step time is 2.5s
 // it covers about 2 inches so 0.8in/s or 4ft/min
