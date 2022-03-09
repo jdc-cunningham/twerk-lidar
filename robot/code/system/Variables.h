@@ -27,6 +27,9 @@ bool sampleGyroX = false; // pitch
 bool sampleYAccel = false;
 bool sampleXAccel = false;
 
+bool movedForward = true;
+bool stopRobot = false;
+
 // these use time from millis() as a shared key to sync the data
 std::map<int, float> gyroVals = {};
 std::map<int, int> servoPosVals = {};

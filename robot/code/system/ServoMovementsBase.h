@@ -60,6 +60,12 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
   int largestServoRange = 0;
   // int moveCounter = 0;
 
+  // emergency stop
+  if (stopRobot)
+  {
+    return;
+  }
+
   for (int servoGroupIndex = 0; servoGroupIndex < servoGroupArrLen; servoGroupIndex++) {
     int range = 0;
     if (servoGroupArr[servoGroupIndex][1] < servoGroupArr[servoGroupIndex][2]) {

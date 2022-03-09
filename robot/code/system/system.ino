@@ -73,8 +73,27 @@ void setup()
 
 void loop()
 {
-  // moveForward5();
-  delay(1000);
+  // poll is like a keep-alive, it bunches up due timing mismatch
+  // String espMsg = getEspSerialMsg().replace("poll", "");
+
+  // espMsg.replace("Hello Server!", "");
+
+  // if (espMsg)
+  // {
+  //   Serial.println(espMsg);
+  //   if (espMsg == "stop")
+  //   {
+  //     stopRobot = true;
+  //   }
+
+  //   clearEspSerial();
+  // }
+
+  // // moveForward5();
+  // turnLeft();
+
+  // delay(1000);
+
   // moveForward5();
   // moveForward5();
   // moveForward5();
