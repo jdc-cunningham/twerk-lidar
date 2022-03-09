@@ -47,7 +47,7 @@ void setup()
   delay(5000);
 
   // updateTelemetry("mf");
-  moveForward5();
+  // moveForward5();
   // performSweep();
 
 
@@ -73,8 +73,8 @@ void setup()
 
 void loop()
 {
-
-  delay(5000);
+  // moveForward5();
+  delay(1000);
   // moveForward5();
   // moveForward5();
   // moveForward5();

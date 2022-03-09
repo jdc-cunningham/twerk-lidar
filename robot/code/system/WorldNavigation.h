@@ -21,7 +21,7 @@ float minScanDistance = 14.62;
 float imuFromFloorHeight = 3.5;
 bool movedForward = true;
 
-std::vector<float> robotWorldPos = {0, 0, 0};
+std::vector<float> robotWorldPos = {0, 0, 3.5};
 
 // each walk forward step time is 2.5s
 // it covers about 2 inches so 0.8in/s or 4ft/min
