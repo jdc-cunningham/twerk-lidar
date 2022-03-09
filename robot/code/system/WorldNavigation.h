@@ -19,6 +19,7 @@ float sensorToMiddleOfBody = 2.5;
 float extVerRotationAngle = 37.5; // external verified
 float minScanDistance = 14.62;
 float imuFromFloorHeight = 3.5;
+float curAngle = 0; // done in 52 increments
 
 std::vector<float> robotWorldPos = {0, 0, 3.5};
 

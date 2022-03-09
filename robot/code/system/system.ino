@@ -29,6 +29,8 @@
 #include "Telemetry.h"
 #include "ServoMovements.h"
 
+int forwardCounter = 0;
+
 void setup()
 {
   Serial.begin(115200);
@@ -90,13 +92,15 @@ void loop()
     clearEspSerial();
   }
 
-  moveForward5();
-  // moveForward5();
-  // moveForward5();
-  // moveForward5();
-  // moveForward5();
-  // turnLeft();
-  // turnLeft();
+  if (forwardCounter < 5)
+  {
+    forwardCounter += 1;
+    moveForward5();
+  } else
+  {
+    forwardCounter = 0;
+    turnLeft();
+  }
 
   // delay(1000);
 }

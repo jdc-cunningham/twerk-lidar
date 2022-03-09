@@ -33,20 +33,10 @@ void moveForwardEvent()
 
       prevMillis = it->first;
       extInc += 1;
-
-      Serial.println(it->first);
-    }
-
-    for (auto it = yAccelVals.cbegin(); it != yAccelVals.cend(); ++it)
-    {
-      Serial.println(it->second);
     }
 
     feetPerSecond = (totalYAccelMps * 3.28) * totalWalkTimeS;
     forwardDistanceIn = feetPerSecond * 12;
-
-    Serial.println("distane in");
-    Serial.println(forwardDistanceIn);
 
     // this is bad as generally the robot is on carpet and it moves 2" per moveFoward5 command
     // it's possible it slips
@@ -57,12 +47,25 @@ void moveForwardEvent()
     }
 
     // depending on turn
-    if (movedForward)
+    if (curAngle == 0)
     {
-      robotWorldPos[1] += forwardDistanceIn;
+      if (movedForward)
+      {
+        robotWorldPos[1] += forwardDistanceIn;
+      } else
+      {
+        robotWorldPos[1] -= forwardDistanceIn;
+      }
     } else
     {
-      robotWorldPos[1] -= forwardDistanceIn;
+      float xDist = 0.0;
+      float yDist = 0.0;
+
+      xDist = cos(curAngle) * forwardDistanceIn;
+      yDist = sin(curAngle) * forwardDistanceIn;
+
+      robotWorldPos[0] += xDist;
+      robotWorldPos[1] += yDist;
     }
 
     // send to ESP
@@ -78,44 +81,54 @@ void moveForwardEvent()
 
 void turnLeftEvent()
 {
-  int prevMillis = 0;
-  float elapsedTime = 0.019; // default value based on observed median
-  int incr = 0;
-  float rotationSum = 0.0;
+  // radians are capped between -1 and 1, the y signage determines up/down
+  // so this is not correct
+  curAngle += (52 * 0.0175); // can only turn left
+  // but unit circle counter-clockwise is positive direction
 
-  if (gyroVals.size() > 0)
-  {
-    // elapsed time
-    // gyro deg summed over time
-    // negative value is counter-clockwise
-    for (auto it = gyroVals.cbegin(); it != gyroVals.cend(); ++it)
-    {
-      if (incr == 0)
-      {
-        rotationSum = it->second * elapsedTime;
-      } else
-      {
-        elapsedTime = (it->first / 1000) - (prevMillis / 1000);
-        Serial.println(elapsedTime);
-        rotationSum += (it->second * elapsedTime);
-      }
+  // below is how you'd compute it but I'm skipping it since the accuracy
+  // is so bad
+  // external visual measurement is 52 deg
+  // note the code below is not 100% though, wasn't matching spreadsheet
 
-      incr += 1;
-      prevMillis = it->first;
+  // int prevMillis = 0;
+  // float elapsedTime = 0.019; // default value based on observed median
+  // int incr = 0;
+  // float rotationSum = 0.0;
 
-      Serial.println(it->first);
-    }
+  // if (gyroVals.size() > 0)
+  // {
+  //   // elapsed time
+  //   // gyro deg summed over time
+  //   // negative value is counter-clockwise
+  //   for (auto it = gyroVals.cbegin(); it != gyroVals.cend(); ++it)
+  //   {
+  //     if (incr == 0)
+  //     {
+  //       rotationSum = it->second * elapsedTime;
+  //     } else
+  //     {
+  //       elapsedTime = (it->first / 1000) - (prevMillis / 1000);
+  //       Serial.println(elapsedTime);
+  //       rotationSum += (it->second * elapsedTime);
+  //     }
 
-    for (auto it = gyroVals.cbegin(); it != gyroVals.cend(); ++it)
-    {
-      Serial.println(it->second);
-    }
+  //     incr += 1;
+  //     prevMillis = it->first;
 
-    Serial.println("rotation");
-    Serial.println(rotationSum);
+  //     Serial.println(it->first);
+  //   }
 
-    gyroVals = {};
-  }
+  //   for (auto it = gyroVals.cbegin(); it != gyroVals.cend(); ++it)
+  //   {
+  //     Serial.println(it->second);
+  //   }
+
+  //   Serial.println("rotation");
+  //   Serial.println(rotationSum);
+
+  //   gyroVals = {};
+  // }
 }
 
 void updateTelemetry(String event)
