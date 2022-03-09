@@ -5,11 +5,67 @@
   <meta name="viewport" content="width=, initial-scale=1.0">
   <title>Document</title>
   <style>
-    body { margin: 0; }
-    canvas { display: block; }
+    body * {
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+    }
+
+    canvas {
+      display: block;
+    }
+
+    .menu {
+      display: flex;
+      align-items: center;
+      justify-content:flex-start;
+      flex-direction: row;
+      width: 100%;
+      height: 40px;
+      border-bottom: 1px solid #282828;
+    }
+    
+    #emergency-stop {
+      background-color: firebrick;
+      color: white;
+    }
+
+    #emergency-stop.clicked {
+      background-color: #ccc;
+      color: #282828;
+    }
+
+    .button {
+      border-radius: 8px;
+      padding: 4px 12px;
+      height: 30px;
+      font-size: 1rem;
+      margin-left: 5px;
+      border: 0;
+      cursor: pointer;
+      font-weight: bold;
+      background-color: #ccc;
+    }
+
+    .connected {
+      background-color: green;
+      color: white;
+    }
   </style>
 </head>
 <body>
+  <div class="menu">
+    <button type="button" id="connect-to-robot" class="button">Connecting...</button>
+    <button type="button" id="emergency-stop" class="button">Stop</button>
+  </div>
   <script src="js/three.js"></script>
   <script src="js/OrbitControls.js"></script>
   <script src="js/three.module.js"></script>
@@ -17,6 +73,9 @@
   <script src="js/ConvexGeometry.js"></script>
   <script src="js/GetCoordinates.js"></script>
   <script>
+    let stopClicked = false;
+    const connectBtn = document.getElementById('connect-to-robot');
+    const stopBtn = document.getElementById('emergency-stop');
     const robotPos = new THREE.Vector3(0, 0, 3.5); // IMU is 3.5" from floor
 
     // https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
@@ -28,7 +87,7 @@
 
     scene.background = new THREE.Color( 0xffffff );
     
-    renderer.setSize(window.innerWidth, window.innerHeight); // add false for lower resolution after dividing x/y values
+    renderer.setSize(window.innerWidth, (window.innerHeight - 40)); // add false for lower resolution after dividing x/y values
     document.body.appendChild(renderer.domElement);
 
     // add orbit controls
@@ -167,11 +226,21 @@
 
     // Connection opened
     socket.addEventListener('open', function (event) {
+      connectBtn.innerText = 'Connected';
+      connectBtn.classList.add('connected');
+ 
       console.log('connected');
       socket.send('Hello Server!');
 
+      stopBtn.addEventListener('click', () => {
+        if (!stopClicked) {
+          socket.send('stop');
+          stopBtn.classList.add('clicked');
+        }
+      });
+
       setInterval(() => {
-        socket.send('yo');
+        socket.send('poll');
       }, 1000);
     });
 
