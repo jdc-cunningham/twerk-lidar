@@ -152,6 +152,7 @@
 
     // Connection opened
     socket.addEventListener('open', function (event) {
+      console.log('connected');
       socket.send('Hello Server!');
 
       setInterval(() => {
@@ -238,6 +239,8 @@
     socket.addEventListener('message', function (event) {
       const imuStream = event.data;
       const imuStreamVectors = parseImuStream(event.data);
+
+      console.log(event);
 
       if (imuStreamVectors.length) {
         const ned = getNed(imuStreamVectors);
