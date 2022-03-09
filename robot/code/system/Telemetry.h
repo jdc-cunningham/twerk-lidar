@@ -2,14 +2,6 @@
 // for now it will only sample y
 void moveForwardEvent()
 {
-  // std::map<int, float> yAccelValsTmp = {};
-
-  // yAccelValsTmp[9604] = -0.0665;
-  // yAccelValsTmp[9627] = 0.00437;
-  // yAccelValsTmp[9645] = 0.00162;
-  // yAccelValsTmp[9663] = 0.04176;
-  // yAccelValsTmp[9686] = 0.0345;
-
   if (yAccelVals.size() > 0)
   {
     int prevMillis = 0; // used for elapsed time calculation
@@ -84,10 +76,56 @@ void moveForwardEvent()
   }
 }
 
+void turnLeftEvent()
+{
+  int prevMillis = 0;
+  float elapsedTime = 0.019; // default value based on observed median
+  int incr = 0;
+  float rotationSum = 0.0;
+
+  if (gyroVals.size() > 0)
+  {
+    // elapsed time
+    // gyro deg summed over time
+    // negative value is counter-clockwise
+    for (auto it = gyroVals.cbegin(); it != gyroVals.cend(); ++it)
+    {
+      if (incr == 0)
+      {
+        rotationSum = it->second * elapsedTime;
+      } else
+      {
+        elapsedTime = (it->first / 1000) - (prevMillis / 1000);
+        Serial.println(elapsedTime);
+        rotationSum += (it->second * elapsedTime);
+      }
+
+      incr += 1;
+      prevMillis = it->first;
+
+      Serial.println(it->first);
+    }
+
+    for (auto it = gyroVals.cbegin(); it != gyroVals.cend(); ++it)
+    {
+      Serial.println(it->second);
+    }
+
+    Serial.println("rotation");
+    Serial.println(rotationSum);
+
+    gyroVals = {};
+  }
+}
+
 void updateTelemetry(String event)
 {
   if (event == "mf")
   {
     moveForwardEvent();
+  }
+  else if (event == "tl")
+  {
+    turnLeftEvent();
   }
 }

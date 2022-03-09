@@ -209,4 +209,6 @@ void turnLeft()
   mf5MoveFrontRightLegUp();
   ltp3ToNeutral2();
   mf5MoveFrontRightLegDownFromUp();
+
+  updateTelemetry("tl");
 }
