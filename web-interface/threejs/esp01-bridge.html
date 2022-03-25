@@ -77,6 +77,7 @@
     const connectBtn = document.getElementById('connect-to-robot');
     const stopBtn = document.getElementById('emergency-stop');
     const robotPos = new THREE.Vector3(0, 0, 3.5); // IMU is 3.5" from floor
+    let lastRobotPos = null;
 
     // https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
     THREE.Object3D.DefaultUp.set(0, 0, 1);
@@ -209,9 +210,17 @@
     animate();
 
     const plotRobotPos = (robotMsg) => {
-      const points = [robotPos];
+      let points = [];
+
+      if (!lastRobotPos) {
+        points.push(robotPos);
+      } else {
+        points.push(lastRobotPos);
+      }
+
       const newRobotPos = robotMsg.split('pos update, ')[1].split(',').map(point => parseFloat(point));
       const newRobotPosVector = new THREE.Vector3(newRobotPos[0], newRobotPos[1], newRobotPos[2]);
+      lastRobotPos = newRobotPosVector;
       points.push(newRobotPosVector);
       const geometry = new THREE.BufferGeometry().setFromPoints(points);
       const material = new THREE.LineBasicMaterial({ color: purple });
