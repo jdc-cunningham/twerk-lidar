@@ -46,7 +46,7 @@ void setup()
   delay(500);
   blueLedOff();
 
-  delay(5000);
+  delay(10000);
 
   // updateTelemetry("mf");
   // moveForward5();
@@ -76,31 +76,34 @@ void setup()
 
 void loop()
 {
+  // moveForward5();
+  // delay(10000);
+
   // poll is like a keep-alive, it bunches up due timing mismatch
-  String espMsg = getEspSerialMsg().replace("poll", "");
+  // String espMsg = getEspSerialMsg().replace("poll", "");
 
-  espMsg.replace("Hello Server!", "");
+  // espMsg.replace("Hello Server!", "");
 
-  if (espMsg)
-  {
-    Serial.println(espMsg);
-    if (espMsg == "stop")
-    {
-      stopRobot = true;
-    }
+  // if (espMsg)
+  // {
+  //   Serial.println(espMsg);
+  //   if (espMsg == "stop")
+  //   {
+  //     stopRobot = true;
+  //   }
 
-    clearEspSerial();
-  }
+  //   clearEspSerial();
+  // }
 
-  if (forwardCounter < 5)
-  {
-    forwardCounter += 1;
-    moveForward5();
-  } else
-  {
-    forwardCounter = 0;
-    turnLeft();
-  }
+  // if (forwardCounter < 5)
+  // {
+  //   forwardCounter += 1;
+  //   moveForward5();
+  // } else
+  // {
+  //   forwardCounter = 0;
+  //   turnLeft();
+  // }
 
   // delay(1000);
 }
