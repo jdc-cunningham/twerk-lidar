@@ -5,13 +5,14 @@
  *    FLO                          FRO
  *         FLM                 FRM
  *              FLI  TOF  FRI
+ * 
  *                    ^
  *                    y
  * 
- *                   (z)  x >
+ *                   (z)   x >
  *                   IMU
  *
- * 
+ *
  *
  *              BLI       BRI
  *         BLM                 BRM
@@ -46,7 +47,7 @@ void setup()
   delay(500);
   blueLedOff();
 
-  delay(10000);
+  // delay(10000);
 
   // updateTelemetry("mf");
   // moveForward5();
