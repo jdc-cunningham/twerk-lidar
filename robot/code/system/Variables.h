@@ -18,7 +18,7 @@ Servo backLeftMiddleServo;
 Servo backLeftInnerServo;
 
 bool motionInProgress = false;
-int servoMotionDelay = 4; // min 1 ms
+int servoMotionDelay = 4; // default 4, min 1 ms
 int stepDelay = 0; // ms usually a second or more
 
 bool sampleDepth = false;
