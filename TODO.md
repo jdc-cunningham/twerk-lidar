@@ -10,9 +10,13 @@
 - [x] design body for servo placement
 - [x] placement of parts based on size/wiring
 
-### Modeling
-- [ ] create 3D world/mockup of robot
-- [ ] simulate the navigation
+### Basic obstacle detection
+- [ ] come up with scan pattern/rules the robot follows
+- [ ] add stuck catch, based on accel values
+- [ ] mark objects as boxes if the sample beams hit anything
 
 ### Telemetry
 - [ ] with ESP-01 send back data to remote thing that can create 3D world of what robot perceives
+### Modeling
+- [ ] create 3D world/mockup of robot
+- [ ] simulate the navigation
