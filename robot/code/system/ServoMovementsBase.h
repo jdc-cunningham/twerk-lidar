@@ -114,9 +114,11 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
         
         // this catches bad measurements
         // something can't be this close due to the allen wrench counter weight
-        if (distSampleIn == 0 || distSampleIn <= 3 || distSampleIn >= 47)
+        if (distSampleIn == 0 || distSampleIn >= 47)
         {
           depthVals[timeNow] = 47; // 47in is based on 1.2m max default measurement
+        } else if (distSampleIn <= 4) {
+          depthVals[timeNow] = 4;
         } else {
           depthVals[timeNow] = distSampleIn;
         }
