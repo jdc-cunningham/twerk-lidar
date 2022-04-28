@@ -11,3 +11,5 @@ Also keep in mind the edges/arc with the debouncer
 Add the rest of the gaits (turn right and reverse)
 
 Factor in IMU so you don't ram into something/burn the servos out
+
+Also do pre-emptive scan termination if something is very close, don't proceed with the rest and just turn/back away
