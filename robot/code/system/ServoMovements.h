@@ -61,25 +61,30 @@ void sweep(int runCount, bool scan = false, String scanType = "")
   if (scanType == "d1")
   {
     // reset back to min, top scans run first
-    if (forwardGaitCount >= 4) {
-      forwardGaitCount = 4;
+    if (forwardGaitCount >= 3) {
+      forwardGaitCount = 3;
     } else
     {
-      forwardGaitCount = parseScanData(depthVals, "d1");
+      forwardGaitCount = floor(parseScanData(depthVals, "d1"));
     }
   }
 
   if (scanType == "d2")
   {
-    forwardGaitCount += parseScanData(depthVals, "d2");
+    forwardGaitCount += floor(parseScanData(depthVals, "d2"));
+
+    if (forwardGaitCount > 3)
+    {
+      forwardGaitCount = 3;
+    }
   }
 
   // repeated code
   if (scanType == "m1")
   {
-    int sampleForwardGaitCount = parseScanData(depthVals, "m1");
+    int sampleForwardGaitCount = floor(parseScanData(depthVals, "m1"));
 
-    if (sampleForwardGaitCount < 5)
+    if (sampleForwardGaitCount < 3)
     {
       forwardGaitCount = sampleForwardGaitCount;
     }
@@ -87,9 +92,9 @@ void sweep(int runCount, bool scan = false, String scanType = "")
 
   if (scanType == "u1")
   {
-    int sampleForwardGaitCount = parseScanData(depthVals, "u1");
+    int sampleForwardGaitCount = floor(parseScanData(depthVals, "u1"));
 
-    if (sampleForwardGaitCount < 5)
+    if (sampleForwardGaitCount < 3)
     {
       forwardGaitCount = sampleForwardGaitCount;
     }
@@ -97,9 +102,9 @@ void sweep(int runCount, bool scan = false, String scanType = "")
 
   if (scanType == "u2")
   {
-    int sampleForwardGaitCount = parseScanData(depthVals, "u2");
+    int sampleForwardGaitCount = floor(parseScanData(depthVals, "u2")); // nasty
 
-    if (sampleForwardGaitCount < 5)
+    if (sampleForwardGaitCount < 3)
     {
       forwardGaitCount = sampleForwardGaitCount;
     }

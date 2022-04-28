@@ -81,11 +81,21 @@ void loop()
 {
   performFullScan(false);
 
+  // check close
+  if (forwardGaitCount < 3) // means something is within 4 inches
+  {
+    forwardGaitCount = 0;
+  }
+
   if (forwardGaitCount == 0)
   {
     turnLeft();
   } else
   {
+    Serial.print("forwardGaitCount");
+    Serial.print(forwardGaitCount);
+    Serial.println("");
+
     for (int i = 0; i < forwardGaitCount; i++)
     {
       moveForward5();
