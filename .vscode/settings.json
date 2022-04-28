@@ -75,6 +75,9 @@
     "optional": "cpp",
     "ratio": "cpp",
     "sstream": "cpp",
-    "unordered_map": "cpp"
+    "unordered_map": "cpp",
+    "compare": "cpp",
+    "concepts": "cpp",
+    "variant": "cpp"
   }
 }

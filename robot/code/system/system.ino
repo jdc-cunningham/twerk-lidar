@@ -79,6 +79,7 @@ void setup()
 
 void loop()
 {
+  posErrVals.clear();
   performFullScan(false);
 
   // check close

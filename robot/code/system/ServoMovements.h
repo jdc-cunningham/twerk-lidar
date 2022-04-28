@@ -84,7 +84,7 @@ void sweep(int runCount, bool scan = false, String scanType = "")
   {
     int sampleForwardGaitCount = floor(parseScanData(depthVals, "m1"));
 
-    if (sampleForwardGaitCount < 3)
+    if (sampleForwardGaitCount < 5)
     {
       forwardGaitCount = sampleForwardGaitCount;
     }
@@ -94,7 +94,7 @@ void sweep(int runCount, bool scan = false, String scanType = "")
   {
     int sampleForwardGaitCount = floor(parseScanData(depthVals, "u1"));
 
-    if (sampleForwardGaitCount < 3)
+    if (sampleForwardGaitCount < 5)
     {
       forwardGaitCount = sampleForwardGaitCount;
     }
@@ -104,7 +104,7 @@ void sweep(int runCount, bool scan = false, String scanType = "")
   {
     int sampleForwardGaitCount = floor(parseScanData(depthVals, "u2")); // nasty
 
-    if (sampleForwardGaitCount < 3)
+    if (sampleForwardGaitCount < 5)
     {
       forwardGaitCount = sampleForwardGaitCount;
     }

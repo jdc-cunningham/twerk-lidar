@@ -36,6 +36,7 @@ std::map<int, int> servoPosVals = {};
 std::map<int, float> depthVals = {};
 std::map<int, float> xAccelVals = {};
 std::map<int, float> yAccelVals = {};
+std::vector<int> posErrVals;
 
 // used to avoid buffer buildup between ESP and web communication delay
 String curEspMsg = "";

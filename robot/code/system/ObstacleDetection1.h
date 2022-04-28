@@ -2,6 +2,8 @@
 #include <math.h>
 #endif
 
+#include <vector>
+
 #include "MockData.h"
 
 // this is a basic distance scanner
@@ -28,6 +30,7 @@ int parseScanData(std::map<int, float> depthVals, String scanType)
   Serial.println("");
 
   float smallestMeasurement = 0;
+  std::vector<int> posErrVals;
 
   for (auto it = depthVals.cbegin(); it != depthVals.cend(); ++it)
   {
@@ -49,6 +52,16 @@ int parseScanData(std::map<int, float> depthVals, String scanType)
     ) {
       smallestMeasurement = depthVal;
     }
+
+    if (depthVal == 3) // probably bad sensor value
+    {
+      posErrVals.push_back(smallestMeasurement);
+    }
+  }
+
+  if (posErrVals.size() < 4)
+  {
+    // smallestMeasurement = 4; // means 3 after division
   }
 
   Serial.print("smolv ");
