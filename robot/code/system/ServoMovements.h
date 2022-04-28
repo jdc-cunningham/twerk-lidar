@@ -11,9 +11,9 @@
  * if you were to return to the middle everytime
  * 
  * @param {int} runCount 
- * @param {bool} noScan - means no sampling/fast
+ * @param {bool} scan - means no sampling/fast
  */
-void sweep(int runCount, bool noScan = false, String scanType = "")
+void sweep(int runCount, bool scan = false, String scanType = "")
 {
   if (runCount == 1)
   {
@@ -36,7 +36,7 @@ void sweep(int runCount, bool noScan = false, String scanType = "")
     if (!scanType) dumpData();
   } else
   {
-    if (!noScan)
+    if (scan)
     {
       sampleDepth = true;
       sampleGyroZ = true;
@@ -46,11 +46,11 @@ void sweep(int runCount, bool noScan = false, String scanType = "")
     pivotLeft();
     pivotCenterFromLeft();
 
-    if (!noScan)
+    if (scan)
     {
       sampleDepth = false;
       sampleGyroZ = false;
-      dumpData();
+      if (!scanType) dumpData();
     }
   }
 
@@ -62,6 +62,9 @@ void sweep(int runCount, bool noScan = false, String scanType = "")
   {
     // reset back to min, top scans run first
     if (forwardGaitCount >= 4) {
+      forwardGaitCount = 4;
+    } else
+    {
       forwardGaitCount = parseScanData(depthVals, "d1");
     }
   }
@@ -94,7 +97,7 @@ void sweep(int runCount, bool noScan = false, String scanType = "")
 
   if (scanType == "u2")
   {
-    int sampleForwardGaitCount = parseScanData(depthVals, "u1");
+    int sampleForwardGaitCount = parseScanData(depthVals, "u2");
 
     if (sampleForwardGaitCount < 5)
     {
@@ -117,7 +120,7 @@ void performFullScan(bool addDelayBetweenSamples = false)
   tiltUp1();
   tiltUp2();
   delay(1000); // wait to stop moving
-  sweep(1, false, "up2"); // second param means no delay
+  sweep(1, true, "u2"); // second param means no delay
 
   if (addDelayBetweenSamples)
   {
@@ -126,7 +129,7 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltCenterFromUp2();
   delay(1000); // wait to stop moving
-  sweep(2, false, "up1");
+  sweep(2, true, "u1");
 
   if (addDelayBetweenSamples)
   {
@@ -135,7 +138,7 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltCenterFromUp1();
   delay(1000); // wait to stop moving
-  sweep(3, false, "m1");
+  sweep(3, true, "m1");
 
   if (addDelayBetweenSamples)
   {
@@ -144,7 +147,7 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltDown1();
   delay(1000); // wait to stop moving
-  sweep(1, false, "d1");
+  sweep(1, true, "d1");
 
   if (addDelayBetweenSamples)
   {
@@ -153,7 +156,7 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltDown2();
   delay(1000); // wait to stop moving
-  sweep(2, false, "d2");
+  sweep(2, true, "d2");
 
   if (addDelayBetweenSamples)
   {
@@ -162,7 +165,7 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltCenterFromDown2();
   tiltCenterFromDown1();
-  sweep(3, true);
+  sweep(3, false);
 }
 
 void moveForward4()

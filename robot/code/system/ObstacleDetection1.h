@@ -52,7 +52,7 @@ int parseScanData(std::map<int, float> depthVals, String scanType)
   if (scanType == "d2")
     {
       if (smallestMeasurement >= 12) {
-        return 5;
+        return 4;
       } else {
         return floor(smallestMeasurement) / 2;
       }
@@ -71,7 +71,7 @@ int parseScanData(std::map<int, float> depthVals, String scanType)
     {
       if (smallestMeasurement >= 17)
       {
-        return 5;
+        return 4;
       } else
       {
         return floor(smallestMeasurement) / 2;
@@ -79,7 +79,7 @@ int parseScanData(std::map<int, float> depthVals, String scanType)
     } else {
       if (smallestMeasurement >= 12)
       {
-        return 5;
+        return 4;
       } else
       {
         return floor(smallestMeasurement) / 2;
