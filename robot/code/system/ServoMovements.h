@@ -63,7 +63,7 @@ void performSweep()
   sweep(3);
 }
 
-void performFullScan()
+void performFullScan(bool useMockData)
 {
   tiltUp1();
   tiltUp2();
