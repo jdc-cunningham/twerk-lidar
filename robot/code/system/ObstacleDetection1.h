@@ -64,14 +64,14 @@ int parseScanData(std::map<int, float> depthVals, String scanType)
 
   if (scanType == "d2")
     {
-      if (smallestMeasurement >= 12) {
+      if (smallestMeasurement >= 18) {
         return 3;
       } else {
         return floor(smallestMeasurement) / 2;
       }
     } else if (scanType == "d1")
     {
-      if (smallestMeasurement >= 20)
+      if (smallestMeasurement >= 26)
       {
         return 3; // added ontop of 5 above
       } else
@@ -82,7 +82,7 @@ int parseScanData(std::map<int, float> depthVals, String scanType)
     // the robot is 8" tall primarily due to the servo wires
     } else if (scanType != "m1")
     {
-      if (smallestMeasurement >= 17)
+      if (smallestMeasurement >= 18)
       {
         return 3;
       } else
@@ -90,7 +90,7 @@ int parseScanData(std::map<int, float> depthVals, String scanType)
         return floor(smallestMeasurement) / 2;
       }
     } else {
-      if (smallestMeasurement >= 12)
+      if (smallestMeasurement >= 18)
       {
         return 3;
       } else

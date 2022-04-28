@@ -5,6 +5,8 @@
 
 VL53L0X sensor;
 
+#define HIGH_SPEED
+
 void setupTof() {
   Wire.begin();
   sensor.setTimeout(500);
@@ -14,6 +16,10 @@ void setupTof() {
     Serial.println("Failed to detect and initialize sensor!");
     while (1) {}
   }
+
+  #if defined HIGH_SPEED
+    sensor.setMeasurementTimingBudget(20000);
+  #endif
 }
 
 

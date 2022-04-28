@@ -79,6 +79,7 @@ void setup()
 
 void loop()
 {
+  depthVals = {};
   posErrVals = {};
   performFullScan(false);
 
@@ -87,7 +88,7 @@ void loop()
   // the ToF sensor corrects erroneous measurements by outputting full distance for anything
   // less than 3", this seems to happen more often when scanning open space
   // also if measurements are under 4" it's considered a need to turn
-  if (forwardGaitCount < 3 || posErrVals.size() > 20)
+  if (forwardGaitCount < 3 || posErrVals.size() > 10)
   {
     forwardGaitCount = 0;
   }

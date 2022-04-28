@@ -228,7 +228,7 @@ void moveForward5()
   mf5MoveFrontRightLegForward();
   mf5MoveFrontRightLegDownFromUp();
 
-  sampleYAccel = true;
+  // sampleYAccel = true;
   mf5PullForwardRight();
   sampleYAccel = false;
 
@@ -240,7 +240,7 @@ void moveForward5()
   mf5MoveFrontLeftLegForward();
   mf5MoveFrontLeftLegDownFromUp();
 
-  sampleYAccel = true;
+  // sampleYAccel = true;
   mf5PullForwardLeft();
   sampleYAccel = false;
 
@@ -255,7 +255,7 @@ void moveForward5()
 void turnLeft()
 {
   mf5MoveFrontRightLegUp();
-  sampleGyroZ = true;
+  // sampleGyroZ = true;
   leftTurnPivot();
   sampleGyroZ = false;
   mf5MoveFrontRightLegDownFromUp();
@@ -266,7 +266,7 @@ void turnLeft()
   mf5MoveFrontLeftLegDownFromUp();
 
   mf5MoveBackLeftLegUp();
-  sampleGyroZ = true;
+  // sampleGyroZ = true;
   leftTurnPivot3();
   sampleGyroZ = false;
   mf5MoveBackLeftLegDownFromUp();
