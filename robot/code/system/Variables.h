@@ -39,3 +39,6 @@ std::map<int, float> yAccelVals = {};
 
 // used to avoid buffer buildup between ESP and web communication delay
 String curEspMsg = "";
+
+// used for performFullScan
+int forwardGaitCount = 0;

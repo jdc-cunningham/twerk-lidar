@@ -1,6 +1,7 @@
 #include "ServoMovementsBase.h"
 #include "DiscreteServoMovements.h"
 #include "DiscreteServoMovements2.h"
+#include "ObstacleDetection1.h"
 
 /**
  * @brief runCount is referring to which sweep is running
@@ -12,7 +13,7 @@
  * @param {int} runCount 
  * @param {bool} noScan - means no sampling/fast
  */
-void sweep(int runCount, bool noScan = false)
+void sweep(int runCount, bool noScan = false, String scanType = "")
 {
   if (runCount == 1)
   {
@@ -52,6 +53,48 @@ void sweep(int runCount, bool noScan = false)
       dumpData();
     }
   }
+
+  // do obstacle detection check
+  if (scanType == "d1")
+  {
+    forwardGaitCount = parseScanData(depthVals, "d1");
+  }
+
+  if (scanType == "d2")
+  {
+    forwardGaitCount += parseScanData(depthVals, "d2");
+  }
+
+  // repeated code
+  if (scanType == "m1")
+  {
+    int sampleForwardGaitCount = parseScanData(depthVals, "m1");
+
+    if (sampleForwardGaitCount < 5)
+    {
+      forwardGaitCount = sampleForwardGaitCount;
+    }
+  }
+
+  if (scanType == "u1")
+  {
+    int sampleForwardGaitCount = parseScanData(depthVals, "u1");
+
+    if (sampleForwardGaitCount < 5)
+    {
+      forwardGaitCount = sampleForwardGaitCount;
+    }
+  }
+
+  if (scanType == "u2")
+  {
+    int sampleForwardGaitCount = parseScanData(depthVals, "u1");
+
+    if (sampleForwardGaitCount < 5)
+    {
+      forwardGaitCount = sampleForwardGaitCount;
+    }
+  }
 }
 
 void performSweep()
@@ -63,38 +106,53 @@ void performSweep()
   sweep(3);
 }
 
-void performFullScan(bool useMockData)
+void performFullScan(bool sampling = false)
 {
   tiltUp1();
   tiltUp2();
   delay(1000); // wait to stop moving
-  sweep(1);
+  sweep(1, "up2");
 
-  delay(10000); // for manual serial dump copy paste into excel
+  if (sampling)
+  {
+    delay(10000); // for manual serial dump copy paste into excel
+  }
 
   tiltCenterFromUp2();
   delay(1000); // wait to stop moving
-  sweep(2);
+  sweep(2, "up1");
 
-  delay(10000);
+  if (sampling)
+  {
+    delay(10000);
+  }
 
   tiltCenterFromUp1();
   delay(1000); // wait to stop moving
-  sweep(3);
+  sweep(3, "m1");
 
-  delay(10000);
+  if (sampling)
+  {
+    delay(10000);
+  }
 
   tiltDown1();
   delay(1000); // wait to stop moving
-  sweep(1);
+  sweep(1, "d1");
 
-  delay(10000);
+  if (sampling)
+  {
+    delay(10000);
+  }
 
   tiltDown2();
   delay(1000); // wait to stop moving
-  sweep(2);
+  sweep(2, "d2");
 
-  delay(10000);
+  if (sampling)
+  {
+    delay(10000);
+  }
 
   tiltCenterFromDown2();
   tiltCenterFromDown1();

@@ -29,7 +29,6 @@
 #include "Orientation.h"
 #include "Telemetry.h"
 #include "ServoMovements.h"
-#include "ObstacleDetection1.h"
 
 int forwardCounter = 0;
 
@@ -48,10 +47,9 @@ void setup()
   delay(500);
   blueLedOff();
 
-  performMockScan();
+  // performMockScan();
 
-  // delay(10000);
-  // performFullScan();
+  delay(10000);
 
   // updateTelemetry("mf");
   // moveForward5();
@@ -81,7 +79,20 @@ void setup()
 
 void loop()
 {
-  moveForward5();
+  performFullScan(false);
+
+  if (forwardGaitCount == 0)
+  {
+    turnLeft();
+  } else
+  {
+    for (int i = 0; i < forwardGaitCount; i++)
+    {
+      moveForward5();
+    }
+  }
+
+  // moveForward5();
   // delay(10000);
 
   // poll is like a keep-alive, it bunches up due timing mismatch
