@@ -18,7 +18,7 @@ void sweep(int runCount, bool scan = false, String scanType = "")
   if (runCount == 1)
   {
     sampleDepth = true;
-    sampleGyroZ = true;
+    // sampleGyroZ = true;
     pivotRight();
     pivotCenterFromRight();
     pivotLeft();
@@ -28,7 +28,7 @@ void sweep(int runCount, bool scan = false, String scanType = "")
   } else if (runCount == 2)
   {
     sampleDepth = true;
-    sampleGyroZ = true;
+    // sampleGyroZ = true;
     pivotCenterFromLeft();
     pivotRight();
     sampleDepth = false;
@@ -39,7 +39,7 @@ void sweep(int runCount, bool scan = false, String scanType = "")
     if (scan)
     {
       sampleDepth = true;
-      sampleGyroZ = true;
+      // sampleGyroZ = true;
     }
 
     pivotCenterFromRight();
@@ -73,7 +73,7 @@ void sweep(int runCount, bool scan = false, String scanType = "")
   {
     forwardGaitCount += floor(parseScanData(depthVals, "d2"));
 
-    if (forwardGaitCount > 3)
+    if (forwardGaitCount >= 3)
     {
       forwardGaitCount = 3;
     }
