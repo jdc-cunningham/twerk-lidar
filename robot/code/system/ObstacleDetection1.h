@@ -23,6 +23,7 @@
  */
 int parseScanData(std::map<int, float> depthVals, String scanType)
 {
+  Serial.println("run parse scan data");
   int smallestMeasurement = 0;
 
   for (auto it = depthVals.cbegin(); it != depthVals.cend(); ++it)
@@ -34,8 +35,16 @@ int parseScanData(std::map<int, float> depthVals, String scanType)
       smallestMeasurement = depthVal;
     }
 
-    if (smallestMeasurement > 0 and depthVal < smallestMeasurement)
-    {
+    Serial.print(depthVal);
+    Serial.print(" vs ");
+    Serial.print(smallestMeasurement);
+    Serial.println("");
+
+    if (
+      smallestMeasurement > 0 and
+      depthVal > 0 and
+      depthVal < smallestMeasurement
+    ) {
       smallestMeasurement = depthVal;
     }
   }

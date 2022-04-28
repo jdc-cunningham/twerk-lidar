@@ -24,7 +24,7 @@ void sweep(int runCount, bool noScan = false, String scanType = "")
     pivotLeft();
     sampleDepth = false;
     sampleGyroZ = false;
-    dumpData();
+    if (!scanType) dumpData();
   } else if (runCount == 2)
   {
     sampleDepth = true;
@@ -33,7 +33,7 @@ void sweep(int runCount, bool noScan = false, String scanType = "")
     pivotRight();
     sampleDepth = false;
     sampleGyroZ = false;
-    dumpData();
+    if (!scanType) dumpData();
   } else
   {
     if (!noScan)
@@ -54,10 +54,16 @@ void sweep(int runCount, bool noScan = false, String scanType = "")
     }
   }
 
+  Serial.println("run parser");
+  Serial.println(scanType);
+
   // do obstacle detection check
   if (scanType == "d1")
   {
-    forwardGaitCount = parseScanData(depthVals, "d1");
+    // reset back to min, top scans run first
+    if (forwardGaitCount >= 4) {
+      forwardGaitCount = parseScanData(depthVals, "d1");
+    }
   }
 
   if (scanType == "d2")
@@ -106,14 +112,14 @@ void performSweep()
   sweep(3);
 }
 
-void performFullScan(bool sampling = false)
+void performFullScan(bool addDelayBetweenSamples = false)
 {
   tiltUp1();
   tiltUp2();
   delay(1000); // wait to stop moving
   sweep(1, false, "up2"); // second param means no delay
 
-  if (sampling)
+  if (addDelayBetweenSamples)
   {
     delay(10000); // for manual serial dump copy paste into excel
   }
@@ -122,7 +128,7 @@ void performFullScan(bool sampling = false)
   delay(1000); // wait to stop moving
   sweep(2, false, "up1");
 
-  if (sampling)
+  if (addDelayBetweenSamples)
   {
     delay(10000);
   }
@@ -131,7 +137,7 @@ void performFullScan(bool sampling = false)
   delay(1000); // wait to stop moving
   sweep(3, false, "m1");
 
-  if (sampling)
+  if (addDelayBetweenSamples)
   {
     delay(10000);
   }
@@ -140,7 +146,7 @@ void performFullScan(bool sampling = false)
   delay(1000); // wait to stop moving
   sweep(1, false, "d1");
 
-  if (sampling)
+  if (addDelayBetweenSamples)
   {
     delay(10000);
   }
@@ -149,7 +155,7 @@ void performFullScan(bool sampling = false)
   delay(1000); // wait to stop moving
   sweep(2, false, "d2");
 
-  if (sampling)
+  if (addDelayBetweenSamples)
   {
     delay(10000);
   }
