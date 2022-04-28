@@ -23,47 +23,59 @@
  */
 int parseScanData(std::map<int, float> depthVals, String scanType)
 {
+  int smallestMeasurement = 0;
+
   for (auto it = depthVals.cbegin(); it != depthVals.cend(); ++it)
   {
     float depthVal = it->second;
 
-    if (scanType == "d2")
+    if (smallestMeasurement == 0)
     {
-      if (depthVal >= 12) {
+      smallestMeasurement = depthVal;
+    }
+
+    if (smallestMeasurement > 0 and depthVal < smallestMeasurement)
+    {
+      smallestMeasurement = depthVal;
+    }
+  }
+
+  if (scanType == "d2")
+    {
+      if (smallestMeasurement >= 12) {
         return 5;
       } else {
-        return floor(depthVal) / 2;
+        return floor(smallestMeasurement) / 2;
       }
     } else if (scanType == "d1")
     {
-      if (depthVal >= 20)
+      if (smallestMeasurement >= 20)
       {
         return 4; // added ontop of 5 above
       } else
       {
-        return floor(depthVal) / 2;
+        return floor(smallestMeasurement) / 2;
       }
     // here the top-most scan u2 takes precedence, and u1 matches it, this is overhead clearance
     // the robot is 8" tall primarily due to the servo wires
     } else if (scanType != "m1")
     {
-      if (depthVal >= 17)
+      if (smallestMeasurement >= 17)
       {
         return 5;
       } else
       {
-        return floor(depthVal) / 2;
+        return floor(smallestMeasurement) / 2;
       }
     } else {
-      if (depthVal >= 12)
+      if (smallestMeasurement >= 12)
       {
         return 5;
       } else
       {
-        return floor(depthVal) / 2;
+        return floor(smallestMeasurement) / 2;
       }
     }
-  }
 }
 
 /**
