@@ -111,7 +111,7 @@ void performFullScan(bool sampling = false)
   tiltUp1();
   tiltUp2();
   delay(1000); // wait to stop moving
-  sweep(1, "up2");
+  sweep(1, false, "up2"); // second param means no delay
 
   if (sampling)
   {
@@ -120,7 +120,7 @@ void performFullScan(bool sampling = false)
 
   tiltCenterFromUp2();
   delay(1000); // wait to stop moving
-  sweep(2, "up1");
+  sweep(2, false, "up1");
 
   if (sampling)
   {
@@ -129,7 +129,7 @@ void performFullScan(bool sampling = false)
 
   tiltCenterFromUp1();
   delay(1000); // wait to stop moving
-  sweep(3, "m1");
+  sweep(3, false, "m1");
 
   if (sampling)
   {
@@ -138,7 +138,7 @@ void performFullScan(bool sampling = false)
 
   tiltDown1();
   delay(1000); // wait to stop moving
-  sweep(1, "d1");
+  sweep(1, false, "d1");
 
   if (sampling)
   {
@@ -147,7 +147,7 @@ void performFullScan(bool sampling = false)
 
   tiltDown2();
   delay(1000); // wait to stop moving
-  sweep(2, "d2");
+  sweep(2, false, "d2");
 
   if (sampling)
   {
