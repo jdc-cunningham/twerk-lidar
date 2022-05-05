@@ -609,7 +609,7 @@ void leftTurnPivot()
     {6, 40, 10},
     {9, 125, 95},
     {3, 80, 50},
-    {0, 65, 95}
+    {0, 70, 100}
   };
 
   moveServos(servoGroupArr, 4, servoMotionDelay);
@@ -621,7 +621,7 @@ void leftTurnPivot2()
     {6, 10, 70}, // front left inner
     {9, 95, 65},
     {3, 50, 20},
-    {0, 95, 65}
+    {0, 100, 70}
   };
 
   moveServos(servoGroupArr, 4, servoMotionDelay);
@@ -633,7 +633,7 @@ void leftTurnPivot3()
     {6, 70, 40}, // front left inner
     {9, 65, 125}, // back left inner
     {3, 20, 0}, // back right inner
-    {0, 65, 35}
+    {0, 70, 40}
   };
 
   moveServos(servoGroupArr, 4, servoMotionDelay);
@@ -651,7 +651,7 @@ void ltp3ToNeutral()
 void ltp3ToNeutral2()
 {
   int servoGroupArr[][3] = {
-    {0, 35, 65} // front right inner
+    {0, 40, 70} // front right inner
   };
 
   moveServos(servoGroupArr, 1, servoMotionDelay);

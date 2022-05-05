@@ -74,7 +74,7 @@ void setup()
   // {3, 80, 70}
 
   // sweep(1);
-  // turnLeft();
+  turnLeft();
 }
 
 void loop()
