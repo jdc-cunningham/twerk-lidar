@@ -74,11 +74,14 @@ void setup()
   // {3, 80, 70}
 
   // sweep(1);
-  turnLeft();
+  // turnLeft();
+  // moveForward5();
 }
 
 void loop()
 {
+  // moveForward5();
+  // turnLeft();
   // depthVals = {};
   // posErrVals = {};
   // performFullScan(false);
