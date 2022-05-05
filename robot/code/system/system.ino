@@ -79,34 +79,34 @@ void setup()
 
 void loop()
 {
-  depthVals = {};
-  posErrVals = {};
-  performFullScan(false);
+  // depthVals = {};
+  // posErrVals = {};
+  // performFullScan(false);
 
   // check close
   // means something is within 4 inches or bad ToF measurements
   // the ToF sensor corrects erroneous measurements by outputting full distance for anything
   // less than 3", this seems to happen more often when scanning open space
   // also if measurements are under 4" it's considered a need to turn
-  if (forwardGaitCount < 3 || posErrVals.size() > 10)
-  {
-    forwardGaitCount = 0;
-  }
+  // if (forwardGaitCount < 3 || posErrVals.size() > 10)
+  // {
+  //   forwardGaitCount = 0;
+  // }
 
-  if (forwardGaitCount == 0)
-  {
-    turnLeft();
-  } else
-  {
-    Serial.print("forwardGaitCount");
-    Serial.print(forwardGaitCount);
-    Serial.println("");
+  // if (forwardGaitCount == 0)
+  // {
+  //   turnLeft();
+  // } else
+  // {
+  //   Serial.print("forwardGaitCount");
+  //   Serial.print(forwardGaitCount);
+  //   Serial.println("");
 
-    for (int i = 0; i < forwardGaitCount; i++)
-    {
-      moveForward5();
-    }
-  }
+  //   for (int i = 0; i < forwardGaitCount; i++)
+  //   {
+  //     moveForward5();
+  //   }
+  // }
 
   // moveForward5();
   // delay(10000);
