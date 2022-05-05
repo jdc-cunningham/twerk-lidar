@@ -168,7 +168,7 @@ void centerAllLegs()
   backRightMiddleServo.write(95);
   backRightOuterServo.write(65);
   frontLeftInnerServo.write(40);
-  frontLeftMiddleServo.write(95);
+  frontLeftMiddleServo.write(90);
   frontLeftOuterServo.write(80);
   backLeftInnerServo.write(125);
   backLeftMiddleServo.write(70);
@@ -251,7 +251,7 @@ void tiltUp1()
 {
   int servoGroupArr[][3] = {
     {10, 70, 50},
-    {7, 95, 75},
+    {7, 90, 70},
     {2, 105, 90},
     {8, 80, 95},
     {4, 95, 115},
@@ -267,7 +267,7 @@ void tiltCenterFromUp1()
 {
   int servoGroupArr[][3] = {
     {10, 50, 70},
-    {7, 75, 90},
+    {7, 70, 90},
     {2, 90, 105},
     {8, 95, 80},
     {4, 115, 95},
@@ -283,7 +283,7 @@ void tiltUp2()
 {
   int servoGroupArr[][3] = {
     {10, 50, 30},
-    {7, 75, 50},
+    {7, 70, 45},
     {2, 90, 70},
     {8, 95, 110},
     {4, 115, 135},
@@ -299,7 +299,7 @@ void tiltCenterFromUp2()
 {
   int servoGroupArr[][3] = {
     {10, 30, 50},
-    {7, 50, 75},
+    {7, 45, 70},
     {2, 70, 90},
     {8, 110, 95},
     {4, 135, 115},
@@ -315,7 +315,7 @@ void tiltDown1()
 {
   int servoGroupArr[][3] = {
     {10, 70, 90},
-    {7, 95, 115},
+    {7, 90, 110},
     {2, 105, 120}, // outer
     {8, 80, 65}, // outer
     {4, 95, 75},
@@ -331,7 +331,7 @@ void tiltCenterFromDown1()
 {
   int servoGroupArr[][3] = {
     {10, 90, 70},
-    {7, 115, 95},
+    {7, 110, 90},
     {2, 120, 105},
     {8, 65, 80},
     {4, 75, 95},
@@ -347,7 +347,7 @@ void tiltDown2()
 {
   int servoGroupArr[][3] = {
     {10, 90, 110},
-    {7, 115, 145},
+    {7, 110, 140},
     {2, 120, 135}, // outer
     {8, 60, 45}, // outer
     {4, 75, 55},
@@ -363,7 +363,7 @@ void tiltCenterFromDown2()
 {
   int servoGroupArr[][3] = {
     {10, 110, 90},
-    {7, 145, 115},
+    {7, 140, 110},
     {2, 135, 120}, // outer
     {8, 45, 60}, // outer
     {4, 55, 75},
