@@ -20,6 +20,7 @@ float extVerRotationAngle = 58; // external verified
 float minScanDistance = 14.62;
 float imuFromFloorHeight = 3.5;
 float curAngle = 0; // done in 52 increments
+float robotForwardGaitDistance = 2.0;
 
 std::vector<float> robotWorldPos = {0, 0, 3.5};
 
