@@ -1,5 +1,4 @@
 #include "ServoMovementsBase.h"
-#include "DiscreteServoMovements.h"
 #include "DiscreteServoMovements2.h"
 #include "ObstacleDetection1.h"
 
@@ -171,54 +170,6 @@ void performFullScan(bool addDelayBetweenSamples = false)
   tiltCenterFromDown2();
   tiltCenterFromDown1();
   sweep(3, false);
-}
-
-void moveForward4()
-{
-  // move front left leg forward
-  mf4MoveFrontRightLegDown();
-  mf4MoveFrontLeftLegUp();
-  mf4MoveFrontLeftLegForward();
-  mf4MoveFrontLeftLegDownFromUp();
-  mf4MoveFrontRightLegUpFromDown();
-
-  // move front right leg forward
-  mf4MoveFrontLeftLegDown();
-  mf4MoveFrontRightLegUp();
-  mf4MoveFrontRightLegForward();
-  mf4MoveFrontRightLegDownFromUp();
-  mf4MoveFrontLeftLegUpFromDown();
-
-  mf4MoveAllForward();
-
-  // move back-right leg forwrard
-  mf4MoveBackRightLegUp();
-  mf4MoveBackRightLegForward();
-  mf4MoveBackRightLegDownFromUp();
-
-  // move back left leg forward
-  mf4MoveFrontRightLegUpOuterFlipped();
-  mf4MoveBackLeftLegUp();
-  mf4MoveBackLeftLegForward();
-  mf4MoveBackLeftLegDownFromUp();
-  mf4MoveFrontRightLegDownFromUpOuterFlipped();
-}
-
-void moveForward3()
-{
-  moveFrontRightLegUp();
-  moveFrontRightLegForward();
-  moveFrontRightLegDown();
-  moveFrontLeftLegUp();
-  moveFrontLeftLegForward();
-  moveFrontLeftLegDown();
-  pullForward();
-  moveBackLeftLegUp();
-  moveBackLeftLegForward();
-  moveBackLeftLegDown();
-  moveBackRightLegUp();
-  moveBackRightLegForward();
-  moveBackRightLegDown();
 }
 
 // based on visual observation of Regis Hsu 2017 spider bot
