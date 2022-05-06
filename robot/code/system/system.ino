@@ -53,12 +53,9 @@ void setup()
 
   // updateTelemetry("mf");
   // moveForward5();
-  // performSweep();
 
 
-  // preSweepSwayForward(); // moves ToF sensor away from legs, 0.5" forward
   // performFullScan();
-  // postSweepSwayForward(); // return
 
 
   // turnLeft();

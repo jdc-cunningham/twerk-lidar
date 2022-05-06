@@ -110,15 +110,6 @@ void sweep(int runCount, bool scan = false, String scanType = "")
   }
 }
 
-void performSweep()
-{
-  sweep(1);
-  delay(1000);
-  sweep(2);
-  delay(1000);
-  sweep(3);
-}
-
 void performFullScan(bool addDelayBetweenSamples = false)
 {
   tiltUp1();
