@@ -250,8 +250,8 @@ void pivotCenterFromRight()
 void tiltUp1()
 {
   int servoGroupArr[][3] = {
-    {10, 75, 50},
-    {7, 85, 70},
+    {10, 70, 45},
+    {7, 95, 80},
     {2, 105, 90},
     {8, 80, 95},
     {4, 95, 115},
@@ -266,8 +266,8 @@ void tiltUp1()
 void tiltCenterFromUp1()
 {
   int servoGroupArr[][3] = {
-    {10, 50, 75},
-    {7, 70, 85},
+    {10, 45, 70},
+    {7, 80, 95},
     {2, 90, 105},
     {8, 95, 80},
     {4, 115, 95},
@@ -282,8 +282,8 @@ void tiltCenterFromUp1()
 void tiltUp2()
 {
   int servoGroupArr[][3] = {
-    {10, 50, 30},
-    {7, 70, 45},
+    {10, 45, 30},
+    {7, 80, 45},
     {2, 90, 70},
     {8, 95, 110},
     {4, 115, 135},
@@ -298,8 +298,8 @@ void tiltUp2()
 void tiltCenterFromUp2()
 {
   int servoGroupArr[][3] = {
-    {10, 30, 50},
-    {7, 45, 70},
+    {10, 30, 45},
+    {7, 45, 80},
     {2, 70, 90},
     {8, 110, 95},
     {4, 135, 115},
@@ -314,8 +314,8 @@ void tiltCenterFromUp2()
 void tiltDown1()
 {
   int servoGroupArr[][3] = {
-    {10, 75, 90},
-    {7, 85, 110},
+    {10, 70, 90},
+    {7, 95, 110},
     {2, 105, 120}, // outer
     {8, 80, 65}, // outer
     {4, 95, 75},
@@ -330,8 +330,8 @@ void tiltDown1()
 void tiltCenterFromDown1()
 {
   int servoGroupArr[][3] = {
-    {10, 90, 75},
-    {7, 110, 85},
+    {10, 90, 70},
+    {7, 110, 95},
     {2, 120, 105},
     {8, 65, 80},
     {4, 75, 95},
@@ -373,78 +373,6 @@ void tiltCenterFromDown2()
   };
 
   moveServos(servoGroupArr, 8, servoMotionDelay);
-}
-
-void cgShiftBackRight()
-{
-  int servoGroupArr[][3] = {
-    // {8, 85, 65},
-    {9, 130, 110},
-    {0, 105, 125},
-    // {5, 75, 95}
-  };
-
-  int servoCount = sizeof(servoGroupArr) / sizeof(servoGroupArr[0]);
-  moveServos(servoGroupArr, servoCount, servoMotionDelay);
-}
-
-void centerFromCgShiftBackRight()
-{
-  int servoGroupArr[][3] = {
-    // {8, 65, 85},
-    {9, 110, 130},
-    {0, 125, 105},
-    // {5, 95, 75}
-  };
-
-  int servoCount = sizeof(servoGroupArr) / sizeof(servoGroupArr[0]);
-  moveServos(servoGroupArr, servoCount, servoMotionDelay);
-}
-
-void pullForward()
-{
-  int servoGroupArr[][3] = {
-    {6, 30, 60},
-    {0, 105, 75},
-    {9, 130, 150},
-    {3, 80, 40}
-  };
-
-  int servoCount = sizeof(servoGroupArr) / sizeof(servoGroupArr[0]);
-  moveServos(servoGroupArr, servoCount, servoMotionDelay);
-}
-
-void pitchDown() // tiltDown command as well but 4 servos
-{
-  int servoGroupArr[][3] = {
-    {7, 100, 125},
-    {1, 80, 55},
-  };
-
-  int servoCount = sizeof(servoGroupArr) / sizeof(servoGroupArr[0]);
-  moveServos(servoGroupArr, servoCount, servoMotionDelay);
-}
-
-void pitchUp()
-{
-  int servoGroupArr[][3] = {
-    {7, 125, 100},
-    {1, 55, 80}
-  };
-
-  int servoCount = sizeof(servoGroupArr) / sizeof(servoGroupArr[0]);
-  moveServos(servoGroupArr, servoCount, servoMotionDelay);
-}
-
-void performPitchTest()
-{
-  tiltUp1();
-  delay(5000);
-  tiltCenterFromUp1();
-  delay(5000);
-  tiltDown1();
-  delay(5000);
-  tiltCenterFromDown1();
 }
 
 void leftTurnPivot()
