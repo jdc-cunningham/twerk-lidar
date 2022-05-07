@@ -140,11 +140,11 @@
 
       if (sensorSamples[sampleKey]?.trim) {
         if (sensorSamples[sampleKey].trim === 'end') {
-          trimmedTofData = preppedTofData.slice(0, 80);
-          trimmedSweepAngleData = preppedSweepAngleData.slice(0, 80);
+          trimmedTofData = preppedTofData.slice(0, 60);
+          trimmedSweepAngleData = preppedSweepAngleData.slice(0, 60);
         } else {
-          trimmedTofData = preppedTofData.slice(40, preppedTofData.length);
-          trimmedSweepAngleData = preppedSweepAngleData.slice(40, preppedTofData.length);
+          trimmedTofData = preppedTofData.slice(30, preppedTofData.length);
+          trimmedSweepAngleData = preppedSweepAngleData.slice(30, preppedTofData.length);
         }
       } else {
         trimmedTofData = preppedTofData;
@@ -154,12 +154,12 @@
       meshPoints[sampleKey] = (
         trimmedTofData.map((distance, index) => {
           const adjustedAngle = getAdjustedAngle(
-            (index < 40)
-              ? trimmedSweepAngleData.slice(0, 40)
-              : trimmedSweepAngleData.slice(40, trimmedSweepAngleData.length),
-            trimmedSweepAngleData[39],
-            (index < 40) ? index : (index - 40),
-            index > 39 ? true : false
+            (index < 30)
+              ? trimmedSweepAngleData.slice(0, 30)
+              : trimmedSweepAngleData.slice(30, trimmedSweepAngleData.length),
+            trimmedSweepAngleData[29],
+            (index < 30) ? index : (index - 30),
+            index > 29 ? true : false
           );
 
           return [
