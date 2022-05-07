@@ -100,14 +100,14 @@
     }
 
     const meshPoints = {};
-    const floorToSensorOffset = 3.38;
+    const floorToSensorOffset = 3.59;
     const processOrder = ['tilt-up-2', 'tilt-up-1', 'level', 'tilt-down-1', 'tilt-down-2'];
     const tiltMap = {
-      'tilt-up-2': 15.3,
-      'tilt-up-1': 7.2,
+      'tilt-up-2': 16.2,
+      'tilt-up-1': 10.9,
       'level': 0,
-      'tilt-down-1': -6.8,
-      'tilt-down-2': -16.1
+      'tilt-down-1': -10.0,
+      'tilt-down-2': -18.5
     };
 
     const getAdjustedAngle = (measurements, end, currentIndex, beyondMidpoint, sampleKey) => {
@@ -134,6 +134,9 @@
 
       let trimmedTofData = [];
       let trimmedSweepAngleData = [];
+
+      // 80/120 original
+      // 60/90
 
       if (sensorSamples[sampleKey]?.trim) {
         if (sensorSamples[sampleKey].trim === 'end') {

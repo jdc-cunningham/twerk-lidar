@@ -47,8 +47,8 @@ int forwardGaitCount = 0;
 // tilt angles
 float u1 = 10.9;
 float u2 = 16.2;
-float d1 = 10.0;
-float d2 = 18.5;
+float d1 = -10.0;
+float d2 = -18.5;
 
 // sweep angles
 float sweepRightMax = 18.7; // 19.3
