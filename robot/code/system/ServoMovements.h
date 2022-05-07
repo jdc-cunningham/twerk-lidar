@@ -12,6 +12,103 @@
  * @param {int} runCount 
  * @param {bool} scan - means no sampling/fast
  */
+void sweep(int runCount, bool scan = false, String scanType = "")
+{
+  if (runCount == 1)
+  {
+    sampleDepth = true;
+    // sampleGyroZ = true;
+    pivotRight();
+    pivotCenterFromRight();
+    pivotLeft();
+    sampleDepth = false;
+    sampleGyroZ = false;
+    if (!scanType) dumpData();
+  } else if (runCount == 2)
+  {
+    sampleDepth = true;
+    // sampleGyroZ = true;
+    pivotCenterFromLeft();
+    pivotRight();
+    sampleDepth = false;
+    sampleGyroZ = false;
+    if (!scanType) dumpData();
+  } else
+  {
+    if (scan)
+    {
+      sampleDepth = true;
+      // sampleGyroZ = true;
+    }
+
+    pivotCenterFromRight();
+    pivotLeft();
+    pivotCenterFromLeft();
+
+    if (scan)
+    {
+      sampleDepth = false;
+      sampleGyroZ = false;
+      if (!scanType) dumpData();
+    }
+  }
+
+  Serial.println("run parser");
+  Serial.println(scanType);
+
+  // do obstacle detection check
+  if (scanType == "d1")
+  {
+    // reset back to min, top scans run first
+    if (forwardGaitCount >= 3) {
+      forwardGaitCount = 3;
+    } else
+    {
+      forwardGaitCount = floor(parseScanData(depthVals, "d1"));
+    }
+  }
+
+  if (scanType == "d2")
+  {
+    forwardGaitCount += floor(parseScanData(depthVals, "d2"));
+
+    if (forwardGaitCount >= 3)
+    {
+      forwardGaitCount = 3;
+    }
+  }
+
+  // repeated code
+  if (scanType == "m1")
+  {
+    int sampleForwardGaitCount = floor(parseScanData(depthVals, "m1"));
+
+    if (sampleForwardGaitCount < 5)
+    {
+      forwardGaitCount = sampleForwardGaitCount;
+    }
+  }
+
+  if (scanType == "u1")
+  {
+    int sampleForwardGaitCount = floor(parseScanData(depthVals, "u1"));
+
+    if (sampleForwardGaitCount < 5)
+    {
+      forwardGaitCount = sampleForwardGaitCount;
+    }
+  }
+
+  if (scanType == "u2")
+  {
+    int sampleForwardGaitCount = floor(parseScanData(depthVals, "u2")); // nasty
+
+    if (sampleForwardGaitCount < 5)
+    {
+      forwardGaitCount = sampleForwardGaitCount;
+    }
+  }
+}
 
 void performFullScan(bool addDelayBetweenSamples = false)
 {
