@@ -103,12 +103,26 @@
     const floorToSensorOffset = 3.59;
     const processOrder = ['tilt-up-2', 'tilt-up-1', 'level', 'tilt-down-1', 'tilt-down-2'];
     const tiltMap = {
-      'tilt-up-2': 16.2,
-      'tilt-up-1': 10.9,
+      'tilt-up-2': 18.7,
+      'tilt-up-1': 13.1,
       'level': 0,
-      'tilt-down-1': -10.0,
-      'tilt-down-2': -18.5
+      'tilt-down-1': -6.7,
+      'tilt-down-2': -15.9
     };
+
+    const getAdjustedTofValue = (sampleKey, originalTofValue) => {
+      if (sampleKey === "level") {
+        return originalTofValue;
+      } else if (sampleKey === 'tilt-up-2') {
+        return originalTofValue - 1.05;
+      } else if (sampleKey === 'tilt-up-1') {
+        return originalTofValue - 0.69;
+      } else if (sampleKey === 'tilt-down-1') {
+        return originalTofValue - 0.18;
+      } else {
+        return originalTofValue - 0.9;
+      }
+    }
 
     const getAdjustedAngle = (measurements, end, currentIndex, beyondMidpoint, sampleKey) => {
       // counter clockwise direction eg. right to left
@@ -162,10 +176,12 @@
             index > 29 ? true : false
           );
 
+          const adjustedDistance = getAdjustedTofValue(sampleKey, distance);
+
           return [
-            parseFloat(getXCoordinate(adjustedAngle, distance).toFixed(2)),
-            parseFloat(getYCoordinate(adjustedAngle, distance, sampleKey).toFixed(2)),
-            parseFloat(getZCoordinate(tiltMap[sampleKey], distance, floorToSensorOffset).toFixed(2))
+            parseFloat(getXCoordinate(adjustedAngle, adjustedDistance).toFixed(2)),
+            parseFloat(getYCoordinate(adjustedAngle, adjustedDistance, sampleKey).toFixed(2)),
+            parseFloat(getZCoordinate(tiltMap[sampleKey], adjustedDistance, floorToSensorOffset).toFixed(2))
           ];
         })
       );

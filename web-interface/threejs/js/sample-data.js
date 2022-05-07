@@ -1,6 +1,6 @@
 const sensorSamples = {
   "tilt-up-2": {
-    "angle": 16.2,
+    "angle": 18.7,
     "trim": 'beginning',
     "sweep-angles": `0.00999
     0.00675
@@ -184,7 +184,7 @@ const sensorSamples = {
     22.22`
   },
   "tilt-up-1": {
-    "angle": 10.9,
+    "angle": 13.1,
     "sweep-angles": `0.05427
     0.00162
     -0.18468
@@ -491,7 +491,7 @@ const sensorSamples = {
     18.87`
   },
   "tilt-down-1": {
-    "angle": -10.0,
+    "angle": -6.7,
     "trim": 'beginning',
     "sweep-angles": `0.01323
     0.01323
@@ -675,7 +675,7 @@ const sensorSamples = {
     17.93`
   },
   "tilt-down-2": {
-    "angle": -18.5,
+    "angle": -15.9,
     "sweep-angles": `0.02646
     0.02646
     -0.13762
