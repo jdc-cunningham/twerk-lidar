@@ -203,9 +203,9 @@ void pivotLeft()
 {
   int servoGroupArr[][3] = {
     {6, 30, 0},
-    {9, 135, 105},
+    {9, 125, 95},
     {0, 70, 40},
-    {3, 70, 40}
+    {3, 80, 50}
   };
 
   moveServos(servoGroupArr, 4, servoMotionDelay);
@@ -227,9 +227,9 @@ void pivotRight()
 {
   int servoGroupArr[][3] = {
     {6, 30, 60},
-    {9, 135, 165},
+    {9, 125, 155},
     {0, 70, 100},
-    {3, 70, 100}
+    {3, 80, 110}
   };
 
   moveServos(servoGroupArr, 4, servoMotionDelay);
@@ -239,7 +239,7 @@ void pivotCenterFromRight()
 {
   int servoGroupArr[][3] = {
     {6, 60, 30},
-    {9, 175, 145},
+    {9, 155, 125},
     {0, 100, 70},
     {3, 110, 80}
   };
