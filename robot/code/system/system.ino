@@ -65,6 +65,21 @@ void setup()
   tiltCenterFromUp1();
     delay(3000);
   sweep(3, true, "m1");
+    delay(3000);
+
+  tiltDown1();
+    delay(3000);
+  sweep(1, true, "d1"); // skip
+    delay(3000);
+  tiltDown2();
+    delay(3000);
+  sweep(2, true, "d2"); // skip
+    delay(3000);
+  tiltCenterFromDown2();
+    delay(3000);
+  tiltCenterFromDown1();
+    delay(3000);
+  sweep(3, false);
   
 
   // updateTelemetry("mf");
