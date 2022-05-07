@@ -99,10 +99,11 @@ void mf5PullForwardLeft()
     {0, 95, 65},
     {8, 105, 85},
     {3, 50, 20},
-    {9, 100, 125}
+    {9, 100, 130},
+    {11, 95, 100}
   };
 
-  moveServos(servoGroupArr, 4, servoMotionDelay);
+  moveServos(servoGroupArr, 5, servoMotionDelay);
 }
 
 void mf5MoveBackRightLegUp()
@@ -117,10 +118,11 @@ void mf5MoveBackRightLegUp()
 void mf5MoveBackRightLegForward()
 {
   int servoGroupArr[][3] = {
-    {3, 20, 80} // back right inner
+    {3, 20, 80}, // back right inner
+    {11, 100, 95}
   };
 
-  moveServos(servoGroupArr, 1, servoMotionDelay);
+  moveServos(servoGroupArr, 2, servoMotionDelay);
 }
 
 void mf5MoveBackRightLegDownFromUp()
@@ -171,7 +173,7 @@ void mf5MoveFrontLeftLegDownFromUpHalf()
 void mf5MoveBackLeftLegBackward()
 {
   int servoGroupArr[][3] = {
-    {9, 100, 125} // front left middle
+    {9, 100, 130} // front left middle
   };
 
   moveServos(servoGroupArr, 1, servoMotionDelay);

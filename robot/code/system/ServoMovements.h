@@ -193,7 +193,7 @@ void moveForward5()
   updateTelemetry("mf");
 }
 
-// also inspired by Regis Hsu 2017 spider robot turn gait
+// also based on Regis Hsu 2017 spider robot turn gait
 void turnLeft()
 {
   mf5MoveFrontRightLegUp();

@@ -77,7 +77,7 @@ void setup()
 
 void loop()
 {
-  // moveForward5();
+  moveForward5();
   // turnLeft();
   // depthVals = {};
   // posErrVals = {};
