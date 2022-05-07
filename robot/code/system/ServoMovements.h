@@ -17,21 +17,21 @@ void sweep(int runCount, bool scan = false, String scanType = "")
   if (runCount == 1)
   {
     sampleDepth = true;
-    // sampleGyroZ = true;
+    sampleGyroZ = true;
     pivotRight();
     pivotCenterFromRight();
     pivotLeft();
     sampleDepth = false;
-    sampleGyroZ = true;
+    sampleGyroZ = false;
     if (!scanType) dumpData();
   } else if (runCount == 2)
   {
     sampleDepth = true;
-    // sampleGyroZ = true;
+    sampleGyroZ = true;
     pivotCenterFromLeft();
     pivotRight();
     sampleDepth = false;
-    sampleGyroZ = true;
+    sampleGyroZ = false;
     if (!scanType) dumpData();
   } else
   {
@@ -48,7 +48,7 @@ void sweep(int runCount, bool scan = false, String scanType = "")
     if (scan)
     {
       sampleDepth = false;
-      sampleGyroZ = true;
+      sampleGyroZ = false;
       if (!scanType) dumpData();
     }
   }
