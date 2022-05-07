@@ -52,33 +52,33 @@ void setup()
   delay(10000);
 
   // manually step through performFullScan() segments
-  tiltUp1();
-    delay(3000);
-  tiltUp2();
-    delay(3000);
-  sweep(1, true, "u2");
-    delay(3000);
-  tiltCenterFromUp2();
-    delay(3000);
-  sweep(2, true, "u1");
-    delay(3000);
-  tiltCenterFromUp1();
-    delay(3000);
-  sweep(3, true, "m1");
-    delay(3000);
+  // tiltUp1();
+  //   delay(3000);
+  // tiltUp2();
+  //   delay(3000);
+  // sweep(1, true, "u2");
+  //   delay(3000);
+  // tiltCenterFromUp2();
+  //   delay(3000);
+  // sweep(2, true, "u1");
+  //   delay(3000);
+  // tiltCenterFromUp1();
+  //   delay(3000);
+  // sweep(3, true, "m1");
+  //   delay(3000);
 
   tiltDown1();
-    delay(3000);
+  //   delay(3000);
   sweep(1, true, "d1"); // skip
-    delay(3000);
+  //   delay(3000);
   tiltDown2();
-    delay(3000);
+  //   delay(3000);
   sweep(2, true, "d2"); // skip
-    delay(3000);
+  //   delay(3000);
   tiltCenterFromDown2();
-    delay(3000);
+  //   delay(3000);
   tiltCenterFromDown1();
-    delay(3000);
+  //   delay(3000);
   sweep(3, false);
   
 
