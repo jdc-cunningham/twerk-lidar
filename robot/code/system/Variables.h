@@ -44,8 +44,13 @@ String curEspMsg = "";
 // used for performFullScan
 int forwardGaitCount = 0;
 
-// angles
+// tilt angles
 float u1 = 10.9;
 float u2 = 16.2;
 float d1 = 10.0;
 float d2 = 18.5;
+
+// sweep angles
+float sweepRightMax = 18.7; // 19.3
+float sweepLeftMax = 16.5; // 15.2, don't match lol
+
