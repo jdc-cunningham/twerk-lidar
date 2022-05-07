@@ -52,7 +52,10 @@ void setup()
   delay(10000);
 
   tiltUp1();
+  delay(3000);
   tiltUp2();
+  delay(3000);
+  sweep(1, true, "u2");
 
   // updateTelemetry("mf");
   // moveForward5();
