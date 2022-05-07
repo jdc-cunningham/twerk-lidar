@@ -47,63 +47,9 @@ void setup()
   delay(500);
   blueLedOff();
 
-  // performMockScan();
-
   delay(10000);
-
-  // manually step through performFullScan() segments
-  // tiltUp1();
-  //   delay(3000);
-  // tiltUp2();
-  //   delay(3000);
-  sweep(1, true, "u2");
-  delay(3000);
-  // tiltCenterFromUp2();
-  //   delay(3000);
-  sweep(2, true, "u1");
-  delay(3000);
-  // tiltCenterFromUp1();
-  //   delay(3000);
-  sweep(3, true, "m1");
-  // delay(3000);
-
-  // tiltDown1();
-  //   delay(3000);
-  // // sweep(1, true, "d1"); // skip
-  //   // delay(3000);
-  // tiltDown2();
-  //   delay(3000);
-  // // sweep(2, true, "d2"); // skip
-  //   // delay(3000);
-  // tiltCenterFromDown2();
-  //   delay(3000);
-  // tiltCenterFromDown1();
-  //   delay(3000);
-  // sweep(3, false);
   
-
-  // updateTelemetry("mf");
-  // moveForward5();
-
-
-  // performFullScan();
-
-
-  // turnLeft();
-  // turnLeft();
-  // dumpData();
-  // mf5MoveFrontRightLegUp();
-
-  // preSweepSwayForward();
-
-  // {6, 40, 50},
-  // {0, 65, 55},
-  // {9, 125, 135},
-  // {3, 80, 70}
-
-  // sweep(1);
-  // turnLeft();
-  // moveForward5();
+  performFullScan(true);
 }
 
 void loop()

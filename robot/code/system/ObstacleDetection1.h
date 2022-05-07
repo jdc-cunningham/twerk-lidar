@@ -35,9 +35,9 @@ int parseScanData(std::map<int, float> depthVals, String scanType)
   {
     float depthVal = it->second;
 
-    Serial.print("depth val");
-    Serial.print(depthVal);
-    Serial.println("");
+    // Serial.print("depth val");
+    // Serial.print(depthVal);
+    // Serial.println("");
 
     if (smallestMeasurement == 0)
     {
