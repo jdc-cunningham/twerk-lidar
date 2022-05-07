@@ -51,11 +51,21 @@ void setup()
 
   delay(10000);
 
+  // manually step through performFullScan() segments
   tiltUp1();
-  delay(3000);
+    delay(3000);
   tiltUp2();
-  delay(3000);
+    delay(3000);
   sweep(1, true, "u2");
+    delay(3000);
+  tiltCenterFromUp2();
+    delay(3000);
+  sweep(2, true, "u1");
+    delay(3000);
+  tiltCenterFromUp1();
+    delay(3000);
+  sweep(3, true, "m1");
+  
 
   // updateTelemetry("mf");
   // moveForward5();

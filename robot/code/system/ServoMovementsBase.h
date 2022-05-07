@@ -216,8 +216,8 @@ void pivotCenterFromLeft()
   int servoGroupArr[][3] = {
     {6, 0, 30},
     {9, 95, 125},
-    {0, 30, 60},
-    {3, 30, 60}
+    {0, 40, 70},
+    {3, 50, 80}
   };
 
   moveServos(servoGroupArr, 4, servoMotionDelay);
@@ -282,7 +282,7 @@ void tiltUp2()
 void tiltCenterFromUp2()
 {
   int servoGroupArr[][3] = {
-    {10, 30, 50},
+    {10, 25, 45},
     {7, 35, 60},
     {2, 70, 90},
     {8, 115, 100},
