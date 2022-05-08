@@ -48,14 +48,14 @@ void setup()
   blueLedOff();
 
   delay(10000);
-  
-  performFullScan(true);
+
+  // performFullScan(true);
 }
 
 void loop()
 {
   // moveForward5();
-  // turnLeft();
+  turnLeft();
   // depthVals = {};
   // posErrVals = {};
   // performFullScan(false);
