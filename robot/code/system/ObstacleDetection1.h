@@ -27,6 +27,8 @@ int parseScanData(std::map<int, float> depthVals, String scanType)
 {
   float smallestMeasurement = 0;
 
+  // check for smallest value
+  // add to error collection (too close)
   for (auto it = depthVals.cbegin(); it != depthVals.cend(); ++it)
   {
     float depthVal = it->second;
@@ -57,9 +59,9 @@ int parseScanData(std::map<int, float> depthVals, String scanType)
   if (scanType == "d2")
   {
     if (smallestMeasurement >= 11) {
-      return 4;
+      return 7;
     } else {
-      return floor(smallestMeasurement) / 2;
+      return floor(smallestMeasurement / 2);
     }
   } else if (scanType == "d1")
   {
@@ -68,26 +70,26 @@ int parseScanData(std::map<int, float> depthVals, String scanType)
       return 4; // added ontop of 5 above
     } else
     {
-      return floor(smallestMeasurement) / 2;
+      return floor(smallestMeasurement / 2);
     }
   // here the top-most scan u2 takes precedence, and u1 matches it, this is overhead clearance
   // the robot is 8" tall primarily due to the servo wires
-  } else if (scanType != "m1")
+  } else if (scanType == "m1")
   {
     if (smallestMeasurement >= 18)
     {
-      return 4;
+      return 7;
     } else
     {
-      return floor(smallestMeasurement) / 2;
+      return floor(smallestMeasurement / 2);
     }
   } else {
     if (smallestMeasurement >= 18)
     {
-      return 4;
+      return 7;
     } else
     {
-      return floor(smallestMeasurement) / 2;
+      return floor(smallestMeasurement / 2);
     }
   }
 }
@@ -98,53 +100,32 @@ void performObstacleCheck(String scanType)
   if (scanType == "d1")
   {
     // reset back to min, top scans run first
-    if (forwardGaitCount >= 3) {
-      forwardGaitCount = 3;
-    } else
-    {
-      forwardGaitCount = floor(parseScanData(depthVals, "d1"));
+    int d1GaitCount = parseScanData(depthVals, "d1");
+
+    if (d1GaitCount < 4) {
+      forwardGaitCount = d1GaitCount;
     }
   }
 
   if (scanType == "d2")
   {
-    forwardGaitCount += floor(parseScanData(depthVals, "d2"));
-
-    if (forwardGaitCount >= 3)
-    {
-      forwardGaitCount = 3;
-    }
+    forwardGaitCount = parseScanData(depthVals, "d2");
   }
 
   // repeated code
   if (scanType == "m1")
   {
-    int sampleForwardGaitCount = floor(parseScanData(depthVals, "m1"));
-
-    if (sampleForwardGaitCount < 5)
-    {
-      forwardGaitCount = sampleForwardGaitCount;
-    }
+    forwardGaitCount = parseScanData(depthVals, "m1");
   }
 
   if (scanType == "u1")
   {
-    int sampleForwardGaitCount = floor(parseScanData(depthVals, "u1"));
-
-    if (sampleForwardGaitCount < 5)
-    {
-      forwardGaitCount = sampleForwardGaitCount;
-    }
+    forwardGaitCount = parseScanData(depthVals, "u1");
   }
 
   if (scanType == "u2")
   {
-    int sampleForwardGaitCount = floor(parseScanData(depthVals, "u2")); // nasty
-
-    if (sampleForwardGaitCount < 5)
-    {
-      forwardGaitCount = sampleForwardGaitCount;
-    }
+    forwardGaitCount = parseScanData(depthVals, "u2");
   }
 
   gyroVals = {};

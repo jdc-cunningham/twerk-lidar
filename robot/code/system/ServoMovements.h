@@ -61,8 +61,8 @@ void performFullScan(bool addDelayBetweenSamples = false)
   tiltUp1();
   tiltUp2();
   delay(1000); // wait to stop moving
-  sweep(1, true, "");
-  // sweep(1, true, "u2"); // second param means no delay
+  // sweep(1, true, "");
+  sweep(1, true, "u2"); // second param means no delay
 
   if (addDelayBetweenSamples)
   {
@@ -71,8 +71,8 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltCenterFromUp2();
   delay(1000); // wait to stop moving
-  sweep(2, true, "");
-  // sweep(2, true, "u1");
+  // sweep(2, true, "");
+  sweep(2, true, "u1");
 
   if (addDelayBetweenSamples)
   {
@@ -81,8 +81,8 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltCenterFromUp1();
   delay(1000); // wait to stop moving
-  sweep(3, true, "");
-  // sweep(3, true, "m1");
+  // sweep(3, true, "");
+  sweep(3, true, "m1");
 
   if (addDelayBetweenSamples)
   {
@@ -91,8 +91,8 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltDown1();
   delay(1000); // wait to stop moving
-  sweep(1, true, "");
-  // sweep(1, true, "d1");
+  // sweep(1, true, "");
+  sweep(1, true, "d1");
 
   if (addDelayBetweenSamples)
   {
@@ -101,8 +101,8 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltDown2();
   delay(1000); // wait to stop moving
-  sweep(2, true, "");
-  // sweep(2, true, "d2");
+  // sweep(2, true, "");
+  sweep(2, true, "d2");
 
   if (addDelayBetweenSamples)
   {
@@ -174,6 +174,9 @@ void turnLeft()
   mf5MoveFrontRightLegUp();
   ltp3ToNeutral2();
   mf5MoveFrontRightLegDownFromUp();
+
+  // increment rotation
+  robotHeading -= 58.8;
 
   // updateTelemetry("tl");
 }

@@ -71,19 +71,18 @@ void loop()
 
   if (forwardGaitCount == 0)
   {
-    plotCube(12, robotHeading, 4); // 4 is min distance away from a wall to turn
-  } else
-  {
-    plotCube(12, robotHeading, (forwardGaitCount * 2) + 4);
+    plotCube(12, robotHeading, robotDistance < 4 ? 4 : robotDistance);
   }
 
   if (forwardGaitCount == 0)
   {
+    robotDistance = 0;
     turnLeft();
   } else
   {
     for (int i = 0; i < forwardGaitCount; i++)
     {
+      robotDistance += forwardGaitCount * 2;
       moveForward5();
     }
   }
