@@ -254,20 +254,26 @@
       const material = new THREE.MeshBasicMaterial({color: cubeColor});
       const cube = new THREE.Mesh(geometry, material);
 
-      cube.rotateZ(radians);
+      if (sweepAngle !== 0) {
+        cube.rotateZ(radians);
 
-      cube.position.set(
-        ((dist + (size/2)) * Math.cos(radians)),
-        sweepAngle === 45
-          ? ((dist + (size/2)) * Math.cos(radians))
-          : ((dist + (size/2)) * Math.sin(radians)),
-        size/2
-      );
+        cube.position.set(
+          ((dist + (size/2)) * Math.cos(radians)),
+          (sweepAngle === 45)
+            ? ((dist + (size/2)) * Math.cos(radians))
+            : ((dist + (size/2)) * Math.sin(radians)),
+          size/2
+        );
+      } else {
+        cube.position.set(
+          0,
+          (dist + (size/2)),
+          size/2
+        );
+      }
 
       scene.add(cube);
     }
-
-    plotCube(5, 45, 10);
 
     const plotRobotPos = (robotMsg) => {
       let points = [];
@@ -394,6 +400,12 @@
 
       if (robotMsg.indexOf('pos update,') !== -1) {
         plotRobotPos(robotMsg);
+      }
+
+      if (robotMsg.indexOf('plot cube,') !== -1) {
+        console.log(robotMsg);
+        const cubeData = robotMsg.split('plot cube, ')[1].split(',');
+        plotCube(cubeData[0], cubeData[1], cubeData[2]);
       }
 
       // const imuStreamVectors = parseImuStream(event.data);
