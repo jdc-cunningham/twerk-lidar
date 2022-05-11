@@ -80,7 +80,7 @@
     let lastRobotPos = null;
 
     // https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
-    THREE.Object3D.DefaultUp.set(0, 0, 1);
+    THREE.Object3D.DefaultUp.set(0, 0, 1); // set Z as vertical axes
     const scene = new THREE.Scene();
     // 10 z distanece
     const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -208,6 +208,89 @@
     // render scene
     renderer.render(scene, camera);
     animate();
+
+    const getRandomHex = (returnRandom = true) => {
+      if (!returnRandom) {
+        return '#B6B6B6';
+      }
+      // https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+      var result           = '';
+      var characters       = 'abcdef0123456789';
+      var charactersLength = characters.length;
+      for ( var i = 0; i < 6; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return parseInt(`0x${result}`, 16);
+    }
+
+    const plotPlane = (planePoints, color = false) => {
+      let points = [];
+      planePoints.forEach((panelPoint) => {
+        points.push(new THREE.Vector3(panelPoint[0], panelPoint[1], panelPoint[2]));
+      });
+      material = new THREE.LineBasicMaterial({ color: color || getRandomHex() });
+      material.opacity = 1;
+      meshGeometry = new THREE.ConvexGeometry( points ); // points = vertices array
+      mesh = new THREE.Mesh(meshGeometry, material);
+      scene.add(mesh);
+    }
+
+    // pos is based on the cube bottom x-y center point
+    // in this world there's no negative height eg. third coordinate
+    const plotCube = (size = 1, pos = [0, 0], angle = 0) => {
+      const cubeColor = '#DC143C';
+
+      // lazy manual plotting of a cube
+      // front
+      plotPlane([
+        [0, 0, 0],
+        [size, 0, 0],
+        [size, 0, size],
+        [0, 0, size],
+      ], cubeColor);
+
+      // back
+      plotPlane([
+        [0, size, size],
+        [size, size, 0],
+        [size, size, size],
+        [0, size, 0],
+      ], cubeColor);
+
+      // right
+      plotPlane([
+        [size, 0, size],
+        [size, size, size],
+        [size, 0, 0],
+        [size, size, 0],
+      ], cubeColor);
+
+      // left
+      plotPlane([
+        [0, 0, 0],
+        [0, 0, size],
+        [0, size, size],
+        [0, size, 0],
+      ], cubeColor);
+
+      //top
+      plotPlane([
+        [0, 0, size],
+        [size, 0, size],
+        [0, size, size],
+        [size, size, size]
+      ], cubeColor);
+
+      // bottom
+      plotPlane([
+        [0, 0, 0],
+        [size, 0, 0],
+        [0, size, 0],
+        [size, size, 0]
+      ], cubeColor);
+    }
+
+    plotCube(5);
 
     const plotRobotPos = (robotMsg) => {
       let points = [];

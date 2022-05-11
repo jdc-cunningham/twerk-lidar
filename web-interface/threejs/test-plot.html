@@ -18,7 +18,7 @@
   <script src="js/GetCoordinates.js"></script>
   <script>
     // https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
-    THREE.Object3D.DefaultUp.set(0, 0, 1);
+    THREE.Object3D.DefaultUp.set(0, 0, 1); // set Z as vertical axes
     const scene = new THREE.Scene();
     // 10 z distanece
     const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
