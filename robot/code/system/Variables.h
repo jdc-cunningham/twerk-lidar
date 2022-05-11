@@ -54,3 +54,4 @@ float d2 = -15.9;
 float sweepRightMax = 18.7; // 19.3
 float sweepLeftMax = 16.5; // 15.2, don't match lol
 
+float robotHeading = 0;

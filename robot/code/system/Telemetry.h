@@ -142,3 +142,9 @@ void updateTelemetry(String event)
     turnLeftEvent();
   }
 }
+
+void plotCube(float size, float sweepAngle, float distance)
+{
+  writeToEsp("plot cube, ");
+  writeToEsp(String(size) + "," + String(sweepAngle) + "," + String(distance));
+}

@@ -25,10 +25,6 @@
  */
 int parseScanData(std::map<int, float> depthVals, String scanType)
 {
-  Serial.print("run parse scan data ");
-  Serial.print(scanType);
-  Serial.println("");
-
   float smallestMeasurement = 0;
 
   for (auto it = depthVals.cbegin(); it != depthVals.cend(); ++it)
@@ -58,46 +54,102 @@ int parseScanData(std::map<int, float> depthVals, String scanType)
     }
   }
 
-  Serial.print("smolv ");
-  Serial.print(smallestMeasurement);
-  Serial.println("");
+  if (scanType == "d2")
+  {
+    if (smallestMeasurement >= 11) {
+      return 4;
+    } else {
+      return floor(smallestMeasurement) / 2;
+    }
+  } else if (scanType == "d1")
+  {
+    if (smallestMeasurement >= 18)
+    {
+      return 4; // added ontop of 5 above
+    } else
+    {
+      return floor(smallestMeasurement) / 2;
+    }
+  // here the top-most scan u2 takes precedence, and u1 matches it, this is overhead clearance
+  // the robot is 8" tall primarily due to the servo wires
+  } else if (scanType != "m1")
+  {
+    if (smallestMeasurement >= 18)
+    {
+      return 4;
+    } else
+    {
+      return floor(smallestMeasurement) / 2;
+    }
+  } else {
+    if (smallestMeasurement >= 18)
+    {
+      return 4;
+    } else
+    {
+      return floor(smallestMeasurement) / 2;
+    }
+  }
+}
+
+void performObstacleCheck(String scanType)
+{
+  // do obstacle detection check
+  if (scanType == "d1")
+  {
+    // reset back to min, top scans run first
+    if (forwardGaitCount >= 3) {
+      forwardGaitCount = 3;
+    } else
+    {
+      forwardGaitCount = floor(parseScanData(depthVals, "d1"));
+    }
+  }
 
   if (scanType == "d2")
+  {
+    forwardGaitCount += floor(parseScanData(depthVals, "d2"));
+
+    if (forwardGaitCount >= 3)
     {
-      if (smallestMeasurement >= 18) {
-        return 3;
-      } else {
-        return floor(smallestMeasurement) / 2;
-      }
-    } else if (scanType == "d1")
-    {
-      if (smallestMeasurement >= 26)
-      {
-        return 3; // added ontop of 5 above
-      } else
-      {
-        return floor(smallestMeasurement) / 2;
-      }
-    // here the top-most scan u2 takes precedence, and u1 matches it, this is overhead clearance
-    // the robot is 8" tall primarily due to the servo wires
-    } else if (scanType != "m1")
-    {
-      if (smallestMeasurement >= 18)
-      {
-        return 3;
-      } else
-      {
-        return floor(smallestMeasurement) / 2;
-      }
-    } else {
-      if (smallestMeasurement >= 18)
-      {
-        return 3;
-      } else
-      {
-        return floor(smallestMeasurement) / 2;
-      }
+      forwardGaitCount = 3;
     }
+  }
+
+  // repeated code
+  if (scanType == "m1")
+  {
+    int sampleForwardGaitCount = floor(parseScanData(depthVals, "m1"));
+
+    if (sampleForwardGaitCount < 5)
+    {
+      forwardGaitCount = sampleForwardGaitCount;
+    }
+  }
+
+  if (scanType == "u1")
+  {
+    int sampleForwardGaitCount = floor(parseScanData(depthVals, "u1"));
+
+    if (sampleForwardGaitCount < 5)
+    {
+      forwardGaitCount = sampleForwardGaitCount;
+    }
+  }
+
+  if (scanType == "u2")
+  {
+    int sampleForwardGaitCount = floor(parseScanData(depthVals, "u2")); // nasty
+
+    if (sampleForwardGaitCount < 5)
+    {
+      forwardGaitCount = sampleForwardGaitCount;
+    }
+  }
+
+  gyroVals = {};
+  depthVals = {};
+  posErrVals = {};
 }
 
 /**
