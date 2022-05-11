@@ -405,7 +405,11 @@
       if (robotMsg.indexOf('plot cube,') !== -1) {
         console.log(robotMsg);
         const cubeData = robotMsg.split('plot cube, ')[1].split(',');
-        plotCube(cubeData[0], cubeData[1], cubeData[2]);
+        plotCube(
+          parseFloat(cubeData[0]),
+          parseFloat(cubeData[1]),
+          parseFloat(cubeData[2])
+        );
       }
 
       // const imuStreamVectors = parseImuStream(event.data);
