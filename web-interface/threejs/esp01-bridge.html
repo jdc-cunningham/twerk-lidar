@@ -235,62 +235,52 @@
       scene.add(mesh);
     }
 
-    // pos is based on the cube bottom x-y center point
-    // in this world there's no negative height eg. third coordinate
-    const plotCube = (size = 1, pos = [0, 0], angle = 0) => {
+    const degreesToRadians = (degree) => degree * (Math.PI/180);
+
+    /**
+     * pos is based on the cube bottom x-y center point
+     * in this world there's no negative height eg. third coordinate
+     * these units are in inches
+     * 
+     * https://threejs.org/docs/#api/en/geometries/BoxGeometry
+     * https://stackoverflow.com/questions/11911065/three-js-move-geometrys-center
+     * https://discourse.threejs.org/t/rotate-and-scale-geometry/880
+     * 
+     */
+    const plotCube = (size = 1, sweepAngle = 0, dist = 0) => {
       const cubeColor = '#DC143C';
+      const radians = degreesToRadians(sweepAngle);
 
-      // lazy manual plotting of a cube
-      // front
-      plotPlane([
-        [0, 0, 0],
-        [size, 0, 0],
-        [size, 0, size],
-        [0, 0, size],
-      ], cubeColor);
-
-      // back
-      plotPlane([
-        [0, size, size],
-        [size, size, 0],
-        [size, size, size],
-        [0, size, 0],
-      ], cubeColor);
-
-      // right
-      plotPlane([
-        [size, 0, size],
-        [size, size, size],
-        [size, 0, 0],
-        [size, size, 0],
-      ], cubeColor);
-
-      // left
-      plotPlane([
-        [0, 0, 0],
-        [0, 0, size],
-        [0, size, size],
-        [0, size, 0],
-      ], cubeColor);
-
-      //top
-      plotPlane([
-        [0, 0, size],
-        [size, 0, size],
-        [0, size, size],
-        [size, size, size]
-      ], cubeColor);
-
-      // bottom
-      plotPlane([
-        [0, 0, 0],
-        [size, 0, 0],
-        [0, size, 0],
-        [size, size, 0]
-      ], cubeColor);
+      const geometry = new THREE.BoxGeometry(size, size, size);
+      // geometry.applyMatrix(new THREE.Matrix4().makeTranslation(
+      //   (dist * Math.cos(sweepAngle)),
+      //   (dist * Math.sin(sweepAngle)),
+      //   (size/2)
+      // ));
+      // geometry.translate(
+      //   (dist * Math.cos(sweepAngle)) + (size/2),
+      //   (dist * Math.sin(sweepAngle)) + (size/2),
+      //   (size/2)
+      // );
+      // geometry.translate(
+      //   0,
+      //   (size/2),
+      //   (size/2)
+      // );
+      const material = new THREE.MeshBasicMaterial({color: cubeColor});
+      const cube = new THREE.Mesh(geometry, material);
+      cube.rotateZ(radians);
+      cube.position.set(
+        ((dist + (size/2)) * Math.cos(radians)),
+        sweepAngle === 45
+          ? ((dist + (size/2)) * Math.cos(radians))
+          : ((dist + (size/2)) * Math.sin(radians)),
+        size/2
+      );
+      scene.add(cube);
     }
 
-    plotCube(5);
+    plotCube(5, 45, 10);
 
     const plotRobotPos = (robotMsg) => {
       let points = [];
