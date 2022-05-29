@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="js/three.js"></script>
+  <script src="js/GLTFLoader.js"></script>
+  <script src="js/DracoLoader.js"></script>
+  <script>
+    // hacked together from
+    // https://threejs.org/docs/#examples/en/loaders/GLTFLoader
+    // https://stackoverflow.com/questions/69831083/unable-to-render-gltf-object-with-three-js
+    // https://sbcode.net/threejs/gltf-animations-drag/
+    const scene = new THREE.Scene();
+    const ratio = window.innerWidth / window.innerHeight
+    const camera = new THREE.PerspectiveCamera( 75, ratio, 0.1, 1000 );
+    const renderer = new THREE.WebGLRenderer();
+
+    camera.position.set(0,0,0)
+    camera.lookAt(10,0,0)
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
+
+    renderer.render( scene, camera );
+
+
+    // Instantiate a loader
+    const loader = new THREE.GLTFLoader();
+    // const loader = new GLTFLoader();
+    // const DRACOLoader = new THREE.DRACOLoader();
+
+    // Optional: Provide a DRACOLoader instance to decode compressed mesh data
+    // const dracoLoader = new DRACOLoader();
+    // dracoLoader.setDecoderPath( '/examples/js/libs/draco/' );
+    // loader.setDRACOLoader( dracoLoader );
+
+    // Load a glTF resource
+    loader.load(
+      // resource URL
+      'http://192.168.1.144/3d-files/Parrot.glb',
+      // called when the resource is loaded
+      function ( gltf ) {
+
+        scene.add(new THREE.AmbientLight());
+        gltf.scene.position.x=10
+        scene.add( gltf.scene );
+
+        gltf.animations; // Array<THREE.AnimationClip>
+        gltf.scene; // THREE.Group
+        gltf.scenes; // Array<THREE.Group>
+        gltf.cameras; // Array<THREE.Camera>
+        gltf.asset; // Object
+
+        renderer.render( scene, camera );
+      },
+      // called while loading is progressing
+      function ( xhr ) {
+
+        console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+      },
+      // called when loading has errors
+      function ( error ) {
+
+        console.log( 'An error happened' );
+
+      }
+    );
+  </script>
+</body>
+</html>
