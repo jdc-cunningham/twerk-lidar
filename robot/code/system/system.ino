@@ -53,7 +53,7 @@ void setup()
   // performFullScan(true);
   // leftTurnPivot();
   // frontRightLegUp();
-  switchToRightDefaultStance();
+  // switchToRightDefaultStance();
 }
 
 void main_nav_process()
