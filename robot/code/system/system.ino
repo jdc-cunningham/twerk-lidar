@@ -51,9 +51,12 @@ void setup()
   delay(10000);
 
   // performFullScan(true);
+  // leftTurnPivot();
+  // frontRightLegUp();
+  switchToRightDefaultStance();
 }
 
-void loop()
+void main_nav_process()
 {
   // moveForward5();
   // turnLeft();
@@ -86,7 +89,10 @@ void loop()
       moveForward5();
     }
   }
+}
 
+void loop()
+{
   // moveForward5();
   // delay(10000);
 

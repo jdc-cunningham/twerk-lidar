@@ -1,5 +1,6 @@
 #include "ServoMovementsBase.h"
 #include "DiscreteServoMovements2.h"
+#include "DiscreteServoMovements3.h"
 #include "ObstacleDetection1.h"
 
 /**
@@ -179,4 +180,10 @@ void turnLeft()
   robotHeading -= 58.8;
 
   // updateTelemetry("tl");
+}
+
+void turnRight()
+{
+  frontRightLegUp();
+  
 }
