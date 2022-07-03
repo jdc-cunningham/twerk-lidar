@@ -114,18 +114,18 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
 
 void centerAllLegs()
 {
-  frontRightInnerServo.servo.write(frontRightInnerServoInfo.start);
-  frontRightMiddleServo.servo.write(frontRightMiddleServoInfo.start);
-  frontRightOuterServo.servo.write(frontRightOuterServoInfo.start);
-  backRightInnerServo.servo.write(backRightInnerServoInfo.start);
-  backRightMiddleServo.servo.write(backRightMiddleServoInfo.start);
-  backRightOuterServo.servo.write(backRightOuterServoInfo.start);
-  frontLeftInnerServo.servo.write(frontLeftInnerServoInfo.start);
-  frontLeftMiddleServo.servo.write(frontLeftMiddleServoInfo.start);
-  frontLeftOuterServo.servo.write(frontLeftOuterServoInfo.start);
-  backLeftInnerServo.servo.write(backLeftInnerServoInfo.start);
-  backLeftMiddleServo.servo.write(backLeftMiddleServoInfo.start);
-  backLeftOuterServo.servo.write(backLeftOuterServoInfo.start);
+  frontRightInnerJoint.servo.write(frontRightInnerJoint.startPos);
+  frontRightMiddleJoint.servo.write(frontRightMiddleJoint.startPos);
+  frontRightOuterJoint.servo.write(frontRightOuterJoint.startPos);
+  backRightInnerJoint.servo.write(backRightInnerJoint.startPos);
+  backRightMiddleJoint.servo.write(backRightMiddleJoint.startPos);
+  backRightOuterJoint.servo.write(backRightOuterJoint.startPos);
+  frontLeftInnerJoint.servo.write(frontLeftInnerJoint.startPos);
+  frontLeftMiddleJoint.servo.write(frontLeftMiddleJoint.startPos);
+  frontLeftOuterJoint.servo.write(frontLeftOuterJoint.startPos);
+  backLeftInnerJoint.servo.write(backLeftInnerJoint.startPos);
+  backLeftMiddleJoint.servo.write(backLeftMiddleJoint.startPos);
+  backLeftOuterJoint.servo.write(backLeftOuterJoint.startPos);
 }
 
 /**
@@ -135,25 +135,25 @@ void centerAllLegs()
  */
 void setAndCenterServos()
 {
-  frontRightInnerServo.servo.attach(0);
-  frontRightMiddleServo.servo.attach(1);
-  frontRightOuterServo.servo.attach(2);
-  backRightInnerServo.servo.attach(3);
-  backRightMiddleServo.servo.attach(4);
-  backRightOuterServo.servo.attach(5);
-  frontLeftInnerServo.servo.attach(6);
-  frontLeftMiddleServo.servo.attach(7);
-  frontLeftOuterServo.servo.attach(8);
-  backLeftInnerServo.servo.attach(9);
-  backLeftMiddleServo.servo.attach(10);
-  backLeftOuterServo.servo.attach(11);
+  frontRightInnerJoint.servo.attach(0);
+  frontRightMiddleJoint.servo.attach(1);
+  frontRightOuterJoint.servo.attach(2);
+  backRightInnerJoint.servo.attach(3);
+  backRightMiddleJoint.servo.attach(4);
+  backRightOuterJoint.servo.attach(5);
+  frontLeftInnerJoint.servo.attach(6);
+  frontLeftMiddleJoint.servo.attach(7);
+  frontLeftOuterJoint.servo.attach(8);
+  backLeftInnerJoint.servo.attach(9);
+  backLeftMiddleJoint.servo.attach(10);
+  backLeftOuterJoint.servo.attach(11);
 
   // neutral stance
   centerAllLegs();
 }
 
 /**
- * @brief this function is a wrapper around Servo.write() however
+ * @brief this function is a wrapper around Joint.write() however
  * it checks against the servo's min/max throws based on robot geometry
  * the min/max values are determined upon assembling the robot/calibrated
  * manually since the servos have not feedback
@@ -161,11 +161,16 @@ void setAndCenterServos()
  * @param servo 
  * @param deg 
  */
-void safeServoWrite(Servo servoPin, int deg)
+void safeServoWrite(int servoPin, int deg)
 {
-  struct servoToMove = getServoByPin(servoPin);
-  int servoMax = servoToMove.max;
-  int servoMin = servoToMove.min;
+  joint jointToMove = getJointByPin(servoPin);
+  int servoMin = jointToMove.minPos;
+  int servoMax = jointToMove.maxPos;
+
+  if (deg <= servoMax && deg >= servoMin)
+  {
+    jointToMove.servo.write(deg);
+  }
 }
 
 /**
@@ -174,7 +179,6 @@ void safeServoWrite(Servo servoPin, int deg)
  */
 void manual_move_servo(String espMsg)
 {
-  Serial.println("run");
   int degStart = espMsg.indexOf("__");
   int servoPin = espMsg.substring(4, degStart).toInt();
   int servoDeg = espMsg.substring(degStart + 2).toInt();

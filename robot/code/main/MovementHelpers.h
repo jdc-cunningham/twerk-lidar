@@ -4,43 +4,82 @@
  * @param digitalPin 
  * @return struct
  */
-servo getServoByPin(int digitalPin)
+Servo getServoByPin(int digitalPin)
 {
   if (digitalPin == 0) // ugh this sucks
   {
-    return frontRightInnerServo;
+    return frontRightInnerJoint.servo;
   } else if (digitalPin == 1)
   {
-    return frontRightMiddleServo;
+    return frontRightMiddleJoint.servo;
   } else if (digitalPin == 2)
   {
-    return frontRightOuterServo;
+    return frontRightOuterJoint.servo;
   } else if (digitalPin == 3)
   {
-    return backRightInnerServo;
+    return backRightInnerJoint.servo;
   } else if (digitalPin == 4)
   {
-    return backRightMiddleServo;
+    return backRightMiddleJoint.servo;
   } else if (digitalPin == 5)
   {
-    return backRightOuterServo;
+    return backRightOuterJoint.servo;
   } else if (digitalPin == 6)
   {
-    return frontLeftInnerServo;
+    return frontLeftInnerJoint.servo;
   } else if (digitalPin == 7)
   {
-    return frontLeftMiddleServo;
+    return frontLeftMiddleJoint.servo;
   } else if (digitalPin == 8)
   {
-    return frontLeftOuterServo;
+    return frontLeftOuterJoint.servo;
   } else if (digitalPin == 9)
   {
-    return backLeftInnerServo;
+    return backLeftInnerJoint.servo;
   } else if (digitalPin == 10)
   {
-    return backLeftMiddleServo;
+    return backLeftMiddleJoint.servo;
   } else {
-    return backLeftOuterServo;
+    return backLeftOuterJoint.servo;
   }
 }
 
+joint getJointByPin (int digitalPin)
+{
+  if (digitalPin == 0) // ugh this sucks
+  {
+    return frontRightInnerJoint;
+  } else if (digitalPin == 1)
+  {
+    return frontRightMiddleJoint;
+  } else if (digitalPin == 2)
+  {
+    return frontRightOuterJoint;
+  } else if (digitalPin == 3)
+  {
+    return backRightInnerJoint;
+  } else if (digitalPin == 4)
+  {
+    return backRightMiddleJoint;
+  } else if (digitalPin == 5)
+  {
+    return backRightOuterJoint;
+  } else if (digitalPin == 6)
+  {
+    return frontLeftInnerJoint;
+  } else if (digitalPin == 7)
+  {
+    return frontLeftMiddleJoint;
+  } else if (digitalPin == 8)
+  {
+    return frontLeftOuterJoint;
+  } else if (digitalPin == 9)
+  {
+    return backLeftInnerJoint;
+  } else if (digitalPin == 10)
+  {
+    return backLeftMiddleJoint;
+  } else {
+    return backLeftOuterJoint;
+  }
+}
