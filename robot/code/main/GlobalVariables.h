@@ -4,107 +4,143 @@
 #include <vector>
 #include <string>
 
-Servo frontRightOuterServo;
-Servo frontRightMiddleServo;
-Servo frontRightInnerServo;
-Servo backRightOuterServo;
-Servo backRightMiddleServo;
-Servo backRightInnerServo;
-Servo frontLeftOuterServo;
-Servo frontLeftMiddleServo;
-Servo frontLeftInnerServo;
-Servo backLeftOuterServo;
-Servo backLeftMiddleServo;
-Servo backLeftInnerServo;
+// Servo frontRightOuterServo;
+// Servo frontRightMiddleServo;
+// Servo frontRightInnerServo;
+// Servo backRightOuterServo;
+// Servo backRightMiddleServo;
+// Servo backRightInnerServo;
+// Servo frontLeftOuterServo;
+// Servo frontLeftMiddleServo;
+// Servo frontLeftInnerServo;
+// Servo backLeftOuterServo;
+// Servo backLeftMiddleServo;
+// Servo backLeftInnerServo;
 
 bool motionInProgress = false;
 int servoMotionDelay = 8; // ms
 int stepDelay = 0; // ms usually a second or more
 
 // these positions are for a >= quad stance (top view)
-struct {
+struct leg {
+  Servo servo;
+  int startPos;
+  int currentPos;
+  int maxDeg; // later determined based on geometry
+  int minDeg; // later determined based on geometry
+};
+
+struct
+{
+  Servo servo;
   int start = 105;
   int current = 105;
   int max = 180; // later determined based on geometry
   int min = 0; // later determined based on geometry
-} frontRightOuterServoInfo;
+} frontRightOuterServo;
 
-struct {
+struct
+{
+  Servo servo;
   int start = 80;
   int current = 80;
   int max = 180; // later determined based on geometry
   int min = 0; // later determined based on geometry
-} frontRightMiddleServoInfo;
+} frontRightMiddleServo;
 
-struct {
+struct
+{
+  Servo servo;
   int start = 70;
   int current = 70;
   int max = 180; // later determined based on geometry
   int min = 0; // later determined based on geometry
-} frontRightInnerServoInfo;
+} frontRightInnerServo;
 
-struct {
+struct
+{
+  Servo servo;
   int start = 67;
   int current = 67;
   int max = 180; // later determined based on geometry
   int min = 0; // later determined based on geometry
-} backRightOuterServoInfo;
+} backRightOuterServo;
 
-struct {
+struct
+{
+  Servo servo;
   int start = 90;
   int current = 90;
   int max = 180; // later determined based on geometry
   int min = 0; // later determined based on geometry
-} backRightMiddleServoInfo;
+} backRightMiddleServo;
 
-struct {
+struct
+{
+  Servo servo;
   int start = 80;
   int current = 80;
   int max = 180; // later determined based on geometry
   int min = 0; // later determined based on geometry
-} backRightInnerServoInfo;
+} backRightInnerServo;
 
-struct {
+struct
+{
+  Servo servo;
   int start = 85;
   int current = 85;
   int max = 180; // later determined based on geometry
   int min = 0; // later determined based on geometry
 } frontLeftOuterServoInfo;
 
-struct {
+struct
+{
+  Servo servo;
   int start = 80;
   int current = 80;
   int max = 180; // later determined based on geometry
   int min = 0; // later determined based on geometry
-} frontLeftMiddleServoInfo;
+} frontLeftMiddleServo;
 
-struct {
+struct
+{
+  Servo servo;
   int start = 30;
   int current = 30;
   int max = 180; // later determined based on geometry
   int min = 0; // later determined based on geometry
-} frontLeftInnerServoInfo;
+} frontLeftInnerServo;
 
-struct {
+struct
+{
+  Servo servo;
   int start = 95;
   int current = 95;
   int max = 180; // later determined based on geometry
   int min = 0; // later determined based on geometry
-} backLeftOuterServoInfo;
+} backLeftOuterServo;
 
-struct {
+struct
+{
+  Servo servo;
   int start = 75;
   int current = 75;
   int max = 180; // later determined based on geometry
   int min = 0; // later determined based on geometry
-} backLeftMiddleServoInfo;
+} backLeftMiddleServo;
 
-struct {
+struct
+{
+  Servo servo;
   int start = 125;
   int current = 125;
   int max = 180; // later determined based on geometry
   int min = 0; // later determined based on geometry
-} backLeftInnerServoInfo;
+} backLeftInnerServo;
+
+std::map<int, struct> structMap = {};
+
+structMap[0] = frontRightInnerServo;
 
 bool sampleDepth = false;
 bool sampleGyroZ = false; // yaw

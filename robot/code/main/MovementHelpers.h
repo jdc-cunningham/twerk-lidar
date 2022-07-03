@@ -2,9 +2,9 @@
  * @brief Get the Servo By Pin object
  * 
  * @param digitalPin 
- * @return Servo 
+ * @return struct
  */
-Servo getServoByPin(int digitalPin)
+servo getServoByPin(int digitalPin)
 {
   if (digitalPin == 0) // ugh this sucks
   {

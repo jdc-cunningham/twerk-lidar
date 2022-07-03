@@ -114,18 +114,18 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
 
 void centerAllLegs()
 {
-  frontRightInnerServo.write(frontRightInnerServoInfo.start);
-  frontRightMiddleServo.write(frontRightMiddleServoInfo.start);
-  frontRightOuterServo.write(frontRightOuterServoInfo.start);
-  backRightInnerServo.write(backRightInnerServoInfo.start);
-  backRightMiddleServo.write(backRightMiddleServoInfo.start);
-  backRightOuterServo.write(backRightOuterServoInfo.start);
-  frontLeftInnerServo.write(frontLeftInnerServoInfo.start);
-  frontLeftMiddleServo.write(frontLeftMiddleServoInfo.start);
-  frontLeftOuterServo.write(frontLeftOuterServoInfo.start);
-  backLeftInnerServo.write(backLeftInnerServoInfo.start);
-  backLeftMiddleServo.write(backLeftMiddleServoInfo.start);
-  backLeftOuterServo.write(backLeftOuterServoInfo.start);
+  frontRightInnerServo.servo.write(frontRightInnerServoInfo.start);
+  frontRightMiddleServo.servo.write(frontRightMiddleServoInfo.start);
+  frontRightOuterServo.servo.write(frontRightOuterServoInfo.start);
+  backRightInnerServo.servo.write(backRightInnerServoInfo.start);
+  backRightMiddleServo.servo.write(backRightMiddleServoInfo.start);
+  backRightOuterServo.servo.write(backRightOuterServoInfo.start);
+  frontLeftInnerServo.servo.write(frontLeftInnerServoInfo.start);
+  frontLeftMiddleServo.servo.write(frontLeftMiddleServoInfo.start);
+  frontLeftOuterServo.servo.write(frontLeftOuterServoInfo.start);
+  backLeftInnerServo.servo.write(backLeftInnerServoInfo.start);
+  backLeftMiddleServo.servo.write(backLeftMiddleServoInfo.start);
+  backLeftOuterServo.servo.write(backLeftOuterServoInfo.start);
 }
 
 /**
@@ -135,19 +135,48 @@ void centerAllLegs()
  */
 void setAndCenterServos()
 {
-  frontRightInnerServo.attach(0);
-  frontRightMiddleServo.attach(1);
-  frontRightOuterServo.attach(2);
-  backRightInnerServo.attach(3);
-  backRightMiddleServo.attach(4);
-  backRightOuterServo.attach(5);
-  frontLeftInnerServo.attach(6);
-  frontLeftMiddleServo.attach(7);
-  frontLeftOuterServo.attach(8);
-  backLeftInnerServo.attach(9);
-  backLeftMiddleServo.attach(10);
-  backLeftOuterServo.attach(11);
+  frontRightInnerServo.servo.attach(0);
+  frontRightMiddleServo.servo.attach(1);
+  frontRightOuterServo.servo.attach(2);
+  backRightInnerServo.servo.attach(3);
+  backRightMiddleServo.servo.attach(4);
+  backRightOuterServo.servo.attach(5);
+  frontLeftInnerServo.servo.attach(6);
+  frontLeftMiddleServo.servo.attach(7);
+  frontLeftOuterServo.servo.attach(8);
+  backLeftInnerServo.servo.attach(9);
+  backLeftMiddleServo.servo.attach(10);
+  backLeftOuterServo.servo.attach(11);
 
   // neutral stance
   centerAllLegs();
+}
+
+/**
+ * @brief this function is a wrapper around Servo.write() however
+ * it checks against the servo's min/max throws based on robot geometry
+ * the min/max values are determined upon assembling the robot/calibrated
+ * manually since the servos have not feedback
+ * 
+ * @param servo 
+ * @param deg 
+ */
+void safeServoWrite(Servo servoPin, int deg)
+{
+  struct servoToMove = getServoByPin(servoPin);
+  int servoMax = servoToMove.max;
+  int servoMin = servoToMove.min;
+}
+
+/**
+ * @brief this function is used to move the servos by a web interface
+ * espMsg pattern msc_servoInt__deg
+ */
+void manual_move_servo(String espMsg)
+{
+  Serial.println("run");
+  int degStart = espMsg.indexOf("__");
+  int servoPin = espMsg.substring(4, degStart).toInt();
+  int servoDeg = espMsg.substring(degStart + 2).toInt();
+  safeServoWrite(servoPin, servoDeg);
 }
