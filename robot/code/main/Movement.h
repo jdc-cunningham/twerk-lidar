@@ -1,116 +1,4 @@
-/**
- * This function moves servos together at the same speed
- * there is a "bias" where the shortest motion will end first
- * @param {int} - array of arrays with the following: servo enum, start pos, end pos
- * @param {int} - array length
- * @param {int} - duration of motion in ms
- */
-void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration)
-{
-  /**
-   * loop through servos, find largest range between start/end pos
-   * there is no error checking, I find coding in Arduino to be cumbersome */
-  motionInProgress = true;
-  int largestServoRange = 0;
-  // int moveCounter = 0;
-
-  // emergency stop
-  if (stopRobot)
-  {
-    return;
-  }
-
-  for (int servoGroupIndex = 0; servoGroupIndex < servoGroupArrLen; servoGroupIndex++) {
-    int range = 0;
-    if (servoGroupArr[servoGroupIndex][1] < servoGroupArr[servoGroupIndex][2]) {
-      // increase
-      range = servoGroupArr[servoGroupIndex][2] - servoGroupArr[servoGroupIndex][1];
-      if (range > largestServoRange) {
-        largestServoRange = range;
-      }
-    } else {
-      // decrease
-      range = servoGroupArr[servoGroupIndex][1] - servoGroupArr[servoGroupIndex][2];
-      if (range > largestServoRange) {
-        largestServoRange = range;
-      }
-    }
-  }
-
-  /* do the motion on the servos going by largest range
-   * this will update all the servo positions at the same rate
-   * but some will finish earlier than others if the motion range is not the same */
-  for (int pos = 0; pos < largestServoRange; pos++) {
-    for(int servoGroupIndex = 0; servoGroupIndex < servoGroupArrLen; servoGroupIndex++) {
-      if (servoGroupArr[servoGroupIndex][1] < servoGroupArr[servoGroupIndex][2]) {
-        // increase
-        if (servoGroupArr[servoGroupIndex][1] + pos < servoGroupArr[servoGroupIndex][2]) {
-          int nextServoPos = servoGroupArr[servoGroupIndex][1] + pos;
-          getServoByPin(servoGroupArr[servoGroupIndex][0]).write(nextServoPos);
-        }
-      } else {
-        // decrease
-        if (servoGroupArr[servoGroupIndex][1] - pos > servoGroupArr[servoGroupIndex][2]) {
-          int nextServoPos = servoGroupArr[servoGroupIndex][1] - pos;
-          getServoByPin(servoGroupArr[servoGroupIndex][0]).write(nextServoPos);
-        }
-      }
-    }
-
-    int timeNow = millis();
-
-    if (imu.Read())
-    {
-      if (sampleDepth)
-      {
-        float distSample = sensor.readRangeSingleMillimeters();
-        float distSampleIn = (distSample * 0.0393701) - 0.5; // due to sway forward
-        
-        // this catches bad measurements
-        // something can't be this close due to the allen wrench counter weight
-        if (distSampleIn == 0 || distSampleIn >= 47)
-        {
-          depthVals[timeNow] = 47; // 47in is based on 1.2m max default measurement
-        } else if (distSampleIn <= 4) {
-          depthVals[timeNow] = 4;
-        } else {
-          depthVals[timeNow] = distSampleIn;
-        }
-      }
-
-      // pitch angle rate
-      if (sampleGyroX)
-      {
-        gyroVals[timeNow] = radianToDegree(imu.gyro_x_radps());
-      }
-
-      // yaw angle rate
-      if (sampleGyroZ)
-      {
-        gyroVals[timeNow] = radianToDegree(imu.gyro_z_radps());
-      }
-
-      if (sampleYAccel)
-      {
-        yAccelVals[timeNow] = imu.accel_y_mps2();
-      }
-
-      if (sampleXAccel)
-      {
-        xAccelVals[timeNow] = imu.accel_x_mps2();
-      }
-    }
-
-    if (sampleDepth || sampleGyroX || sampleGyroZ || sampleYAccel || sampleXAccel)
-    {
-      servoPosVals[timeNow] = pos;
-    }
-    delay(motionDuration);
-  }
-
-  motionInProgress = false;
-  delay(stepDelay);
-}
+#include "MovementHelpers.h"
 
 void centerAllLegs()
 {
@@ -183,4 +71,141 @@ void manual_move_servo(String espMsg)
   int servoPin = espMsg.substring(4, degStart).toInt();
   int servoDeg = espMsg.substring(degStart + 2).toInt();
   safeServoWrite(servoPin, servoDeg);
+}
+
+// based on visual observation of Regis Hsu 2017 spider bot
+void moveForward5()
+{
+  mf5MoveFrontRightLegUp();
+  mf5MoveFrontRightLegForward();
+  mf5MoveFrontRightLegDownFromUp();
+
+  // sampleYAccel = true;
+  mf5PullForwardRight();
+  sampleYAccel = false;
+
+  mf5MoveBackLeftLegUp();
+  mf5MoveBackLeftLegForward();
+  mf5MoveBackLeftLegDownFromUp();
+
+  mf5MoveFrontLeftLegUp();
+  mf5MoveFrontLeftLegForward();
+  mf5MoveFrontLeftLegDownFromUp();
+
+  // sampleYAccel = true;
+  mf5PullForwardLeft();
+  sampleYAccel = false;
+
+  mf5MoveBackRightLegUp();
+  mf5MoveBackRightLegForward();
+  mf5MoveBackRightLegDownFromUp();
+
+  // updateTelemetry("mf");
+}
+
+void leftTurnPivot()
+{
+  int servoGroupArr[][3] = {
+    {6, 30, 0},
+    {9, 125, 95},
+    {3, 80, 50},
+    {0, 70, 100}
+  };
+
+  moveServos(servoGroupArr, 4, servoMotionDelay);
+}
+
+void leftTurnPivot2()
+{
+  int servoGroupArr[][3] = {
+    {6, 0, 60}, // front left inner
+    {9, 95, 65},
+    {3, 50, 20},
+    {0, 100, 70}
+  };
+
+  moveServos(servoGroupArr, 4, servoMotionDelay);
+}
+
+void leftTurnPivot3()
+{
+  int servoGroupArr[][3] = {
+    {6, 60, 30}, // front left inner
+    {9, 65, 125}, // back left inner
+    {3, 20, 0}, // back right inner
+    {0, 70, 40}
+  };
+
+  moveServos(servoGroupArr, 4, servoMotionDelay);
+}
+
+void ltp3ToNeutral()
+{
+  int servoGroupArr[][3] = {
+    {3, 0, 80} // back right inner
+  };
+
+  moveServos(servoGroupArr, 1, servoMotionDelay);
+}
+
+void ltp3ToNeutral2()
+{
+  int servoGroupArr[][3] = {
+    {0, 40, 70} // front right inner
+  };
+
+  moveServos(servoGroupArr, 1, servoMotionDelay);
+}
+
+void ltp3ToNeutral3()
+{
+  int servoGroupArr[][3] = {
+    {9, 95, 125}, // back left inner
+    {1, 60, 80}
+  };
+
+  moveServos(servoGroupArr, 2, servoMotionDelay);
+}
+
+// also based on Regis Hsu 2017 spider robot turn gait
+void turnLeft()
+{
+  mf5MoveFrontRightLegUp();
+  // sampleGyroZ = true;
+  leftTurnPivot();
+  sampleGyroZ = false;
+  mf5MoveFrontRightLegDownFromUp();
+
+  // mf5MoveFrontRightLegUp();
+  mf5MoveFrontLeftLegUp();
+  leftTurnPivot2();
+  mf5MoveFrontLeftLegDownFromUp();
+
+  mf5MoveBackLeftLegUp();
+  // sampleGyroZ = true;
+  leftTurnPivot3();
+  sampleGyroZ = false;
+  mf5MoveBackLeftLegDownFromUp();
+
+  // at 45 deg here
+  // rest below returns to neutral
+
+  mf5MoveBackRightLegUp();
+  ltp3ToNeutral();
+  mf5MoveBackRightLegDownFromUp();
+
+  mf5MoveFrontRightLegUp();
+  ltp3ToNeutral2();
+  mf5MoveFrontRightLegDownFromUp();
+
+  // increment rotation
+  robotHeading -= 58.8;
+
+  // updateTelemetry("tl");
+}
+
+void turnRight()
+{
+  
+  
 }

@@ -7,8 +7,10 @@
 #include "WorldNavigation.h"
 #include "Orientation.h"
 #include "Telemetry.h"
-#include "MovementHelpers.h"
 #include "Movement.h"
+#include "Misc.h"
+#include "ObstacleDetection.h"
+#include "Scan.h"
 
 void setup_robot()
 {
@@ -30,6 +32,8 @@ void setup()
   Serial.begin(115200);
 
   setup_robot();
+
+  performFullScan(false);
 
   // allow time to position robot
   // delay(10000);
