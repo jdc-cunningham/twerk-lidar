@@ -17,18 +17,19 @@ struct joint {
   Servo servo; // last due to order of agg init
 };
 
-joint frontRightInnerJoint = {70, 70, 0, 180};
-joint frontRightMiddleJoint = {80, 80, 0, 180};
-joint frontRightOuterJoint = {105, 105, 0, 180};
-joint backRightInnerJoint = {80, 80, 0, 180};
-joint backRightMiddleJoint = {90, 90, 0, 180};
-joint backRightOuterJoint = {67, 67, 0, 180};
-joint backLeftInnerJoint = {125, 125, 0, 180};
-joint backLeftMiddleJoint = {75, 75, 0, 180};
-joint backLeftOuterJoint = {95, 95, 0, 180};
-joint frontLeftInnerJoint = {30, 30, 0, 180};
-joint frontLeftMiddleJoint = {80, 80, 0, 180};
+// should follow clockwise but it does not
+joint frontRightInnerJoint = {70, 70, 45, 160};
+joint frontRightMiddleJoint = {80, 80, 40, 180};
+joint frontRightOuterJoint = {105, 105, 50, 160};
+joint backRightInnerJoint = {80, 80, 0, 110};
+joint backRightMiddleJoint = {90, 90, 0, 140};
+joint backRightOuterJoint = {67, 67, 15, 130};
+joint frontLeftInnerJoint = {30, 30, 0, 100};
+joint frontLeftMiddleJoint = {80, 80, 40, 160};
 joint frontLeftOuterJoint = {85, 85, 0, 180};
+joint backLeftInnerJoint = {125, 125, 60, 100};
+joint backLeftMiddleJoint = {75, 75, 30, 180};
+joint backLeftOuterJoint = {95, 95, 70, 140};
 
 bool sampleDepth = false;
 bool sampleGyroZ = false; // yaw
