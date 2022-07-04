@@ -89,6 +89,8 @@ void loop()
 
   webMessaging();
 
+  moveForward5();
+
   // if (forwardCounter < 5)
   // {
   //   forwardCounter += 1;

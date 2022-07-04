@@ -298,7 +298,7 @@ void mf5MoveBackLeftLegForward()
 void mf5MoveBackLeftLegDownFromUp()
 {
   int servoGroupArr[][3] = {
-    {10, 30, 75} // front right middle
+    {10, 40, 85} // front right middle
   };
 
   moveServos(servoGroupArr, 1, servoMotionDelay);

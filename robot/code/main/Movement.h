@@ -42,6 +42,9 @@ void setAndCenterServos()
 
 /**
  * @brief this function is used to move the servos by a web interface
+ * this one does not use safeServoWrite, since it's primarily used to
+ * determine the min, max endpoints
+ * 
  * espMsg pattern msc_servoInt__deg
  */
 void manualMoveServo(String espMsg)
@@ -49,7 +52,8 @@ void manualMoveServo(String espMsg)
   int degStart = espMsg.indexOf("__");
   int servoPin = espMsg.substring(4, degStart).toInt();
   int servoDeg = espMsg.substring(degStart + 2).toInt();
-  safeServoWrite(servoPin, servoDeg);
+  Servo servoToMove = getServoByPin(servoPin);
+  servoToMove.write(servoDeg);
 }
 
 // based on visual observation of Regis Hsu 2017 spider bot
