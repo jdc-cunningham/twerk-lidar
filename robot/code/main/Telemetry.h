@@ -151,7 +151,7 @@ void plotCube(float size, float sweepAngle, float distance)
 
 void checkTelemetry(String espMsg)
 {
-  if (espMsg == "tel_battery_voltage")
+  if (espMsg == "tel_bv") // I try to keep these short to guarantee delivery
   {
     float batteryVoltage = getBatteryVoltage();
     writeToEsp("bv_" + String(batteryVoltage));
