@@ -65,7 +65,7 @@ void safeServoWrite(int servoPin, int deg)
  * @brief this function is used to move the servos by a web interface
  * espMsg pattern msc_servoInt__deg
  */
-void manual_move_servo(String espMsg)
+void manualMoveServo(String espMsg)
 {
   int degStart = espMsg.indexOf("__");
   int servoPin = espMsg.substring(4, degStart).toInt();

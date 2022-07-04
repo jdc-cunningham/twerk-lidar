@@ -4,28 +4,24 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manual Servo Control</title>
+  <title>Web Socket Commands</title>
 </head>
 <body>
-  <h1>Manual Servo Control</h1>
+  <h2>Manual Servo Control</h2>
   <input id="servo-pin" type="number" placeholder="servo pin"/>
   <input id="servo-deg" type="number" placeholder="servo deg"/>
   <button type="button" id="send-btn">Set</button>
+
+  <h2>Get battery voltage</h2>
+  <h3>Current voltage is: <span id="voltage-display"></span></h3>
+  <button type="button" id="voltage-btn">Get voltage</button>
+
   <script>
     // socket feed
     // Create WebSocket connection.
     const socket = new WebSocket('ws://192.168.1.187:80'); // esp01
 
-    // Connection opened
-    socket.addEventListener('open', function (event) { 
-      console.log('connected');
-      socket.send('Hello Server!');
-
-      // keep connection to esp01 alive
-      setInterval(() => {
-        socket.send('poll');
-      }, 1000);
-
+    const setupManualServoControl = (socket) => {
       // bind inputs/run commands
       const servoPinInput = document.getElementById('servo-pin');
       const servoDegInput = document.getElementById('servo-deg');
@@ -49,6 +45,38 @@
 
         socket.send(`msc_${servoPinVal}__${servoDegVal}`);
       });
+    }
+
+    const setupBatteryVoltage = (socket) => {
+      const getVoltageBtn = document.getElementById('voltage-btn');
+
+      getVoltageBtn.addEventListener('click', () => {
+        socket.send('tel_battery_voltage');
+      });
+    }
+
+    // connection opened, send messages to robot
+    socket.addEventListener('open', function (event) { 
+      console.log('connected');
+      socket.send('Hello Server!');
+
+      // keep connection to esp01 alive
+      setInterval(() => {
+        socket.send('poll');
+      }, 1000);
+
+      setupManualServoControl(socket);
+      setupBatteryVoltage(socket);
+    });
+
+    // listen for messages from robot
+    socket.addEventListener('message', function (event) {
+      const robotMsg = event.data;
+
+      if (robotMsg.indexOf('bv_') !== -1) {
+        const voltageDisplay = document.getElementById('voltage-display');
+        voltageDisplay.innerText = robotMsg.split('bv_')[1];
+      }
     });
   </script>
 </body>

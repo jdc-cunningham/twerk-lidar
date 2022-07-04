@@ -148,3 +148,12 @@ void plotCube(float size, float sweepAngle, float distance)
   writeToEsp("plot cube, ");
   writeToEsp(String(size) + "," + String(sweepAngle) + "," + String(distance));
 }
+
+void checkTelemetry(String espMsg)
+{
+  if (espMsg == "tel_battery_voltage")
+  {
+    float batteryVoltage = getBatteryVoltage();
+    writeToEsp("bv_" + String(batteryVoltage));
+  }
+}

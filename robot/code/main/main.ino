@@ -79,7 +79,7 @@ void setup()
 //   }
 // }
 
-void web_messaging()
+void webMessaging()
 {
   // poll is like a keep-alive, it bunches up due timing mismatch
   String espMsg = getEspSerialMsg().replace("poll", "");
@@ -96,7 +96,12 @@ void web_messaging()
     // manual web-based servo control
     if (espMsg.indexOf("msc_") > -1)
     {
-      manual_move_servo(espMsg);
+      manualMoveServo(espMsg);
+    }
+
+    if (espMsg.indexOf("tel_") > -1)
+    {
+      checkTelemetry(espMsg);
     }
 
     clearEspSerial();
@@ -112,7 +117,7 @@ void loop()
 
   // delay(10000);
 
-  web_messaging();
+  webMessaging();
 
   // if (forwardCounter < 5)
   // {
