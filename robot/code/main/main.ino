@@ -34,6 +34,8 @@ void setup()
 
   setup_robot();
 
+  // turnLeft();
+
   // performFullScan(false);
 
   // allow time to position robot
@@ -89,7 +91,7 @@ void loop()
 
   webMessaging();
 
-  moveForward5();
+  // moveForward5();
 
   // if (forwardCounter < 5)
   // {

@@ -93,10 +93,9 @@ void turnLeft()
   mf5MoveFrontRightLegUp();
   // sampleGyroZ = true;
   leftTurnPivot();
-  sampleGyroZ = false;
+  // sampleGyroZ = false;
   mf5MoveFrontRightLegDownFromUp();
 
-  // mf5MoveFrontRightLegUp();
   mf5MoveFrontLeftLegUp();
   leftTurnPivot2();
   mf5MoveFrontLeftLegDownFromUp();
@@ -104,7 +103,7 @@ void turnLeft()
   mf5MoveBackLeftLegUp();
   // sampleGyroZ = true;
   leftTurnPivot3();
-  sampleGyroZ = false;
+  // sampleGyroZ = false;
   mf5MoveBackLeftLegDownFromUp();
 
   // at 45 deg here
@@ -119,7 +118,7 @@ void turnLeft()
   mf5MoveFrontRightLegDownFromUp();
 
   // increment rotation
-  robotHeading -= 58.8;
+  robotHeading -= 56.3;
 
   // updateTelemetry("tl");
 }
