@@ -55,10 +55,11 @@ String curEspMsg = "";
 int forwardGaitCount = 0;
 
 // tilt angles
-float u1 = 13.1;
-float u2 = 18.7;
-float d1 = -6.7;
-float d2 = -15.9;
+float u1 = 18.7;
+float u2 = 9.8;
+float c1 = 2; // assumed 0 but it's not
+float d1 = -8.4;
+float d2 = -17.6;
 
 // sweep angles
 float sweepRightMax = 18.7; // 19.3
