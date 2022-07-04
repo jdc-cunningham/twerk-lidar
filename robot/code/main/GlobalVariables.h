@@ -5,7 +5,7 @@
 #include <string>
 
 bool motionInProgress = false;
-int servoMotionDelay = 20; // ms
+int servoMotionDelay = 4; // ms
 int stepDelay = 0; // ms usually a second or more
 
 // these positions are for a >= quad stance (top view)

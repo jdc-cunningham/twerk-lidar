@@ -31,77 +31,47 @@ void setup_robot()
 void setup()
 {
   Serial.begin(115200);
-
   setup_robot();
 
   // allow time to position robot
   delay(10000);
-
-  // turnLeft();
-
-  performFullScan(false);
-
-  // performFullScan(true);
-  // leftTurnPivot();
-  // frontRightLegUp();
-  // switchToRightDefaultStance();
 }
 
-// void main_nav_process()
-// {
-//   // moveForward5();
-//   // turnLeft();
-//   performFullScan(false);
+void main_nav_process()
+{
+  performFullScan(false);
 
-//   // check close
-//   // means something is within 4 inches or bad ToF measurements
-//   // the ToF sensor corrects erroneous measurements by outputting full distance for anything
-//   // less than 3", this seems to happen more often when scanning open space
-//   // also if measurements are under 4" it's considered a need to turn
-//   if (forwardGaitCount < 3 || posErrVals.size() > 10)
-//   {
-//     forwardGaitCount = 0;
-//   }
+  // check close
+  // means something is within 4 inches or bad ToF measurements
+  // the ToF sensor corrects erroneous measurements by outputting full distance for anything
+  // less than 3", this seems to happen more often when scanning open space
+  // also if measurements are under 4" it's considered a need to turn
+  if (forwardGaitCount < 3 || posErrVals.size() > 10)
+  {
+    forwardGaitCount = 0;
+  }
 
-//   if (forwardGaitCount == 0)
-//   {
-//     plotCube(12, robotHeading, robotDistance < 4 ? 4 : robotDistance);
-//   }
+  if (forwardGaitCount == 0)
+  {
+    plotCube(12, robotHeading, robotDistance < 4 ? 4 : robotDistance);
+  }
 
-//   if (forwardGaitCount == 0)
-//   {
-//     robotDistance = 0;
-//     turnLeft();
-//   } else
-//   {
-//     for (int i = 0; i < forwardGaitCount; i++)
-//     {
-//       robotDistance += forwardGaitCount * 2;
-//       moveForward5();
-//     }
-//   }
-// }
+  if (forwardGaitCount == 0)
+  {
+    robotDistance = 0;
+    turnLeft();
+  } else
+  {
+    for (int i = 0; i < forwardGaitCount; i++)
+    {
+      robotDistance += forwardGaitCount * 2;
+      moveForward5();
+    }
+  }
+}
 
 void loop()
 {
-  // moveForward5();
-  // delay(10000);
-
-  // delay(10000);
-
   webMessaging();
-
-  // moveForward5();
-
-  // if (forwardCounter < 5)
-  // {
-  //   forwardCounter += 1;
-  //   moveForward5();
-  // } else
-  // {
-  //   forwardCounter = 0;
-  //   turnLeft();
-  // }
-
-  // delay(1000);
+  main_nav_process();
 }
