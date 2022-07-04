@@ -18,18 +18,18 @@ struct joint {
 };
 
 // should follow clockwise but it does not
-joint frontRightInnerJoint = {70, 70, 45, 160};
-joint frontRightMiddleJoint = {80, 80, 40, 180};
-joint frontRightOuterJoint = {105, 105, 50, 160};
-joint backRightInnerJoint = {80, 80, 0, 110};
-joint backRightMiddleJoint = {90, 90, 0, 140};
-joint backRightOuterJoint = {67, 67, 15, 130};
-joint frontLeftInnerJoint = {30, 30, 0, 100};
-joint frontLeftMiddleJoint = {70, 70, 40, 160};
-joint frontLeftOuterJoint = {95, 95, 0, 180};
-joint backLeftInnerJoint = {125, 125, 60, 100};
-joint backLeftMiddleJoint = {85, 85, 30, 180};
-joint backLeftOuterJoint = {85, 85, 70, 140};
+joint frontRightInnerJoint = {70, 70, 45, 160};       // 0
+joint frontRightMiddleJoint = {80, 80, 40, 180};      // 1
+joint frontRightOuterJoint = {105, 105, 50, 160};     // 2
+joint backRightInnerJoint = {80, 80, 0, 110};         // 3
+joint backRightMiddleJoint = {90, 90, 0, 140};        // 4
+joint backRightOuterJoint = {67, 67, 15, 130};        // 5
+joint frontLeftInnerJoint = {30, 30, 0, 100};         // 6
+joint frontLeftMiddleJoint = {70, 70, 40, 160};       // 7
+joint frontLeftOuterJoint = {95, 95, 0, 180};         // 8
+joint backLeftInnerJoint = {125, 125, 60, 100};       // 9
+joint backLeftMiddleJoint = {85, 85, 30, 180};        // 10
+joint backLeftOuterJoint = {85, 85, 70, 140};         // 11
 
 bool sampleDepth = false;
 bool sampleGyroZ = false; // yaw

@@ -41,27 +41,6 @@ void setAndCenterServos()
 }
 
 /**
- * @brief this function is a wrapper around Joint.write() however
- * it checks against the servo's min/max throws based on robot geometry
- * the min/max values are determined upon assembling the robot/calibrated
- * manually since the servos have not feedback
- * 
- * @param servo 
- * @param deg 
- */
-void safeServoWrite(int servoPin, int deg)
-{
-  joint jointToMove = getJointByPin(servoPin);
-  int servoMin = jointToMove.minPos;
-  int servoMax = jointToMove.maxPos;
-
-  if (deg <= servoMax && deg >= servoMin)
-  {
-    jointToMove.servo.write(deg);
-  }
-}
-
-/**
  * @brief this function is used to move the servos by a web interface
  * espMsg pattern msc_servoInt__deg
  */
@@ -76,6 +55,7 @@ void manualMoveServo(String espMsg)
 // based on visual observation of Regis Hsu 2017 spider bot
 void moveForward5()
 {
+  // these motions could specify degree, dir and use global to know where servo is
   mf5MoveFrontRightLegUp();
   mf5MoveFrontRightLegForward();
   mf5MoveFrontRightLegDownFromUp();
@@ -101,70 +81,6 @@ void moveForward5()
   mf5MoveBackRightLegDownFromUp();
 
   // updateTelemetry("mf");
-}
-
-void leftTurnPivot()
-{
-  int servoGroupArr[][3] = {
-    {6, 30, 0},
-    {9, 125, 95},
-    {3, 80, 50},
-    {0, 70, 100}
-  };
-
-  moveServos(servoGroupArr, 4, servoMotionDelay);
-}
-
-void leftTurnPivot2()
-{
-  int servoGroupArr[][3] = {
-    {6, 0, 60}, // front left inner
-    {9, 95, 65},
-    {3, 50, 20},
-    {0, 100, 70}
-  };
-
-  moveServos(servoGroupArr, 4, servoMotionDelay);
-}
-
-void leftTurnPivot3()
-{
-  int servoGroupArr[][3] = {
-    {6, 60, 30}, // front left inner
-    {9, 65, 125}, // back left inner
-    {3, 20, 0}, // back right inner
-    {0, 70, 40}
-  };
-
-  moveServos(servoGroupArr, 4, servoMotionDelay);
-}
-
-void ltp3ToNeutral()
-{
-  int servoGroupArr[][3] = {
-    {3, 0, 80} // back right inner
-  };
-
-  moveServos(servoGroupArr, 1, servoMotionDelay);
-}
-
-void ltp3ToNeutral2()
-{
-  int servoGroupArr[][3] = {
-    {0, 40, 70} // front right inner
-  };
-
-  moveServos(servoGroupArr, 1, servoMotionDelay);
-}
-
-void ltp3ToNeutral3()
-{
-  int servoGroupArr[][3] = {
-    {9, 95, 125}, // back left inner
-    {1, 60, 80}
-  };
-
-  moveServos(servoGroupArr, 2, servoMotionDelay);
 }
 
 // also based on Regis Hsu 2017 spider robot turn gait
