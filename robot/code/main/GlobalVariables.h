@@ -25,11 +25,11 @@ joint backRightInnerJoint = {80, 80, 0, 110};
 joint backRightMiddleJoint = {90, 90, 0, 140};
 joint backRightOuterJoint = {67, 67, 15, 130};
 joint frontLeftInnerJoint = {30, 30, 0, 100};
-joint frontLeftMiddleJoint = {80, 80, 40, 160};
-joint frontLeftOuterJoint = {85, 85, 0, 180};
+joint frontLeftMiddleJoint = {70, 70, 40, 160};
+joint frontLeftOuterJoint = {95, 95, 0, 180};
 joint backLeftInnerJoint = {125, 125, 60, 100};
-joint backLeftMiddleJoint = {75, 75, 30, 180};
-joint backLeftOuterJoint = {95, 95, 70, 140};
+joint backLeftMiddleJoint = {85, 85, 30, 180};
+joint backLeftOuterJoint = {85, 85, 70, 140};
 
 bool sampleDepth = false;
 bool sampleGyroZ = false; // yaw

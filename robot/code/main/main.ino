@@ -33,7 +33,7 @@ void setup()
 
   setup_robot();
 
-  performFullScan(false);
+  // performFullScan(false);
 
   // allow time to position robot
   // delay(10000);
