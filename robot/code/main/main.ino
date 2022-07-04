@@ -34,12 +34,12 @@ void setup()
 
   setup_robot();
 
+  // allow time to position robot
+  delay(10000);
+
   // turnLeft();
 
-  // performFullScan(false);
-
-  // allow time to position robot
-  // delay(10000);
+  performFullScan(false);
 
   // performFullScan(true);
   // leftTurnPivot();
