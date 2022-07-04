@@ -56,7 +56,7 @@ void tiltCenterFromUp2()
     {4, 130, 110},
     {1, 115, 100},
     {11, 115, 100},
-    {5, 35, 50}
+    {5, 33, 48}
   };
 
   moveServos(servoGroupArr, 8, servoMotionDelay);
@@ -72,7 +72,7 @@ void tiltCenterFromUp1()
     {4, 110, 90},
     {1, 100, 80},
     {11, 100, 85},
-    {5, 50, 65}
+    {5, 48, 67}
   };
 
   moveServos(servoGroupArr, 8, servoMotionDelay);
@@ -88,7 +88,7 @@ void tiltDown1()
     {4, 90, 70},
     {1, 80, 65},
     {11, 85, 70}, // outer
-    {5, 65, 80} // outer
+    {5, 67, 82} // outer
   };
 
   moveServos(servoGroupArr, 8, servoMotionDelay);
@@ -104,7 +104,7 @@ void tiltDown2()
     {4, 70, 50},
     {1, 65, 55},
     {11, 70, 55}, // outer
-    {5, 80, 95} // outer
+    {5, 82, 97} // outer
   };
 
   moveServos(servoGroupArr, 8, servoMotionDelay);
@@ -120,7 +120,7 @@ void tiltCenterFromDown2()
     {4, 50, 70},
     {1, 55, 65},
     {11, 55, 70}, // outer
-    {5, 95, 80} // outer
+    {5, 97, 82} // outer
   };
 
   moveServos(servoGroupArr, 8, servoMotionDelay);
@@ -136,7 +136,7 @@ void tiltCenterFromDown1()
     {4, 70, 90},
     {1, 65, 80},
     {11, 70, 85},
-    {5, 80, 65}
+    {5, 82, 67}
   };
 
   moveServos(servoGroupArr, 8, servoMotionDelay);
@@ -152,7 +152,7 @@ void tiltUp1()
     {4, 90, 110},
     {1, 80, 100},
     {11, 85, 100},
-    {5, 65, 50}
+    {5, 67, 48}
   };
 
   moveServos(servoGroupArr, 8, servoMotionDelay);
@@ -168,7 +168,7 @@ void tiltUp2()
     {4, 110, 130},
     {1, 100, 115},
     {11, 100, 115},
-    {5, 50, 35}
+    {5, 48, 33}
   };
 
   moveServos(servoGroupArr, 8, servoMotionDelay);
