@@ -73,5 +73,5 @@ void main_nav_process()
 void loop()
 {
   webMessaging(); // internal delay + 250ms
-  // main_nav_process();
+  // main_nav_process(); // will call this from web interface
 }

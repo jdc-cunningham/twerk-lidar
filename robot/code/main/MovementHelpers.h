@@ -176,10 +176,11 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
 
     if (imu.Read())
     {
-      if (sampleDepth)
+      // sample outer-most pos and every 4th degree
+      if (sampleDepth && (pos == 0 || (pos == largestServoRange - 1) || pos % 4 == 0))
       {
         float distSample = tofSensor.readRangeSingleMillimeters();
-        float distSampleIn = (distSample * 0.0393701) + 2; // add extra distance to not run into things
+        float distSampleIn = (distSample * 0.0393701);
         
         // this catches bad measurements
         // something can't be this close due to the allen wrench counter weight
