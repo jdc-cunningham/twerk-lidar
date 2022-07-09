@@ -72,6 +72,6 @@ void main_nav_process()
 
 void loop()
 {
-  webMessaging();
-  main_nav_process();
+  webMessaging(); // internal delay + 250ms
+  // main_nav_process();
 }

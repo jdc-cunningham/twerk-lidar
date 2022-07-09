@@ -3,21 +3,28 @@
 
 // https://github.com/pololu/vl53l0x-arduino/blob/master/examples/Single/Single.ino
 
-VL53L0X sensor;
+VL53L0X tofSensor;
 
 #define HIGH_SPEED
 
 void setupTof() {
   Wire.begin();
-  sensor.setTimeout(500);
+  tofSensor.setTimeout(500);
 
-  if (!sensor.init())
+  if (!tofSensor.init())
   {
     Serial.println("Failed to detect and initialize sensor!");
     while (1) {}
   }
 
   #if defined HIGH_SPEED
-    sensor.setMeasurementTimingBudget(20000);
+    tofSensor.setMeasurementTimingBudget(20000);
   #endif
+}
+
+float getTofDistance()
+{
+  float distSample = tofSensor.readRangeSingleMillimeters();
+  float distSampleIn = (distSample * 0.0393701);
+  return distSampleIn;
 }

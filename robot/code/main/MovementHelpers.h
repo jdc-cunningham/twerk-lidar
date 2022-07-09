@@ -178,8 +178,8 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
     {
       if (sampleDepth)
       {
-        float distSample = sensor.readRangeSingleMillimeters();
-        float distSampleIn = (distSample * 0.0393701) - 0.5; // due to sway forward
+        float distSample = tofSensor.readRangeSingleMillimeters();
+        float distSampleIn = (distSample * 0.0393701) + 2; // add extra distance to not run into things
         
         // this catches bad measurements
         // something can't be this close due to the allen wrench counter weight

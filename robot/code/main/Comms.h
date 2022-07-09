@@ -23,8 +23,14 @@ void webMessaging()
       checkTelemetry(espMsg);
     }
 
+    if (espMsg.indexOf("sensor_d") > -1)
+    {
+      float tofDistance = getTofDistance();
+      writeToEsp("tofd_" + String(tofDistance));
+    }
+
     clearEspSerial();
   }
 
-  delay(1000); // delay for sync
+  delay(250); // delay for sync
 }
