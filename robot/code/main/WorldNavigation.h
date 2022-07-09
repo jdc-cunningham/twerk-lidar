@@ -13,12 +13,12 @@
 // counter-clockwise is positive rotation in all axes
 
 float bodyLargestDimension = 12; // but treated as cube
-float robotTofSensorHeight = 3.59;
+float robotTofSensorHeight = 3.72;
 float minDistance = 7.5; // room for robot to turn, 6" + 1.5" sensor vs. front-left leg
 float sensorToMiddleOfBody = 2.25;
 float extVerRotationAngle = 58.8; // external verified
-float minScanDistance = 14.62;
-float imuFromFloorHeight = 3.5;
+float minScanDistance = 18.0;
+float imuFromFloorHeight = 3.75;
 float curAngle = 0; // done in 52 increments
 float robotForwardGaitDistance = 2.0;
 
