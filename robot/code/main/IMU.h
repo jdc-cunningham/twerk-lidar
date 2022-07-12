@@ -129,7 +129,8 @@ float radianToDegree(float rad)
   return rad * 57.2958;
 }
 
-void setupImu() {
+void setupImu()
+{
   Serial.begin(115200);
   // while(!Serial) {}
   Wire1.begin();
@@ -143,5 +144,15 @@ void setupImu() {
   if (!imu.ConfigSrd(19)) {
     Serial.println("Error configured SRD");
     while(1) {}
+  }
+}
+
+void isUpsideDown() 
+{
+  // negative accel means it's upright
+  if (imu.Read() && imu.accel_z_mps2() > 0)
+  {
+    writeToEsp("e_ud");
+    stopRobot = true; // stops robot from moving
   }
 }

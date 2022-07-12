@@ -74,4 +74,5 @@ void loop()
 {
   webMessaging(); // internal delay + 250ms
   // main_nav_process(); // will call this from web interface
+  isUpsideDown();
 }
