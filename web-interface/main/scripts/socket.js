@@ -21,5 +21,6 @@ socket.addEventListener('message', function (event) {
   receivedMsg(robotMsg);
 
   batteryVoltage(robotMsg);
+  upsideDown(robotMsg);
 });
 
