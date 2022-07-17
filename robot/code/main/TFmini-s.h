@@ -26,7 +26,7 @@ float getTFminiSDistance()
 
   bool samplingComplete = false;
   int sampleCount = 0;
-  int maxSampleCount = 30;
+  int maxSampleCount = 30; // tried this at 5, got bad values like 30, 284033, 14540... etc, but bumping up to 30 made it work as expected
   std::vector<float> samples;
 
   while (!samplingComplete)
