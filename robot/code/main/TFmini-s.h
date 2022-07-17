@@ -6,23 +6,23 @@
 #include <vector>
 #include <numeric>
 
-#define TFMINISSERIAL Serial3
+#define TFMINI_S_SERIAL Serial3
 
 void setupTFminiS()
 {
-  TFMINISSERIAL.begin(115200);
+  TFMINI_S_SERIAL.begin(115200);
 }
 
 float getTFminiSDistance()
 {
-  TFMINISSERIAL.print(0x42); // bytes(b'B')
-  TFMINISSERIAL.print(0x57); // bytes(b'w')
-  TFMINISSERIAL.print(0x02); // bytes(2)
-  TFMINISSERIAL.print(0x00); // bytes(0)
-  TFMINISSERIAL.print(0x00);
-  TFMINISSERIAL.print(0x00);
-  TFMINISSERIAL.print(0x01); // bytes(1)
-  TFMINISSERIAL.print(0x06); // bytes(6)
+  TFMINI_S_SERIAL.print(0x42); // bytes(b'B')
+  TFMINI_S_SERIAL.print(0x57); // bytes(b'w')
+  TFMINI_S_SERIAL.print(0x02); // bytes(2)
+  TFMINI_S_SERIAL.print(0x00); // bytes(0)
+  TFMINI_S_SERIAL.print(0x00);
+  TFMINI_S_SERIAL.print(0x00);
+  TFMINI_S_SERIAL.print(0x01); // bytes(1)
+  TFMINI_S_SERIAL.print(0x06); // bytes(6)
 
   bool samplingComplete = false;
   int sampleCount = 0;
@@ -31,19 +31,19 @@ float getTFminiSDistance()
 
   while (!samplingComplete)
   {
-    if (TFMINISSERIAL.available() >= 9)
+    if (TFMINI_S_SERIAL.available() >= 9)
     {
-      if (TFMINISSERIAL.read() == 89 && TFMINISSERIAL.read() == 89) // b'Y'
+      if (TFMINI_S_SERIAL.read() == 89 && TFMINI_S_SERIAL.read() == 89) // b'Y'
       {
-        int Dist_L = TFMINISSERIAL.read();
-        int Dist_H = TFMINISSERIAL.read();
+        int Dist_L = TFMINI_S_SERIAL.read();
+        int Dist_H = TFMINI_S_SERIAL.read();
         float Dist_Total = (Dist_H * 256) + Dist_L;
 
         // not sure why this code is like this
         // clears buffer? returns same thing
         for (int i = 0; i < 5; i++)
         {
-          TFMINISSERIAL.read();
+          TFMINI_S_SERIAL.read();
           // if (Dist_total < 999) // need to consider adding a guard like this for bad values or have a cap based on max scan interest
           // {
             samples.push_back(Dist_Total);
