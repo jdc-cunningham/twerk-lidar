@@ -1,6 +1,6 @@
 #include "GlobalVariables.h"
 #include "Led.h"
-#include "ToF.h"
+#include "TFmini-s.h"
 #include "ESPSerial.h"
 #include "IMU.h"
 #include "Power.h"
@@ -19,7 +19,7 @@ void setup_robot()
   setupBlueLed();
   setAndCenterServos();
   setupEspSerial();
-  setupTof();
+  setupTof(); // this is abstracted to use either VL or TF
   setupImu();
 
   // indicates setup is done
