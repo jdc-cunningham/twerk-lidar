@@ -44,7 +44,10 @@ float getTFminiSDistance()
         for (int i = 0; i < 5; i++)
         {
           TFMINISSERIAL.read();
-          samples.push_back(Dist_Total);
+          // if (Dist_total < 999) // need to consider adding a guard like this for bad values or have a cap based on max scan interest
+          // {
+            samples.push_back(Dist_Total);
+          // }
         }
 
         sampleCount += 1;
