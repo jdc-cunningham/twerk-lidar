@@ -1,5 +1,6 @@
 #include "GlobalVariables.h"
 #include "Led.h"
+#include "ToF.h"
 #include "TFmini-s.h"
 #include "ESPSerial.h"
 #include "IMU.h"
@@ -19,7 +20,8 @@ void setup_robot()
   setupBlueLed();
   setAndCenterServos();
   setupEspSerial();
-  setupTof(); // this is abstracted to use either VL or TF
+  setupTof();
+  setupTFminiS();
   setupImu();
 
   // indicates setup is done
@@ -73,6 +75,7 @@ void main_nav_process()
 void loop()
 {
   webMessaging(); // internal delay + 250ms
-  // main_nav_process(); // will call this from web interface
+  main_nav_process(); // will call this from web interface
   isUpsideDown();
+  // Serial.println(getTFminiSDistance());
 }

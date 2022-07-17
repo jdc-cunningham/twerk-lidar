@@ -59,5 +59,4 @@ void getTofDistance()
 void loop()
 {
   getTofDistance();
-  delay(1000);
 }
