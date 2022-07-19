@@ -49,7 +49,7 @@ void pivotCenterFromLeft()
 void tiltCenterFromUp2()
 {
   int servoGroupArr[][3] = {
-    {10, 35, 55},
+    {10, 45, 65},
     {7, 25, 50},
     {2, 70, 90},
     {8, 125, 110},
@@ -65,7 +65,7 @@ void tiltCenterFromUp2()
 void tiltCenterFromUp1()
 {
   int servoGroupArr[][3] = {
-    {10, 55, 85},
+    {10, 65, 85},
     {7, 50, 70},
     {2, 90, 105},
     {8, 110, 95},
@@ -145,7 +145,7 @@ void tiltCenterFromDown1()
 void tiltUp1()
 {
   int servoGroupArr[][3] = {
-    {10, 85, 55},
+    {10, 85, 65},
     {7, 70, 50},
     {2, 105, 90},
     {8, 95, 110},
@@ -161,7 +161,7 @@ void tiltUp1()
 void tiltUp2()
 {
   int servoGroupArr[][3] = {
-    {10, 55, 35},
+    {10, 65, 45},
     {7, 50, 25},
     {2, 90, 70},
     {8, 110, 125},
