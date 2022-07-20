@@ -15,7 +15,7 @@ void dumpData(bool useSerial)
     if (useSerial) Serial.println(it->second);
   }
 
-  // Serial.println("g");
+  if (useSerial) Serial.println("g");
   for (auto it = gyroVals.cbegin(); it != gyroVals.cend(); ++it)
   {
     if (useSerial) Serial.println(it->first);
