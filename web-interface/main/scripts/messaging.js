@@ -14,19 +14,19 @@ const receivedMsg = (msg) => {
 
 let activeTab = 'sent';
 
-const toggleTabs = (activeTab) => {
-  if (activeTab === 'sent') {
+const toggleTabs = (setTab) => {
+  if (setTab === 'sent') {
     receivedTab.classList = '';
     receivedDisplay.classList = 'hidden';
     sentTab.classList = 'active';
     sentDisplay.classList = '';
-    activeTab = 'sent';
+    activeTab = setTab;
   } else {
     sentTab.classList = '';
     sentDisplay.classList = 'hidden';
     receivedTab.classList = 'active';
     receivedDisplay.classList = '';
-    activeTab = 'received';
+    activeTab = setTab;
   }
 }
 
