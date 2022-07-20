@@ -5,7 +5,7 @@
 #include <string>
 
 bool motionInProgress = false;
-int servoMotionDelay = 10; // ms - the higher this number, the slower the robot moves, 4 is normal speed
+int servoMotionDelay = 4; // ms - the higher this number, the slower the robot moves, 4 is normal speed
 int stepDelay = 0; // ms usually a second or more
 
 // these positions are for a >= quad stance (top view)
@@ -67,3 +67,9 @@ float sweepLeftMax = 16.5; // 15.2, don't match lol
 
 float robotHeading = 0;
 float robotDistance = 0;
+
+float lidarSensorDistanceFromCenter = 3.38;
+float lidarSensorDistanceFromFloor = 3.75;
+
+float tofSensorDistanceFromCenter = 2.78;
+float tofSensorDistanceFromFloor = 3.125;

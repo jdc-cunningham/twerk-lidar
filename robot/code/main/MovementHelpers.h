@@ -177,7 +177,8 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
     if (imu.Read())
     {
       // sample outer-most pos and every 4th degree
-      if (sampleDepth && (pos == 0 || (pos == largestServoRange - 1) || pos % 4 == 0))
+      // if (sampleDepth && (pos == 0 || (pos == largestServoRange - 1) || pos % 4 == 0))
+      if (sampleDepth)
       {
         float distSample = tofSensor.readRangeSingleMillimeters();
         float distSampleIn = (distSample * 0.0393701);
