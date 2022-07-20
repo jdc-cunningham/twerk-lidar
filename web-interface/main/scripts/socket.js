@@ -4,8 +4,8 @@ const socket = new WebSocket('ws://192.168.1.187:80'); // esp01 on robot
 
  // connection opened, send messages to robot
  socket.addEventListener('open', function (event) {
-  socket.send('Hello Server!');
-  sentMsg('Hello Server!');
+  socket.send('Hello robot!');
+  sentMsg('Hello robot!');
   setRobotConnected(true);
 
   // keep connection to esp01 alive
