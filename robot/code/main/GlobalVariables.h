@@ -73,3 +73,7 @@ float lidarSensorDistanceFromFloor = 3.75;
 
 float tofSensorDistanceFromCenter = 2.78;
 float tofSensorDistanceFromFloor = 3.125;
+
+// this means data from the scan is sent to the monitor
+// usually to be copied/pasted into a spreadsheet manually
+bool dumpSerial = false;

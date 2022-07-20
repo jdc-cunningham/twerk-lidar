@@ -12,7 +12,7 @@
  */
 void sweep(int runCount, bool scan = false, String scanType = "")
 {
-  bool useSerial = false; // true means it goes to monitor for manual copy/paste capture
+  bool useSerial = dumpSerial; // true means it goes to monitor for manual copy/paste capture
 
   if (runCount == 1)
   {
@@ -58,11 +58,11 @@ void sweep(int runCount, bool scan = false, String scanType = "")
 
 void performFullScan(bool addDelayBetweenSamples = false)
 {
+  bool printData = dumpSerial; // to serial monitor
   tiltUp1();
   tiltUp2();
   delay(1000); // wait to stop moving
-  // sweep(1, true, "");
-  sweep(1, true, "u2"); // second param means no delay
+  sweep(1, true, printData ? "" : "u2"); // second param means no delay
 
   if (addDelayBetweenSamples)
   {
@@ -71,8 +71,7 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltCenterFromUp2();
   delay(1000); // wait to stop moving
-  // sweep(2, true, "");
-  sweep(2, true, "u1");
+  sweep(2, true, printData ? "" : "u1");
 
   if (addDelayBetweenSamples)
   {
@@ -81,8 +80,7 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltCenterFromUp1();
   delay(1000); // wait to stop moving
-  // sweep(3, true, "");
-  sweep(3, true, "m1");
+  sweep(3, true, printData ? "" : "m1");
 
   if (addDelayBetweenSamples)
   {
@@ -91,8 +89,7 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltDown1();
   delay(1000); // wait to stop moving
-  // sweep(1, true, "");
-  sweep(1, true, "d1");
+  sweep(1, true, printData ? "" : "d1");
 
   if (addDelayBetweenSamples)
   {
@@ -101,8 +98,7 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltDown2();
   delay(1000); // wait to stop moving
-  // sweep(2, true, "");
-  sweep(2, true, "d2");
+  sweep(2, true, printData ? "" : "d2");
 
   if (addDelayBetweenSamples)
   {

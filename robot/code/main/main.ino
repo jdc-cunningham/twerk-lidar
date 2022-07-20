@@ -37,6 +37,7 @@ void setup()
 
   // allow time to position robot
   delay(10000);
+  performFullScan(true);
 }
 
 void main_nav_process()
@@ -74,7 +75,7 @@ void main_nav_process()
 
 void loop()
 {
-  performFullScan(false);
+  // performFullScan(false);
   // webMessaging(); // internal delay + 250ms
   // main_nav_process(); // will call this from web interface
   // isUpsideDown();
