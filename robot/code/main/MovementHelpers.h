@@ -191,30 +191,30 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
         } else if (distSampleIn <= 4) {
           depthVals[timeNow] = 4;
         } else {
-          depthVals[timeNow] = distSampleIn;
+          depthVals[timeNow] = roundUp(distSampleIn);
         }
       }
 
       // pitch angle rate
       if (sampleGyroX)
       {
-        gyroVals[timeNow] = radianToDegree(imu.gyro_x_radps());
+        gyroVals[timeNow] = roundUp(radianToDegree(imu.gyro_x_radps()));
       }
 
       // yaw angle rate
       if (sampleGyroZ)
       {
-        gyroVals[timeNow] = radianToDegree(imu.gyro_z_radps());
+        gyroVals[timeNow] = roundUp(radianToDegree(imu.gyro_z_radps()));
       }
 
       if (sampleYAccel)
       {
-        yAccelVals[timeNow] = imu.accel_y_mps2();
+        yAccelVals[timeNow] = roundUp(imu.accel_y_mps2());
       }
 
       if (sampleXAccel)
       {
-        xAccelVals[timeNow] = imu.accel_x_mps2();
+        xAccelVals[timeNow] = roundUp(imu.accel_x_mps2());
       }
     }
 

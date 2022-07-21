@@ -34,3 +34,12 @@ void webMessaging()
 
   delay(250); // delay for sync
 }
+
+// this sends the servoPosVals, gyroVals and depthVals
+// all tied together by time (ellapsed millis)
+void sendMeshDataToWeb()
+{
+  bool allDataSent = false;
+
+  
+}

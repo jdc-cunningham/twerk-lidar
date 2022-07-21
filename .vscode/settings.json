@@ -78,6 +78,8 @@
     "unordered_map": "cpp",
     "compare": "cpp",
     "concepts": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "numeric": "cpp",
+    "xtree": "cpp"
   }
 }

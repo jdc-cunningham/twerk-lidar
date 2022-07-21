@@ -77,3 +77,6 @@ float tofSensorDistanceFromFloor = 3.125;
 // this means data from the scan is sent to the monitor
 // usually to be copied/pasted into a spreadsheet manually
 bool dumpSerial = false;
+
+// these store the pan/tilt values for transmission
+std::map<std::string, std::map<float, float>> scanSampleValues = {};
