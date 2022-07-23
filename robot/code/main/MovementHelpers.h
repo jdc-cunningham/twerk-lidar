@@ -222,6 +222,7 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
     {
       servoPosVals[timeNow] = pos;
     }
+
     delay(motionDuration);
   }
 

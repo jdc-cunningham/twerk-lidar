@@ -1,3 +1,13 @@
+// this is in the wrong place
+// this sends the servoPosVals, gyroVals and depthVals
+// all tied together by time (ellapsed millis)
+void sendMeshDataToWeb()
+{
+  bool allDataSent = false;
+
+  
+}
+
 void dumpData(bool useSerial, String scanType)
 {
   if (useSerial)

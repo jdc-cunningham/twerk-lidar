@@ -80,6 +80,23 @@
     "concepts": "cpp",
     "variant": "cpp",
     "numeric": "cpp",
-    "xtree": "cpp"
+    "xtree": "cpp",
+    "cinttypes": "cpp",
+    "condition_variable": "cpp",
+    "deque": "cpp",
+    "coroutine": "cpp",
+    "forward_list": "cpp",
+    "future": "cpp",
+    "iomanip": "cpp",
+    "list": "cpp",
+    "queue": "cpp",
+    "random": "cpp",
+    "regex": "cpp",
+    "set": "cpp",
+    "shared_mutex": "cpp",
+    "stack": "cpp",
+    "thread": "cpp",
+    "typeindex": "cpp",
+    "unordered_set": "cpp"
   }
 }

@@ -79,4 +79,5 @@ float tofSensorDistanceFromFloor = 3.125;
 bool dumpSerial = false;
 
 // these store the pan/tilt values for transmission
+std::string activeScan = "";
 std::map<std::string, std::map<float, float>> scanSampleValues = {};
