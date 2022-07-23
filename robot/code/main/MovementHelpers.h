@@ -179,7 +179,8 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
       float correctedDistanceSampleIn = 0.00;
       float tfMiniSDistance = 0.00;
 
-      if (pos == 0 || pos == largestServoRange || floor(largestServoRange/2))
+      // ToF ranging sensor
+      if (pos == 0 || pos == largestServoRange || pos == floor(largestServoRange/2)) // actually wrong without == 0 part but good to get data
       {
         float distSample = tofSensor.readRangeSingleMillimeters();
         float distSampleIn = (distSample * 0.0393701);
@@ -194,6 +195,7 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
         }
       }
 
+      // lidar distance
       if (pos == 0 || pos == largestServoRange || pos % 3 == 0)
       {
         // tfMiniSDistance = getTFminiSDistance(); // skip until have it

@@ -7,6 +7,18 @@
   <title>Twerk Lidar Robot Web Interface</title>
   <link rel="stylesheet" href="./styles/css-reset.css">
   <link rel="stylesheet" href="./styles/main.css">
+  <style>
+    body { margin: 0; }
+    canvas { display: block; }
+  </style>
+  <script src="../misc-test-code/threejs/js/three.js"></script>
+  <script src="../misc-test-code/threejs/js/OrbitControls.js"></script>
+  <script src="../misc-test-code/threejs/js/three.module.js"></script>
+  <script src="../misc-test-code/threejs/js/ConvexHull.js"></script>
+  <script src="../misc-test-code/threejs/js/ConvexGeometry.js"></script>
+  <script src="../misc-test-code/threejs/js/GetCoordinates.js"></script>
+  <script src="../misc-test-code/threejs/js/utils.js"></script>
+  <script src="../misc-test-code/threejs/js/sample-data-blank.js"></script>
 </head>
 <body>
   <div class="app flex-col">
@@ -33,7 +45,7 @@
         </div>
       </div>
       <div class="app__body-right">
-
+        <canvas id="threejs-canvas"></canvas>
       </div>
     </div>
     <div id="upside-down-modal" class="hidden">
@@ -43,6 +55,7 @@
       </div>
     </div>
   </div>
+  <script src="./scripts/threejs-plotter.js"></script>
   <script src="./scripts/messaging.js"></script>
   <script src="./scripts/statuses.js"></script>
   <script src="./scripts/parseMsgs.js"></script>
