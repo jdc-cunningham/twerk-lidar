@@ -5,19 +5,3 @@ float roundUp(float val)
 {
   return roundf(val * 100) / 100;
 }
-
-// this does not belong here
-void saveDataLocally()
-{
-  // std::map<std::string, std::map<float, float>> scanSampleValues = {};
-
-  // for (auto it = servoPosVals.cbegin(); it != servoPosVals.cend(); ++it)
-  // {
-  //   Serial.println(it->first);
-  // }
-
-  // for (auto it = servoPosVals.cbegin(); it != servoPosVals.cend(); ++it)
-  // {
-  //   Serial.println(it->second);
-  // }
-}

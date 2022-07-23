@@ -59,6 +59,8 @@ void sweep(int runCount, bool scan = false, String scanType = "")
 
 void performFullScan(bool addDelayBetweenSamples = false)
 {
+  // this slows down the robot a lot, each sensor probe takes 20-30ms
+  // it's not used for walking, you can use IMU while walking that does not take 20-30ms to get
   performScan = true; // so moveServos gather samples from the sensors
 
   bool printData = dumpSerial; // to serial monitor
@@ -111,4 +113,6 @@ void performFullScan(bool addDelayBetweenSamples = false)
   tiltCenterFromDown2();
   tiltCenterFromDown1();
   sweep(3, false);
+
+  performScan = false;
 }

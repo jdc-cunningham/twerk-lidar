@@ -2,7 +2,6 @@
 #include <math.h>
 #include <map>
 #include <vector>
-#include <array>
 
 bool motionInProgress = false;
 int servoMotionDelay = 4; // ms - the higher this number, the slower the robot moves, 4 is normal speed
@@ -85,4 +84,5 @@ String activeScan = "";
 // std::map<std::string, std::map<int, float, float, float>> scanSampleValues = {};
 // I'm casting servo pos to float nasty, guess it's fine tested in C++ shell
 // stores scan type (tilt-up-2) -> time ms -> {servoPos, gyroMeasurement, shortScan, longScan}
-std::map<String, std::map<int, std::array<float, 4>>> scanSampleValues = {};
+// change to vector, easier to use
+std::map<String, std::map<int, std::vector<float>>> scanSampleValues = {};

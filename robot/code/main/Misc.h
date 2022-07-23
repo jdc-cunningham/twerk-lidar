@@ -5,7 +5,36 @@ void sendMeshDataToWeb()
 {
   bool allDataSent = false;
 
-  
+  std::vector<String, 5> scanTypes = {"tilt-up-2", "tilt-up-1", "middle", "tilt-down-1", "tilt-down-2"};
+  int lastRow = 0;
+
+  for (int i = 0; i < scanTypes.size(); i++)
+  {
+    std::map<int, std::vector<float>> scanSampleTimes = scanSampleValues[scanTypes[i]];
+
+    // gives you millis time it->first
+    for (auto it = scanSampleTimes.cbegin(); it != scanSampleTimes.cend(); ++it)
+    {
+      // https://stackoverflow.com/questions/4108313/how-do-i-find-the-length-of-an-array
+      std::vector scanSampleData = it->second;
+      int scanSampleLength = scanSampleData.size(); // number of scans for this sample eg. tilt-up-1
+      String msgChunk = ""; // length must be <= 250
+
+      for (int j = 0; j < scanSampleLength; j++)
+      {
+        // https://stackoverflow.com/questions/8581832/converting-a-vectorint-to-string
+        String nextStringChunk = String(scanSampleData.begin(), scanSampleData.end());
+
+        if (msgChunk.length() + nextStringChunk.length() >= 250)
+        {
+          // send what is there now
+        } else
+        {
+
+        }
+      }
+    }
+  }
 }
 
 void dumpData(bool useSerial, String scanType)
@@ -70,9 +99,7 @@ void dumpData(bool useSerial, String scanType)
     xAccelVals = {};
   } else
   {
-    saveDataLocally();
-
-    if (scanType == "d2") // tilt-down-2
+    if (scanType == "tilt-down-2") // last one
     {
       sendMeshDataToWeb();
     }
