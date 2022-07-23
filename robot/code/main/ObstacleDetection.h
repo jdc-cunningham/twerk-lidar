@@ -95,35 +95,35 @@ int parseScanData(std::map<int, float> depthVals, String scanType)
 void performObstacleCheck(String scanType)
 {
   // do obstacle detection check
-  if (scanType == "d1")
+  if (scanType == "tilt-down-1")
   {
     // reset back to min, top scans run first
-    int d1GaitCount = parseScanData(depthVals, "d1");
+    int d1GaitCount = parseScanData(depthVals, "tilt-down-1");
 
     if (d1GaitCount < 4) {
       forwardGaitCount = d1GaitCount;
     }
   }
 
-  if (scanType == "d2")
+  if (scanType == "tilt-down-2")
   {
-    forwardGaitCount = parseScanData(depthVals, "d2");
+    forwardGaitCount = parseScanData(depthVals, "tilt-down-2");
   }
 
   // repeated code
-  if (scanType == "m1")
+  if (scanType == "middle")
   {
-    forwardGaitCount = parseScanData(depthVals, "m1");
+    forwardGaitCount = parseScanData(depthVals, "middle");
   }
 
-  if (scanType == "u1")
+  if (scanType == "tilt-up-1")
   {
-    forwardGaitCount = parseScanData(depthVals, "u1");
+    forwardGaitCount = parseScanData(depthVals, "tilt-up-1");
   }
 
-  if (scanType == "u2")
+  if (scanType == "tilt-up-2")
   {
-    forwardGaitCount = parseScanData(depthVals, "u2");
+    forwardGaitCount = parseScanData(depthVals, "tilt-up-2");
   }
 
   gyroVals = {};

@@ -174,37 +174,33 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
 
     int timeNow = millis();
 
-    if (imu.Read())
+    if (performScan && imu.Read())
     {
-      // sample outer-most pos and every 4th degree
-      // if (sampleDepth && (pos == 0 || (pos == largestServoRange - 1) || pos % 4 == 0))
-      if (sampleDepth)
+      float distSample = tofSensor.readRangeSingleMillimeters();
+      float distSampleIn = (distSample * 0.0393701);
+      float correctedDistanceSampleIn = 0;
+
+      if (distSampleIn == 0 || distSampleIn >= 47)
       {
-        float distSample = tofSensor.readRangeSingleMillimeters();
-        float distSampleIn = (distSample * 0.0393701);
-        
-        // this catches bad measurements
-        // something can't be this close due to the allen wrench counter weight
-        if (distSampleIn == 0 || distSampleIn >= 47)
-        {
-          depthVals[timeNow] = 47; // 47in is based on 1.2m max default measurement
-        } else if (distSampleIn <= 4) {
-          depthVals[timeNow] = 4;
-        } else {
-          depthVals[timeNow] = roundUp(distSampleIn);
-        }
+        correctedDistanceSampleIn = 47; // 47in is based on 1.2m max default measurement
+      } else if (distSampleIn <= 4) {
+        correctedDistanceSampleIn = 4;
+      } else {
+        correctedDistanceSampleIn = roundUp(distSampleIn);
       }
 
-      // pitch angle rate
+      // fill out the basic mesh data
+      scanSampleValues[activeScan][timeNow] = {
+        static_cast<float>(pos), // yuck https://stackoverflow.com/a/22589942/2710227
+        roundUp(radianToDegree(imu.gyro_z_radps())),
+        correctedDistanceSampleIn,
+        getTFminiSDistance()
+      };
+
+      // pitch angle rate, this didn't really work
       if (sampleGyroX)
       {
         gyroVals[timeNow] = roundUp(radianToDegree(imu.gyro_x_radps()));
-      }
-
-      // yaw angle rate
-      if (sampleGyroZ)
-      {
-        gyroVals[timeNow] = roundUp(radianToDegree(imu.gyro_z_radps()));
       }
 
       if (sampleYAccel)

@@ -2,7 +2,7 @@
 #include <math.h>
 #include <map>
 #include <vector>
-#include <string>
+#include <array>
 
 bool motionInProgress = false;
 int servoMotionDelay = 4; // ms - the higher this number, the slower the robot moves, 4 is normal speed
@@ -78,6 +78,11 @@ float tofSensorDistanceFromFloor = 3.125;
 // usually to be copied/pasted into a spreadsheet manually
 bool dumpSerial = false;
 
+bool performScan = false;
+
 // these store the pan/tilt values for transmission
-std::string activeScan = "";
-std::map<std::string, std::map<float, float>> scanSampleValues = {};
+String activeScan = "";
+// std::map<std::string, std::map<int, float, float, float>> scanSampleValues = {};
+// I'm casting servo pos to float nasty, guess it's fine tested in C++ shell
+// stores scan type (tilt-up-2) -> time ms -> {servoPos, gyroMeasurement, shortScan, longScan}
+std::map<String, std::map<int, std::array<float, 4>>> scanSampleValues = {};
