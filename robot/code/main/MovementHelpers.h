@@ -196,7 +196,7 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
 
       if (pos == 0 || pos == largestServoRange || pos % 3 == 0)
       {
-        tfMiniSDistance = getTFminiSDistance();
+        // tfMiniSDistance = getTFminiSDistance(); // skip until have it
       }
 
       // fill out the basic mesh data

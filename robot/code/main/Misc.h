@@ -5,61 +5,56 @@ void sendMeshDataToWeb()
 {
   bool allDataSent = false;
 
-  // std::vector<String, 5> scanTypes = {"tilt-up-2", "tilt-up-1", "middle", "tilt-down-1", "tilt-down-2"};
-  // int lastRow = 0;
-
-  // for (int i = 0; i < scanTypes.size(); i++)
-  // {
-  //   std::map<int, std::vector<float>> scanSampleTimes = scanSampleValues[scanTypes[i]];
-
-  //   // gives you millis time it->first
-  //   for (auto it = scanSampleTimes.cbegin(); it != scanSampleTimes.cend(); ++it)
-  //   {
-  //     // https://stackoverflow.com/questions/4108313/how-do-i-find-the-length-of-an-array
-  //     std::vector scanSampleData = it->second;
-  //     int scanSampleLength = scanSampleData.size(); // number of scans for this sample eg. tilt-up-1
-  //     String msgChunk = ""; // length must be <= 250
-
-  //     for (int j = 0; j < scanSampleLength; j++)
-  //     {
-  //       // https://stackoverflow.com/questions/8581832/converting-a-vectorint-to-string
-  //       String nextStringChunk = String(scanSampleData.begin(), scanSampleData.end());
-
-  //       if (msgChunk.length() + nextStringChunk.length() >= 250)
-  //       {
-  //         // send what is there now
-  //       } else
-  //       {
-
-  //       }
-  //     }
-  //   }
-  // }
-
-  Serial.println("send web");
+  writeToEsp("mtel_start");
 
   std::vector<String> scanTypes = {"tilt-up-2", "tilt-up-1", "middle", "tilt-down-1", "tilt-down-2"};
   int lastRow = 0;
+  int writeCount = 0;
 
   for (int i = 0; i < scanTypes.size(); i++)
   {
+    writeToEsp(scanTypes[i] + "|");
+    writeCount += 1;
+
     std::map<int, std::vector<float>> scanSampleTimes = scanSampleValues[scanTypes[i]];
+    int joinCounter = 5; // cap to 5 (four increments)
+    String msgChunk = "";
 
     // gives you millis time it->first
     for (auto it = scanSampleTimes.cbegin(); it != scanSampleTimes.cend(); ++it)
     {
+      if (joinCounter == 5)
+      {
+        blueLedOn();
+        writeToEsp(msgChunk);
+        writeCount += 1;
+        blueLedOff();
+        delay(1000); // wait to send up
+        joinCounter = 0;
+        msgChunk = "";
+      } else
+      {
+        joinCounter += 1;
+      }
 
       std::vector<float> scanSampleData = it->second;
-      int scanSampleLength = scanSampleData.size(); // number of scans for this sample eg. tilt-up-1
-      String msgChunk = ""; // length must be <= 250
-      String nextStringChunk = String(roundUp(scanSampleData[0]))
+      // int scanSampleLength = scanSampleData.size(); // number of scans for this sample eg. tilt-up-1
+      
+      msgChunk += String(it->first)
+        + "," + String(roundUp(scanSampleData[0]))
         + "," + String(roundUp(scanSampleData[1]))
         + "," + String(roundUp(scanSampleData[2]))
-        + "," + String(roundUp(scanSampleData[3]));
+        + "," + String(roundUp(scanSampleData[3]))
+        + "|"; // separator
+    }
 
-      Serial.println(nextStringChunk);
+    if (msgChunk != "")
+    {
+      writeToEsp(msgChunk); // in case any left over data
     }
   }
+
+  writeToEsp("mtel_end");
 }
 
 void dumpData(bool useSerial, String scanType)
@@ -122,12 +117,5 @@ void dumpData(bool useSerial, String scanType)
     depthVals = {};
     yAccelVals = {};
     xAccelVals = {};
-  } else
-  {
-    Serial.println("dump data call");
-    if (scanType == "tilt-down-2") // last one
-    {
-      sendMeshDataToWeb();
-    }
   }
 }

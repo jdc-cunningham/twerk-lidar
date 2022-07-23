@@ -52,6 +52,11 @@ void sweep(int runCount, bool scan = false, String scanType = "")
       sampleGyroZ = false;
       dumpData(useSerial, scanType);
     }
+    
+    if (!scan && !scanType)
+    {
+      sendMeshDataToWeb();
+    }
   }
 
   // performObstacleCheck(scanType); // needs to be reworked
