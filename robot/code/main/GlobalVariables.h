@@ -63,6 +63,7 @@ float d2 = -17.6;
 // sweep angles
 float sweepRightMax = 18.7; // 19.3
 float sweepLeftMax = 16.5; // 15.2, don't match lol
+// rest of angles in recent devlog
 
 float robotHeading = 0;
 float robotDistance = 0;

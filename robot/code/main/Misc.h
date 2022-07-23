@@ -36,7 +36,9 @@ void sendMeshDataToWeb()
   //   }
   // }
 
-  std::vector<String, 5> scanTypes = {"tilt-up-2", "tilt-up-1", "middle", "tilt-down-1", "tilt-down-2"};
+  Serial.println("send web");
+
+  std::vector<String> scanTypes = {"tilt-up-2", "tilt-up-1", "middle", "tilt-down-1", "tilt-down-2"};
   int lastRow = 0;
 
   for (int i = 0; i < scanTypes.size(); i++)
@@ -50,7 +52,12 @@ void sendMeshDataToWeb()
       std::vector<float> scanSampleData = it->second;
       int scanSampleLength = scanSampleData.size(); // number of scans for this sample eg. tilt-up-1
       String msgChunk = ""; // length must be <= 250
-      String nextStringChunk = String(roundUp(scanSampleData[0])) + "," + String(roundUp(scanSampleData[1]));
+      String nextStringChunk = String(roundUp(scanSampleData[0]))
+        + "," + String(roundUp(scanSampleData[1]))
+        + "," + String(roundUp(scanSampleData[2]))
+        + "," + String(roundUp(scanSampleData[3]));
+
+      Serial.println(nextStringChunk);
     }
   }
 }
@@ -117,6 +124,7 @@ void dumpData(bool useSerial, String scanType)
     xAccelVals = {};
   } else
   {
+    Serial.println("dump data call");
     if (scanType == "tilt-down-2") // last one
     {
       sendMeshDataToWeb();

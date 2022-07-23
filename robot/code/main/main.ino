@@ -38,7 +38,7 @@ void setup()
 
   // allow time to position robot
   delay(10000);
-  performFullScan(true);
+  // performFullScan(false);
 }
 
 void main_nav_process()
@@ -81,4 +81,6 @@ void loop()
   // main_nav_process(); // will call this from web interface
   // isUpsideDown();
   // Serial.println(getTFminiSDistance());
+  Serial.println(getTFminiSDistance());
+  delay(100);
 }

@@ -176,17 +176,27 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
 
     if (performScan && imu.Read())
     {
-      float distSample = tofSensor.readRangeSingleMillimeters();
-      float distSampleIn = (distSample * 0.0393701);
-      float correctedDistanceSampleIn = 0;
+      float correctedDistanceSampleIn = 0.00;
+      float tfMiniSDistance = 0.00;
 
-      if (distSampleIn == 0 || distSampleIn >= 47)
+      if (pos == 0 || pos == largestServoRange || floor(largestServoRange/2))
       {
-        correctedDistanceSampleIn = 47; // 47in is based on 1.2m max default measurement
-      } else if (distSampleIn <= 4) {
-        correctedDistanceSampleIn = 4;
-      } else {
-        correctedDistanceSampleIn = roundUp(distSampleIn);
+        float distSample = tofSensor.readRangeSingleMillimeters();
+        float distSampleIn = (distSample * 0.0393701);
+        
+        if (distSampleIn == 0 || distSampleIn >= 47)
+        {
+          correctedDistanceSampleIn = 47; // 47in is based on 1.2m max default measurement
+        } else if (distSampleIn <= 4) {
+          correctedDistanceSampleIn = 4;
+        } else {
+          correctedDistanceSampleIn = roundUp(distSampleIn);
+        }
+      }
+
+      if (pos == 0 || pos == largestServoRange || pos % 3 == 0)
+      {
+        tfMiniSDistance = getTFminiSDistance();
       }
 
       // fill out the basic mesh data
@@ -194,7 +204,7 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
         static_cast<float>(pos), // yuck https://stackoverflow.com/a/22589942/2710227
         roundUp(radianToDegree(imu.gyro_z_radps())),
         correctedDistanceSampleIn,
-        getTFminiSDistance()
+        tfMiniSDistance
       };
 
       // pitch angle rate, this didn't really work

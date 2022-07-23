@@ -24,7 +24,7 @@ void sweep(int runCount, bool scan = false, String scanType = "")
     pivotLeft();
     sampleDepth = false;
     sampleGyroZ = false;
-    if (!scanType) dumpData(useSerial, scanType);
+    dumpData(useSerial, scanType);
   } else if (runCount == 2)
   {
     sampleDepth = true;
@@ -33,7 +33,7 @@ void sweep(int runCount, bool scan = false, String scanType = "")
     pivotRight();
     sampleDepth = false;
     sampleGyroZ = false;
-    if (!scanType) dumpData(useSerial, scanType);
+    dumpData(useSerial, scanType);
   } else
   {
     if (scan)
@@ -50,7 +50,7 @@ void sweep(int runCount, bool scan = false, String scanType = "")
     {
       sampleDepth = false;
       sampleGyroZ = false;
-      if (!scanType) dumpData(useSerial, scanType);
+      dumpData(useSerial, scanType);
     }
   }
 
@@ -61,13 +61,15 @@ void performFullScan(bool addDelayBetweenSamples = false)
 {
   // this slows down the robot a lot, each sensor probe takes 20-30ms
   // it's not used for walking, you can use IMU while walking that does not take 20-30ms to get
-  performScan = true; // so moveServos gather samples from the sensors
 
   bool printData = dumpSerial; // to serial monitor
   tiltUp1();
   tiltUp2();
   delay(1000); // wait to stop moving
+
+  performScan = true; // so moveServos gather samples from the sensors
   sweep(1, true, printData ? "" : "tilt-up-2"); // second param means no delay
+  performScan = false;
 
   if (addDelayBetweenSamples)
   {
@@ -76,7 +78,10 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltCenterFromUp2();
   delay(1000); // wait to stop moving
+
+  performScan = true;
   sweep(2, true, printData ? "" : "tilt-up-1");
+  performScan = false;
 
   if (addDelayBetweenSamples)
   {
@@ -85,7 +90,10 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltCenterFromUp1();
   delay(1000); // wait to stop moving
+
+  performScan = true;
   sweep(3, true, printData ? "" : "middle");
+  performScan = false;
 
   if (addDelayBetweenSamples)
   {
@@ -94,7 +102,9 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltDown1();
   delay(1000); // wait to stop moving
+  performScan = true;
   sweep(1, true, printData ? "" : "tilt-down-1");
+  performScan = false;
 
   if (addDelayBetweenSamples)
   {
@@ -103,7 +113,10 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltDown2();
   delay(1000); // wait to stop moving
+
+  performScan = true;
   sweep(2, true, printData ? "" : "tilt-down-2");
+  performScan = false;
 
   if (addDelayBetweenSamples)
   {
@@ -112,7 +125,6 @@ void performFullScan(bool addDelayBetweenSamples = false)
 
   tiltCenterFromDown2();
   tiltCenterFromDown1();
-  sweep(3, false);
 
-  performScan = false;
+  sweep(3, false);
 }
