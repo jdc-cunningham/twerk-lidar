@@ -4,12 +4,16 @@ const threejsPlotChart = () => {
   const scene = new THREE.Scene();
   // 10 z distanece
   const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer();
+  const canvas = document.getElementById("threejs-canvas");
+  const renderer = new THREE.WebGLRenderer({ canvas: canvas }); // https://stackoverflow.com/a/21646450/2710227
+  const canvasParent = document.querySelector('.app__body-right');
 
   scene.background = new THREE.Color( 0xffffff );
 
-  renderer.setSize(window.innerWidth, window.innerHeight); // add false for lower resolution after dividing x/y values
-  document.body.appendChild(renderer.domElement);
+  renderer.setSize(canvasParent.offsetWidth, canvasParent.offsetWidth); // add false for lower resolution after dividing x/y values
+  // renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setPixelRatio(2); // looks great
+  // https://discourse.threejs.org/t/render-looks-blurry-and-pixelated-even-with-antialias-true-why/12381/5
 
   // add orbit controls
   const controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -177,6 +181,7 @@ const threejsPlotChart = () => {
     if (sampleKey !== 'tilt-down-2') {
       const points = []; // for line
       const samplePlane = meshPoints[sampleKey];
+      console.log(samplePlane);
 
       let nextPoints;
           

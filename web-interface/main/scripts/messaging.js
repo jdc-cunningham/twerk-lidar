@@ -5,11 +5,11 @@ const receivedDisplay = document.getElementById('received-msgs-disp');
 const clearDispBtn = document.getElementById('clear-active-tab');
 
 const sentMsg = (msg) => {
-  sentDisplay.value += msg + `\r\n`;
+  sentDisplay.value = msg + `\r\n` + sentDisplay.value;
 }
 
 const receivedMsg = (msg) => {
-  receivedDisplay.value += msg + `\r\n`;
+  receivedDisplay.value = msg + `\r\n` + receivedDisplay.value;
 }
 
 let activeTab = 'sent';

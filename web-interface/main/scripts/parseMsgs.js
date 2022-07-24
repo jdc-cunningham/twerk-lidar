@@ -36,6 +36,8 @@ const meshPlot = (meshTelData) => {
     }
   });
 
+  console.log(meshGroups);
+
   // process the data for the mesh plot
   // this is lazy code
 
@@ -65,6 +67,8 @@ const meshPlot = (meshTelData) => {
       ]);
     });
   });
+
+  console.log(finalData);
 
   // get elapsed time
   // they're pretty much all the same so just sample one
@@ -115,6 +119,7 @@ const meshPlot = (meshTelData) => {
   const sensorSamples2 = {
     "tilt-up-2": { // 90
       "angle": 18.5,
+      "trim": 'beginning',
       "sweep-angles":"",
       "tof-samples": ""
     },
@@ -125,11 +130,13 @@ const meshPlot = (meshTelData) => {
     },
     "level": { // 90
       "angle": 1.6,
+      "trim": 'end',
       "sweep-angles":"",
       "tof-samples": ""
     },
     "tilt-down-1": { // 90
       "angle": -8.8,
+      "trim": 'beginning',
       "sweep-angles":"",
       "tof-samples": ""
     },

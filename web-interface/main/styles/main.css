@@ -82,6 +82,7 @@ h2 {
 }
 
 .app__body-left, .app__body-right {
+  position: relative;
   padding: 0.5rem;
 }
 
