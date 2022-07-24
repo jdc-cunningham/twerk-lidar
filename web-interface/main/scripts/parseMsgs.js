@@ -113,7 +113,7 @@ const meshPlot = (meshTelData) => {
 
   // the keys here don't 100% match the above
   const sensorSamples2 = {
-    "tilt-up-2": {
+    "tilt-up-2": { // 90
       "angle": 18.5,
       "sweep-angles":"",
       "tof-samples": ""
@@ -123,12 +123,12 @@ const meshPlot = (meshTelData) => {
       "sweep-angles":"",
       "tof-samples": ""
     },
-    "level": {
+    "level": { // 90
       "angle": 1.6,
       "sweep-angles":"",
       "tof-samples": ""
     },
-    "tilt-down-1": {
+    "tilt-down-1": { // 90
       "angle": -8.8,
       "sweep-angles":"",
       "tof-samples": ""
@@ -140,9 +140,8 @@ const meshPlot = (meshTelData) => {
     }
   };
 
-  console.log(finalData2);
-
   meshGroupKeys.forEach(key => {
+    console.log(key);
     let gyroAngles = "";
     let tofRanges = "";
 
@@ -151,8 +150,8 @@ const meshPlot = (meshTelData) => {
         gyroAngles = data[2].toString();
         tofRanges = data[3].toString();
       } else {
-        gyroAngles += "\n" + data[2].toString();
-        tofRanges += "\n" + data[3].toString();
+        gyroAngles += ("\n" + data[2].toString());
+        tofRanges += ("\n" + data[3].toString());
       }
     });
 
@@ -167,6 +166,5 @@ const meshPlot = (meshTelData) => {
 
   // inherited from index.html
   sensorSamples = {...sensorSamples2};
-  console.log(sensorSamples);
   threejsPlotChart();
 }

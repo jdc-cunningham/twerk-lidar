@@ -173,10 +173,7 @@ const threejsPlotChart = () => {
 
   const rangeFilterOff = true;
 
-  console.log(meshPoints);
-
   Object.keys(meshPoints).forEach((sampleKey, sampleKeyIndex) => {
-    console.log(sampleKey);
     if (sampleKey !== 'tilt-down-2') {
       const points = []; // for line
       const samplePlane = meshPoints[sampleKey];
@@ -190,9 +187,7 @@ const threejsPlotChart = () => {
       }
 
       samplePlane.forEach((coordinate, coordinateIndex) => {
-        console.log('>', coordinateIndex);
         if (coordinateIndex < samplePlane.length - 1) {
-          console.log(coordinateIndex, nextPoints);
           const planePoints = [
             coordinate,
             samplePlane[coordinateIndex + 1],
