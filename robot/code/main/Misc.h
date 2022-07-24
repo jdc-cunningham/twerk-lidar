@@ -28,13 +28,13 @@ void sendMeshDataToWeb()
     writeCount += 1;
 
     std::map<int, std::vector<float>> scanSampleTimes = scanSampleValues[scanTypes[i]];
-    int joinCounter = 4; // cap to 4 (three increments)
+    int joinCounter = 5; // cap to 5 (four increments)
     String msgChunk = "";
 
     // gives you millis time it->first
     for (auto it = scanSampleTimes.cbegin(); it != scanSampleTimes.cend(); ++it)
     {
-      if (joinCounter == 4)
+      if (joinCounter == 5)
       {
         blueLedOn();
         writeToEsp(msgChunk);
@@ -57,11 +57,6 @@ void sendMeshDataToWeb()
         + "," + String(roundUp(scanSampleData[2]))
         + "," + String(roundUp(scanSampleData[3]))
         + "|"; // separator
-    }
-
-    if (msgChunk != "")
-    {
-      writeToEsp(msgChunk); // in case any left over data
     }
   }
 
