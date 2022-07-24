@@ -1,3 +1,12 @@
+String getPrefix(String longString)
+{
+  if (longString == "tilt-up-2") return "t2_";
+  if (longString == "tilt-up-1") return "t1_";
+  if (longString == "middle") return "m_";
+  if (longString == "tilt-down-1") return "d1_";
+  if (longString == "tilt-down-2") return "d2_";
+}
+
 // this is in the wrong place
 // this sends the servoPosVals, gyroVals and depthVals
 // all tied together by time (ellapsed millis)
@@ -8,12 +17,12 @@ void sendMeshDataToWeb()
   writeToEsp("mtel_start");
 
   std::vector<String> scanTypes = {"tilt-up-2", "tilt-up-1", "middle", "tilt-down-1", "tilt-down-2"};
+  // map is t2, t1, m, d1, d2
   int lastRow = 0;
   int writeCount = 0;
 
   for (int i = 0; i < scanTypes.size(); i++)
   {
-    writeToEsp(scanTypes[i] + "|");
     writeCount += 1;
 
     std::map<int, std::vector<float>> scanSampleTimes = scanSampleValues[scanTypes[i]];
@@ -38,9 +47,11 @@ void sendMeshDataToWeb()
       }
 
       std::vector<float> scanSampleData = it->second;
+      String prefix = getPrefix(String(it->first)); // sucks call it every time vs. set/compare
       // int scanSampleLength = scanSampleData.size(); // number of scans for this sample eg. tilt-up-1
       
-      msgChunk += String(it->first)
+      msgChunk += "|"
+        + prefix + String(it->first)
         + "," + String(roundUp(scanSampleData[0]))
         + "," + String(roundUp(scanSampleData[1]))
         + "," + String(roundUp(scanSampleData[2]))
