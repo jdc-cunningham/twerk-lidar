@@ -16,40 +16,40 @@ const connectToRobot = () => {
       socket.send('poll');
       sentMsg('poll');
     }, 1000);
- });
+  });
  
 // listen for messages from robot
-socket.addEventListener('message', function (event) {
-  const robotMsg = event.data;
+  socket.addEventListener('message', function (event) {
+    const robotMsg = event.data;
 
-  if (meshTelUploading) {
-    meshTelData += robotMsg;
-  }
+    receivedMsg(robotMsg);
 
-  if (!meshTelData && robotMsg.indexOf('mtel_start') !== -1) {
-    meshTelUploading = true;
-    meshTelData += robotMsg;
+    if (meshTelUploading) {
+      meshTelData += robotMsg;
+    }
 
-    // fallback unset
-    setTimeout(() => {
-      if (meshTelUploading) meshTelUploading = false;
-    }, 60000);
-  }
+    if (!meshTelData && robotMsg.indexOf('mtel_start') !== -1) {
+      meshTelUploading = true;
+      meshTelData += robotMsg;
 
-  if (robotMsg.indexOf('mtel_end') !== -1) {
-    meshTelUploading = false;
-    meshPlot(meshTelData);
-  }
+      // fallback unset
+      setTimeout(() => {
+        if (meshTelUploading) meshTelUploading = false;
+      }, 120000); // 2 mins seems like a long time but it does take close to that, over 1 minute anyway
+    }
 
-  receivedMsg(robotMsg);
+    if (robotMsg.indexOf('mtel_end') !== -1) {
+      meshTelUploading = false;
+      meshPlot(meshTelData);
+    }
+  
+    batteryVoltage(robotMsg);
+    upsideDown(robotMsg);
+  });
  
-  batteryVoltage(robotMsg);
-  upsideDown(robotMsg);
- });
- 
- socket.addEventListener('close', function (event) {
-  clearInterval(socketInterval);
-  if (!meshTelUploading) connectToRobot();
+  socket.addEventListener('close', function (event) {
+    clearInterval(socketInterval);
+    if (!meshTelUploading) connectToRobot();
  });
 }
 

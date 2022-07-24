@@ -15,28 +15,56 @@ const upsideDown = (robotMsg) => {
 const roundTo2 = (val) => Math.round(val * 100) / 100;
 const roundTo3 = (val) =>  Math.round(val * 1000) / 1000;
 
-const meshPlot = (meshTelData) => {
-  const meshTelData1 = meshTelData.replace('mtel_start', ''); // I'm just getting this done at this point 8hrs in
-  const meshTelData2 = meshTelData1.replace('mtel_end', '');
-  const meshData = meshTelData2.split('|');
+const preParser = (str) => {
+	const tiltMap = {
+  	a: 'tilt-up-2',
+    b: 'tilt-up-1',
+    c: 'middle',
+    d: 'tilt-down-1',
+    e: 'tilt-down-2'
+  };
+  
+  
+  const data1 = str.replace('mtel_start', '');
+  const data2 = data1.replace('mtel_end', '');
+  const data3 = data2.split('|');
 
-  const meshGroups = {};
-  const meshGroupKeys = [];
-  let activeGroup = "";
-
-  meshData.forEach(strPart => {
-    if (strPart.indexOf('tilt-') !== -1 || strPart.indexOf('middle') !== -1) {
-      activeGroup = strPart;
-      meshGroups[strPart] = [];
-      meshGroupKeys.push(strPart);
-    } else {
-      if (strPart.trim()) {
-        meshGroups[activeGroup].push(strPart.replace('\n', '').split(','));
-      }
+  const groups = {
+  	"tilt-up-2": [],
+    "tilt-up-1": [],
+    "middle": [],
+    "tilt-down-1": [],
+    "tilt-down-2": []
+  };
+  
+  // https://stackoverflow.com/a/50415457/2710227
+  const data4 = data3.sort(function(a, b) {
+    if (a[0] == b[0]) {
+      return a[1] - b[1];
     }
+
+    return b[0] - a[0];
   });
 
-  console.log(meshGroups);
+  data4.forEach(preData => {
+    const data = preData.replace('\n', '').trim();
+    if (!data) return;
+
+  	// this look up is almost pointless
+  	if (data.indexOf('a') !== -1) groups[tiltMap['a']].push(data.replace('a', '').split(','));
+    if (data.indexOf('b') !== -1) groups[tiltMap['b']].push(data.replace('b', '').split(','));
+    if (data.indexOf('c') !== -1) groups[tiltMap['c']].push(data.replace('c', '').split(','));
+    if (data.indexOf('d') !== -1) groups[tiltMap['d']].push(data.replace('d', '').split(','));
+    if (data.indexOf('e') !== -1) groups[tiltMap['e']].push(data.replace('e', '').split(','));
+  });
+
+  return groups;
+};
+
+const meshPlot = (meshTelData) => {
+  const meshGroups = preParser(meshTelData);
+  const meshGroupKeys = ["tilt-up-2", "tilt-up-1", "middle", "tilt-down-1", "tilt-down-2"];
+  let activeGroup = "";
 
   // process the data for the mesh plot
   // this is lazy code
@@ -67,8 +95,6 @@ const meshPlot = (meshTelData) => {
       ]);
     });
   });
-
-  console.log(finalData);
 
   // get elapsed time
   // they're pretty much all the same so just sample one
@@ -148,7 +174,6 @@ const meshPlot = (meshTelData) => {
   };
 
   meshGroupKeys.forEach(key => {
-    console.log(key);
     let gyroAngles = "";
     let tofRanges = "";
 
