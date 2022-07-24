@@ -1,10 +1,12 @@
 String getPrefix(String longString)
 {
-  if (longString == "tilt-up-2") return "t2_";
-  if (longString == "tilt-up-1") return "t1_";
-  if (longString == "middle") return "m_";
-  if (longString == "tilt-down-1") return "d1_";
-  if (longString == "tilt-down-2") return "d2_";
+  if (longString == "tilt-up-2") return "a";
+  if (longString == "tilt-up-1") return "b";
+  if (longString == "middle") return "c";
+  if (longString == "tilt-down-1") return "d";
+  if (longString == "tilt-down-2") return "e"; // less letters
+
+  return "";
 }
 
 // this is in the wrong place
@@ -21,18 +23,18 @@ void sendMeshDataToWeb()
   int lastRow = 0;
   int writeCount = 0;
 
-  for (int i = 0; i < scanTypes.size(); i++)
+  for (int i = 0; i < 5; i++)
   {
     writeCount += 1;
 
     std::map<int, std::vector<float>> scanSampleTimes = scanSampleValues[scanTypes[i]];
-    int joinCounter = 5; // cap to 5 (four increments)
+    int joinCounter = 4; // cap to 4 (three increments)
     String msgChunk = "";
 
     // gives you millis time it->first
     for (auto it = scanSampleTimes.cbegin(); it != scanSampleTimes.cend(); ++it)
     {
-      if (joinCounter == 5)
+      if (joinCounter == 4)
       {
         blueLedOn();
         writeToEsp(msgChunk);
@@ -47,11 +49,9 @@ void sendMeshDataToWeb()
       }
 
       std::vector<float> scanSampleData = it->second;
-      String prefix = getPrefix(String(it->first)); // sucks call it every time vs. set/compare
-      // int scanSampleLength = scanSampleData.size(); // number of scans for this sample eg. tilt-up-1
+      String prefix = getPrefix(scanTypes[i]); // sucks call it every time vs. set/compare
       
-      msgChunk += "|"
-        + prefix + String(it->first)
+      msgChunk += prefix + String(it->first)
         + "," + String(roundUp(scanSampleData[0]))
         + "," + String(roundUp(scanSampleData[1]))
         + "," + String(roundUp(scanSampleData[2]))
