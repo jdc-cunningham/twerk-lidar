@@ -197,17 +197,19 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
       }
 
       // lidar distance
-      if (pos == 0 || pos == largestServoRange || pos % 3 == 0)
+      if (pos == 0 || pos == largestServoRange || pos % 3) // measure all
+      // if (pos == 0 || pos == largestServoRange || pos % 3 == 0)
       {
-        // tfMiniSDistance = getTFminiSDistance(); // skip until have it
+        tfMiniSDistance = getTFminiSDistance(); // skip until have it
       }
 
       // fill out the basic mesh data
       scanSampleValues[activeScan][timeNow] = {
         static_cast<float>(pos), // yuck https://stackoverflow.com/a/22589942/2710227
         roundUp(radianToDegree(imu.gyro_z_radps())),
-        correctedDistanceSampleIn,
-        tfMiniSDistance
+        tfMiniSDistance,
+        // correctedDistanceSampleIn,
+        0 //tfMiniSDistance
       };
 
       // pitch angle rate, this didn't really work
