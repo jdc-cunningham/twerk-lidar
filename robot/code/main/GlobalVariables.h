@@ -27,7 +27,7 @@ joint frontLeftInnerJoint = {30, 30, 0, 100};         // 6
 joint frontLeftMiddleJoint = {70, 70, 40, 160};       // 7
 joint frontLeftOuterJoint = {95, 95, 0, 180};         // 8
 joint backLeftInnerJoint = {125, 125, 60, 180};       // 9
-joint backLeftMiddleJoint = {85, 85, 30, 180};        // 10
+joint backLeftMiddleJoint = {95, 95, 30, 180};        // 10
 joint backLeftOuterJoint = {85, 85, 70, 140};         // 11
 
 bool sampleDepth = false;
