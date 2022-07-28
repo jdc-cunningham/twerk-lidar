@@ -42,7 +42,7 @@ void setup()
 
   // allow time to position robot
   delay(10000);
-  performFullScan(false);
+  // performFullScan(false);
 }
 
 void main_nav_process()
