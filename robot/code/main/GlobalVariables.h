@@ -17,17 +17,17 @@ struct joint {
 };
 
 // should follow clockwise but it does not
-joint frontRightInnerJoint = {65, 65, 45, 160};       // 0
-joint frontRightMiddleJoint = {90, 90, 40, 180};      // 1
-joint frontRightOuterJoint = {115, 115, 50, 160};     // 2
+joint frontRightInnerJoint = {65, 65, 45, 160};       // 0  // 70 
+joint frontRightMiddleJoint = {90, 90, 40, 180};      // 1  // 80
+joint frontRightOuterJoint = {115, 115, 50, 160};     // 2  // 105
 joint backRightInnerJoint = {80, 80, 0, 110};         // 3
-joint backRightMiddleJoint = {95, 95, 0, 140};        // 4
-joint backRightOuterJoint = {60, 60, 15, 130};        // 5
+joint backRightMiddleJoint = {95, 95, 0, 140};        // 4  // 90
+joint backRightOuterJoint = {60, 60, 15, 130};        // 5  // 67
 joint frontLeftInnerJoint = {30, 30, 0, 100};         // 6
-joint frontLeftMiddleJoint = {60, 60, 40, 160};       // 7
+joint frontLeftMiddleJoint = {60, 60, 40, 160};       // 7  // 70
 joint frontLeftOuterJoint = {95, 95, 0, 180};         // 8
-joint backLeftInnerJoint = {130, 130, 60, 180};       // 9
-joint backLeftMiddleJoint = {100, 100, 30, 180};        // 10
+joint backLeftInnerJoint = {130, 130, 60, 180};       // 9  // 125
+joint backLeftMiddleJoint = {100, 100, 30, 180};      // 10 // 85
 joint backLeftOuterJoint = {85, 85, 70, 140};         // 11
 
 bool sampleDepth = false;
