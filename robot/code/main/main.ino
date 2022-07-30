@@ -17,9 +17,9 @@
 
 void setup_robot()
 {
+  setAndCenterServos();
   Serial.println(getBatteryVoltage());
   setupBlueLed();
-  setAndCenterServos();
   setupEspSerial();
   setupTof();
   setupTFminiS();
@@ -85,4 +85,5 @@ void loop()
   // main_nav_process(); // will call this from web interface
   // isUpsideDown();
   // Serial.println(getTFminiSDistance());
+  // moveForward5();
 }
