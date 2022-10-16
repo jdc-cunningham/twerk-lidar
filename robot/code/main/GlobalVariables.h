@@ -80,6 +80,9 @@ bool dumpSerial = false;
 
 bool performScan = false;
 
+int tofFov = 25; // deg
+int tfMiniSFov = 2; // deg
+
 // these store the pan/tilt values for transmission
 String activeScan = "";
 // std::map<std::string, std::map<int, float, float, float>> scanSampleValues = {};
