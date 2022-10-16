@@ -14,7 +14,7 @@
 
 float bodyLargestDimension = 12; // but treated as cube
 float robotTofSensorHeight = 3.72;
-float minDistance = 7.5; // room for robot to turn, 6" + 1.5" sensor vs. front-left leg
+float minTofDistance = 3; // room for robot to turn, assuming inside 12" square top view
 float sensorToMiddleOfBody = 2.25;
 float extVerRotationAngle = 58.8; // external verified
 float minScanDistance = 18.0;

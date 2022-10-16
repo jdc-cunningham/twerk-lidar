@@ -68,10 +68,10 @@ float sweepLeftMax = 16.5; // 15.2, don't match lol
 float robotHeading = 0;
 float robotDistance = 0;
 
-float lidarSensorDistanceFromCenter = 3.38;
+float lidarSensorDistanceFromCenter = 3.13;
 float lidarSensorDistanceFromFloor = 3.75;
 
-float tofSensorDistanceFromCenter = 2.78;
+float tofSensorDistanceFromCenter = 3; // measured visually with tape measure
 float tofSensorDistanceFromFloor = 3.125;
 
 // this means data from the scan is sent to the monitor
