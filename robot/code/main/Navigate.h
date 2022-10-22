@@ -31,25 +31,36 @@ void navigate()
     // upper set, all have at least 12" check
     // d2 lowest scan, > 5, good, else turn
 
-    if (obstacleFound && forwardGaitCount == 0)
+    if ((obstacleFound && forwardGaitCount == 0) || d2Smallest <= 5)
     {
       turnLeft();
+      prevActionWasTurn = true;
       setAndCenterServos(); // call this because after servo upgrade legs don't line up
     }
     else
     {
-      if (forwardGaitCount > 0)
+      // ignoring sky
+      // if (u2Smallest > d1Smallest && u1Smallest > d1Smallest && mSmallest > d1Smallest)
+      // {
+      //   forwardGaitCount = (d1Smallest - 3) / 2; // tried modulus at first
+      // }
+
+      forwardGaitCount = (d1Smallest - 3) / 2;
+
+      for (int i = 0; i < forwardGaitCount; i++)
       {
-        for (int i = 0; i < forwardGaitCount; i++)
-        {
-          moveForward5();
-          setAndCenterServos();
-        }
+        moveForward5();
+        setAndCenterServos();
       }
     }
-
-    prevActionWasTurn = false;
-    forwardGaitCount = 0;
-    obstacleFound = false;
   }
+
+  prevActionWasTurn = false;
+  forwardGaitCount = 0;
+  obstacleFound = false;
+  u2Smallest = 0.0; // dumb
+  u1Smallest = 0.0;
+  mSmallest = 0.0;
+  d1Smallest = 0.0;
+  d2Smallest = 0.0;
 }

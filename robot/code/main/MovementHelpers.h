@@ -179,7 +179,7 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
 
     if (performScan && !obstacleFound)
     {
-      float correctedDistanceSampleIn = 0.00;
+      float tofSampleIn = 0.00;
       float tfMiniSDistance = 0.00;
 
       int midPos = (largestServoRange - 1) / 2;
@@ -194,42 +194,71 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
       ) // scan 5 samples per plane, not happening here no overlap check
       {
         // scanCounter += 1;
-        correctedDistanceSampleIn = getTofDistanceCorrected();
+        tofSampleIn = getTofDistanceCorrected();
 
-        // short-circuit check for distances
-        if (activeScan != "tilt-down-2")
+        // short circuit
+        if (tofSampleIn < 5) // not able to move forward must turn
         {
-          if (correctedDistanceSampleIn < 5)
+          obstacleFound = true;
+        }
+
+        if (!obstacleFound && activeScan == "tilt-up-2")
+        {
+          if (u2Smallest == 0.0) // can turn this block into a function
           {
-            obstacleFound = true;
+            u2Smallest = tofSampleIn;
+          } else if (tofSampleIn < u2Smallest)
+          {
+            u2Smallest = tofSampleIn;
           }
-        } else
+        }
+
+        if (!obstacleFound && activeScan == "tilt-up-1")
         {
-          if (correctedDistanceSampleIn < 5) {
-            obstacleFound = true;
+          if (u1Smallest == 0.0)
+          {
+            u1Smallest = tofSampleIn;
+          } else if (tofSampleIn < u1Smallest)
+          {
+            u1Smallest = tofSampleIn;
           }
+        }
 
-          // 7
-          if (correctedDistanceSampleIn < 8 && forwardGaitCount == 0) { // ehh, vs. array saving/checking
-            forwardGaitCount = 2;
-            obstacleFound = true;
+        if (!obstacleFound && activeScan == "middle")
+        {
+          if (mSmallest == 0.0)
+          {
+            mSmallest = tofSampleIn;
+          } else if (tofSampleIn < mSmallest)
+          {
+            mSmallest = tofSampleIn;
           }
+        }
 
-          // 9
-          if (correctedDistanceSampleIn < 10 && forwardGaitCount == 0) { // ehh, vs. array saving/checking
-            forwardGaitCount = 3;
-            obstacleFound = true;
+        if (!obstacleFound && activeScan == "tilt-down-1")
+        {
+          if (d1Smallest == 0.0)
+          {
+            d1Smallest = tofSampleIn;
+          } else if (tofSampleIn < d1Smallest)
+          {
+            d1Smallest = tofSampleIn;
           }
+        }
 
-          // 11
-          if (correctedDistanceSampleIn < 12 && forwardGaitCount == 0) { // ehh, vs. array saving/checking
-            forwardGaitCount = 4;
-            obstacleFound = true;
+        if (!obstacleFound && activeScan == "tilt-down-2")
+        {
+          if (d2Smallest == 0.0)
+          {
+            d2Smallest = tofSampleIn;
+          } else if (tofSampleIn < d2Smallest)
+          {
+            d2Smallest = tofSampleIn;
           }
         }
 
         Serial.println("sample");
-        Serial.println(correctedDistanceSampleIn);
+        Serial.println(tofSampleIn);
       }
 
       // lidar distance
