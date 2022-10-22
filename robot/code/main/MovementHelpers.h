@@ -208,6 +208,24 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
           if (correctedDistanceSampleIn < 5) {
             obstacleFound = true;
           }
+
+          // 7
+          if (correctedDistanceSampleIn < 8 && forwardGaitCount == 0) { // ehh, vs. array saving/checking
+            forwardGaitCount = 2;
+            obstacleFound = true;
+          }
+
+          // 9
+          if (correctedDistanceSampleIn < 10 && forwardGaitCount == 0) { // ehh, vs. array saving/checking
+            forwardGaitCount = 3;
+            obstacleFound = true;
+          }
+
+          // 11
+          if (correctedDistanceSampleIn < 12 && forwardGaitCount == 0) { // ehh, vs. array saving/checking
+            forwardGaitCount = 4;
+            obstacleFound = true;
+          }
         }
 
         Serial.println("sample");

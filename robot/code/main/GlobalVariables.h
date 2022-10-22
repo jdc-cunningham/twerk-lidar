@@ -93,4 +93,9 @@ String activeScan = "";
 std::map<String, std::map<int, std::vector<float>>> scanSampleValues = {};
 
 bool prevActionWasTurn = false; // what
-bool obstacleDetected = false; // this allows skipping the rest of the scans
+bool obstacleFound = false; // this allows skipping the rest of the scans
+float u2Smallest = 0.0; // dumb
+float u1Smallest = 0.0;
+float mSmallest = 0.0;
+float d1Smallest = 0.0;
+float d2Smallest = 0.0;

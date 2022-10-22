@@ -24,24 +24,32 @@ void navigate()
   } else
   {
     // do scan
-    performFullScan(false);
+    performFullScan(false); // writes distance samples to data store while moving
     setAndCenterServos();
 
     // check
     // upper set, all have at least 12" check
     // d2 lowest scan, > 5, good, else turn
 
-    if (obstacleFound)
+    if (obstacleFound && forwardGaitCount == 0)
     {
       turnLeft();
       setAndCenterServos(); // call this because after servo upgrade legs don't line up
-      obstacleFound = false;
-    } else
+    }
+    else
     {
-
+      if (forwardGaitCount > 0)
+      {
+        for (int i = 0; i < forwardGaitCount; i++)
+        {
+          moveForward5();
+          setAndCenterServos();
+        }
+      }
     }
 
-    moveForward5();
     prevActionWasTurn = false;
+    forwardGaitCount = 0;
+    obstacleFound = false;
   }
 }
