@@ -68,6 +68,7 @@ void performFullScan(bool addDelayBetweenSamples = false)
   // it's not used for walking, you can use IMU while walking that does not take 20-30ms to get
 
   bool printData = dumpSerial; // to serial monitor
+  Serial.println("tilt up1, up 2");
   tiltUp1();
   tiltUp2();
   delay(1000); // wait to stop moving
@@ -81,6 +82,7 @@ void performFullScan(bool addDelayBetweenSamples = false)
     delay(10000); // for manual serial dump copy paste into excel
   }
 
+  Serial.println("tiltCenterFromUp2");
   tiltCenterFromUp2();
   delay(1000); // wait to stop moving
 
@@ -93,6 +95,7 @@ void performFullScan(bool addDelayBetweenSamples = false)
     delay(10000);
   }
 
+  Serial.println("tiltCenterFromUp1");
   tiltCenterFromUp1();
   delay(1000); // wait to stop moving
 
@@ -105,6 +108,7 @@ void performFullScan(bool addDelayBetweenSamples = false)
     delay(10000);
   }
 
+  Serial.println("tilt down 1");
   tiltDown1();
   delay(1000); // wait to stop moving
   performScan = true;
@@ -116,6 +120,7 @@ void performFullScan(bool addDelayBetweenSamples = false)
     delay(10000);
   }
 
+  Serial.println("tilt down 2");
   tiltDown2();
   delay(1000); // wait to stop moving
 
@@ -128,6 +133,7 @@ void performFullScan(bool addDelayBetweenSamples = false)
     delay(10000);
   }
 
+  Serial.println("tilt down 2, down 1");
   tiltCenterFromDown2();
   tiltCenterFromDown1();
 

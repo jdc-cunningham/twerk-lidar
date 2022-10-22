@@ -119,7 +119,6 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
    * there is no error checking, I find coding in Arduino to be cumbersome */
   motionInProgress = true;
   int largestServoRange = 0;
-  // int moveCounter = 0;
 
   // emergency stop
   if (stopRobot)
@@ -148,6 +147,11 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
    * this will update all the servo positions at the same rate
    * but some will finish earlier than others if the motion range is not the same */
   for (int pos = 0; pos < largestServoRange; pos++) {
+    // Serial.println("servo range");
+    // Serial.print(0);
+    // Serial.print(largestServoRange);
+    // Serial.println("");
+
     for(int servoGroupIndex = 0; servoGroupIndex < servoGroupArrLen; servoGroupIndex++) {
       int servoPin = servoGroupArr[servoGroupIndex][0];
       joint jointToMove; // this is like this to avoid a warning unused variable
@@ -204,13 +208,13 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
       }
 
       // fill out the basic mesh data
-      scanSampleValues[activeScan][timeNow] = {
-        static_cast<float>(pos), // yuck https://stackoverflow.com/a/22589942/2710227
-        roundUp(radianToDegree(imu.gyro_z_radps())),
-        tfMiniSDistance,
-        // correctedDistanceSampleIn,
-        0 //tfMiniSDistance
-      };
+      // scanSampleValues[activeScan][timeNow] = {
+      //   static_cast<float>(pos), // yuck https://stackoverflow.com/a/22589942/2710227
+      //   roundUp(radianToDegree(imu.gyro_z_radps())),
+      //   tfMiniSDistance,
+      //   // correctedDistanceSampleIn,
+      //   0 //tfMiniSDistance
+      // };
 
       // pitch angle rate, this didn't really work
       if (sampleGyroX)
