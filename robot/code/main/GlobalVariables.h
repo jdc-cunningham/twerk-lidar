@@ -91,3 +91,5 @@ String activeScan = "";
 // stores scan type (tilt-up-2) -> time ms -> {servoPos, gyroMeasurement, shortScan, longScan}
 // change to vector, easier to use
 std::map<String, std::map<int, std::vector<float>>> scanSampleValues = {};
+
+bool prevActionWasTurn = false; // what

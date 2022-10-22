@@ -147,11 +147,6 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
    * this will update all the servo positions at the same rate
    * but some will finish earlier than others if the motion range is not the same */
   for (int pos = 0; pos < largestServoRange; pos++) {
-    // Serial.println("servo range");
-    // Serial.print(0);
-    // Serial.print(largestServoRange);
-    // Serial.println("");
-
     for(int servoGroupIndex = 0; servoGroupIndex < servoGroupArrLen; servoGroupIndex++) {
       int servoPin = servoGroupArr[servoGroupIndex][0];
       joint jointToMove; // this is like this to avoid a warning unused variable
@@ -178,34 +173,35 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
 
     int timeNow = millis();
 
-    if (performScan && imu.Read())
+    if (performScan)
     {
       float correctedDistanceSampleIn = 0.00;
       float tfMiniSDistance = 0.00;
 
+      int midPos = (largestServoRange - 1) / 2;
+      int lowMidPos = midPos / 2; // this is expecting to truncate floats
+      int highMidPos = (largestServoRange - 1) - lowMidPos;
+
       // ToF ranging sensor
-      if (pos == 0 || pos == largestServoRange || floor(largestServoRange/2)) // scan all
-      // if (pos == 0 || pos == largestServoRange || pos == floor(largestServoRange/2)) // actually wrong without == 0 part but good to get data
+      if (
+        pos == 0 || pos == midPos
+        || pos == lowMidPos || pos == highMidPos
+        || (pos == largestServoRange - 1)
+      ) // scan 5 samples per plane, not happening here no overlap check
       {
-        float distSample = tofSensor.readRangeSingleMillimeters();
-        float distSampleIn = (distSample * 0.0393701);
-        
-        if (distSampleIn == 0 || distSampleIn >= 47)
-        {
-          correctedDistanceSampleIn = 47; // 47in is based on 1.2m max default measurement
-        } else if (distSampleIn <= 4) {
-          correctedDistanceSampleIn = 4;
-        } else {
-          correctedDistanceSampleIn = roundUp(distSampleIn);
-        }
+        // scanCounter += 1;
+        correctedDistanceSampleIn = getTofDistanceCorrected();
+        Serial.println("sample");
+        Serial.println(correctedDistanceSampleIn);
       }
 
       // lidar distance
-      if (pos == 0 || pos == largestServoRange || pos % 3) // measure all
-      // if (pos == 0 || pos == largestServoRange || pos % 3 == 0)
-      {
-        tfMiniSDistance = getTFminiSDistance(); // skip until have it
-      }
+      // skip lidar for now
+      // if (pos == 0 || pos == largestServoRange || pos % 3) // measure all
+      // // if (pos == 0 || pos == largestServoRange || pos % 3 == 0)
+      // {
+      //   tfMiniSDistance = getTFminiSDistance(); // skip until have it
+      // }
 
       // fill out the basic mesh data
       // scanSampleValues[activeScan][timeNow] = {
@@ -216,20 +212,23 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
       //   0 //tfMiniSDistance
       // };
 
-      // pitch angle rate, this didn't really work
-      if (sampleGyroX)
+      if (imu.Read())
       {
-        gyroVals[timeNow] = roundUp(radianToDegree(imu.gyro_x_radps()));
-      }
+        // pitch angle rate, this didn't really work
+        if (sampleGyroX)
+        {
+          gyroVals[timeNow] = roundUp(radianToDegree(imu.gyro_x_radps()));
+        }
 
-      if (sampleYAccel)
-      {
-        yAccelVals[timeNow] = roundUp(imu.accel_y_mps2());
-      }
+        if (sampleYAccel)
+        {
+          yAccelVals[timeNow] = roundUp(imu.accel_y_mps2());
+        }
 
-      if (sampleXAccel)
-      {
-        xAccelVals[timeNow] = roundUp(imu.accel_x_mps2());
+        if (sampleXAccel)
+        {
+          xAccelVals[timeNow] = roundUp(imu.accel_x_mps2());
+        }
       }
     }
 

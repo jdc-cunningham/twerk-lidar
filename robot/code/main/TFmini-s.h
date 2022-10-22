@@ -39,7 +39,7 @@ float getTFminiSDistance()
         int Dist_H = TFMINI_S_SERIAL.read();
         float Dist_Total = (Dist_H * 256) + Dist_L;
 
-        Serial.println(Dist_Total);
+        // Serial.println(Dist_Total);
 
         // not sure why this code is like this
         // clears buffer? returns same thing

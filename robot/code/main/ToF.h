@@ -28,3 +28,20 @@ float getTofDistance()
   float distSampleIn = (distSample * 0.0393701);
   return distSampleIn;
 }
+
+float getTofDistanceCorrected()
+{
+  float distSampleIn = getTofDistance();
+  float correctedDistanceSampleIn = 0.0;
+  
+  if (distSampleIn == 0 || distSampleIn >= 47)
+  {
+    correctedDistanceSampleIn = 47; // 47in is based on 1.2m max default measurement
+  } else if (distSampleIn <= 4) {
+    correctedDistanceSampleIn = 4;
+  } else {
+    correctedDistanceSampleIn = roundUp(distSampleIn);
+  }
+
+  return correctedDistanceSampleIn;
+}

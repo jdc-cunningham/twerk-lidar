@@ -14,6 +14,7 @@
 #include "ObstacleDetection.h"
 #include "Scan.h"
 #include "Comms.h"
+#include "Navigate.h"
 
 void setup_robot()
 {
@@ -42,8 +43,9 @@ void setup()
 
   // allow time to position robot
   delay(10000);
-  performFullScan(true);
   // turnLeft();
+
+  navigate();
 }
 
 void main_nav_process()
