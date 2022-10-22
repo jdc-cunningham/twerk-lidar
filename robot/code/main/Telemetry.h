@@ -83,7 +83,7 @@ void turnLeftEvent()
 {
   // radians are capped between -1 and 1, the y signage determines up/down
   // so this is not correct
-  curAngle += (52 * 0.0175); // can only turn left
+  curAngle += (turnLeftAngle * 0.0175); // can only turn left
   // but unit circle counter-clockwise is positive direction
 
   // below is how you'd compute it but I'm skipping it since the accuracy

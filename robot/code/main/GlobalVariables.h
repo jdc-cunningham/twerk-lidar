@@ -6,6 +6,7 @@
 bool motionInProgress = false;
 int servoMotionDelay = 4; // ms - the higher this number, the slower the robot moves, 4 is normal speed
 int stepDelay = 0; // ms usually a second or more
+float turnLeftAngle = 44.5;
 
 // these positions are for a >= quad stance (top view)
 struct joint {

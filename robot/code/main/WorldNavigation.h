@@ -22,7 +22,7 @@ float imuFromFloorHeight = 3.75;
 float curAngle = 0; // done in 52 increments
 float robotForwardGaitDistance = 2.0;
 
-std::vector<float> robotWorldPos = {0, 0, 3.5};
+std::vector<float> robotWorldPos = {0, 0, 3.75}; // centerpoint of IMU x,y,z
 
 // each walk forward step time is around 1.35s per 2" of ground covered
 // leg clearance 0.78" lowest clearance
@@ -35,16 +35,17 @@ std::vector<float> robotWorldPos = {0, 0, 3.5};
 // down1 6.8
 // down2 16.1
 
-// for 3D collision check
+// for 3D collision check, robot is a 12" cube
+// considering the turning outer leg arc sweep
 std::vector<std::vector <float>> robotCube = {
   {0, 0, 0},
-  {10, 0, 0},
-  {10, 10, 0},
-  {0, 0, 10},
-  {0, 10, 0},
-  {10, 10, 0},
-  {0, 10, 10},
-  {10, 10, 10}
+  {12, 0, 0},
+  {12, 12, 0},
+  {0, 0, 12},
+  {0, 12, 0},
+  {12, 12, 0},
+  {0, 12, 12},
+  {12, 12, 12}
 };
 
 // what is being compared?

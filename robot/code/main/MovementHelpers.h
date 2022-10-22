@@ -456,7 +456,7 @@ void leftTurnPivot()
 void leftTurnPivot2()
 {
   int servoGroupArr[][3] = {
-    {6, 0, 60},
+    {6, 0, 50},
     {9, 95, 65},
     {3, 50, 20},
     {0, 100, 70}
@@ -468,7 +468,7 @@ void leftTurnPivot2()
 void leftTurnPivot3()
 {
   int servoGroupArr[][3] = {
-    {6, 60, 30},
+    {6, 50, 30},
     {9, 65, 125},
     {3, 20, 0},
     {0, 70, 40}
