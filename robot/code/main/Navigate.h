@@ -21,10 +21,25 @@ void navigate()
   {
     turnLeft();
     prevActionWasTurn = true; // this is because if you turn once, you may have to turn again in the case of a wall
-  } else {
+  } else
+  {
     // do scan
     performFullScan(false);
     setAndCenterServos();
+
+    // check
+    // upper set, all have at least 12" check
+    // d2 lowest scan, > 5, good, else turn
+
+    if (obstacleFound)
+    {
+      turnLeft();
+      setAndCenterServos(); // call this because after servo upgrade legs don't line up
+      obstacleFound = false;
+    } else
+    {
+
+    }
 
     moveForward5();
     prevActionWasTurn = false;

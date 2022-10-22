@@ -39,7 +39,8 @@ float getTofDistanceCorrected()
     correctedDistanceSampleIn = 47; // 47in is based on 1.2m max default measurement
   } else if (distSampleIn <= 4) {
     correctedDistanceSampleIn = 4;
-  } else {
+  } else
+  {
     correctedDistanceSampleIn = roundUp(distSampleIn);
   }
 

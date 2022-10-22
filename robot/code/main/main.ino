@@ -44,8 +44,6 @@ void setup()
   // allow time to position robot
   delay(10000);
   // turnLeft();
-
-  navigate();
 }
 
 void main_nav_process()
@@ -83,6 +81,8 @@ void main_nav_process()
 
 void loop()
 {
+  // navigate();
+  // delay(5000);
   // performFullScan(false);
   // webMessaging(); // internal delay + 250ms
   // main_nav_process(); // will call this from web interface

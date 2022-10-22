@@ -66,7 +66,8 @@ std::vector<std::vector <float>> getNed(bool flipGravity = false)
       {east[0], east[1], east[2]},
       {0, 0, down}
     };
-  } else {
+  } else
+  {
     return {
       {0, 0, 0},
       {0, 0, 0},

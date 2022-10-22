@@ -39,7 +39,8 @@ Servo getServoByPin(int digitalPin)
   } else if (digitalPin == 10)
   {
     return backLeftMiddleJoint.servo;
-  } else {
+  } else
+  {
     return backLeftOuterJoint.servo;
   }
 }
@@ -79,7 +80,8 @@ joint getJointByPin (int digitalPin)
   } else if (digitalPin == 10)
   {
     return backLeftMiddleJoint;
-  } else {
+  } else
+  {
     return backLeftOuterJoint;
   }
 }
@@ -134,7 +136,8 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
       if (range > largestServoRange) {
         largestServoRange = range;
       }
-    } else {
+    } else
+    {
       // decrease
       range = servoGroupArr[servoGroupIndex][1] - servoGroupArr[servoGroupIndex][2];
       if (range > largestServoRange) {
@@ -159,7 +162,8 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
           nextServoPos = servoGroupArr[servoGroupIndex][1] + pos;
           safeServoWrite(servoPin, nextServoPos);
         }
-      } else {
+      } else
+      {
         // decrease
         if (servoGroupArr[servoGroupIndex][1] - pos > servoGroupArr[servoGroupIndex][2]) {
           nextServoPos = servoGroupArr[servoGroupIndex][1] - pos;
@@ -173,7 +177,7 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
 
     int timeNow = millis();
 
-    if (performScan)
+    if (performScan && !obstacleFound)
     {
       float correctedDistanceSampleIn = 0.00;
       float tfMiniSDistance = 0.00;
@@ -191,6 +195,21 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
       {
         // scanCounter += 1;
         correctedDistanceSampleIn = getTofDistanceCorrected();
+
+        // short-circuit check for distances
+        if (activeScan != "tilt-down-2")
+        {
+          if (correctedDistanceSampleIn < 5)
+          {
+            obstacleFound = true;
+          }
+        } else
+        {
+          if (correctedDistanceSampleIn < 5) {
+            obstacleFound = true;
+          }
+        }
+
         Serial.println("sample");
         Serial.println(correctedDistanceSampleIn);
       }
