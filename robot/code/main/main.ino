@@ -46,6 +46,17 @@ void setup()
   // performFullScan(false);
   // navigate();
   // turnLeft();
+
+  // moveForward5();
+
+  // dumpImuData();
+
+
+
+  // for (int i = 0; i < 5; i++)
+  // {
+  //   moveForward5();
+  // }
 }
 
 void main_nav_process()
@@ -83,7 +94,7 @@ void main_nav_process()
 
 void loop()
 {
-  navigate();
+  // navigate();
   // delay(5000);
   // performFullScan(false);
   // webMessaging(); // internal delay + 250ms

@@ -177,6 +177,26 @@ void moveServos(int servoGroupArr[][3], int servoGroupArrLen, int motionDuration
 
     int timeNow = millis();
 
+    // track robot trajectory over time
+    if (trackImu)
+    {
+      if (imu.Read())
+      {
+        motionImuTracking[timeNow] = {
+          roundUp(imu.accel_x_mps2()),
+          roundUp(imu.accel_y_mps2()),
+          roundUp(radianToDegree(imu.gyro_z_radps()))
+        };
+      } else
+      {
+        motionImuTracking[timeNow] = {
+          0.0, // to see how many are missed
+          0.0,
+          0.0
+        };
+      }
+    }
+
     if (performScan && !obstacleFound)
     {
       float tofSampleIn = 0.00;

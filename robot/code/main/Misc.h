@@ -1,3 +1,6 @@
+#include <map>
+#include <vector>
+
 String getPrefix(String longString)
 {
   if (longString == "tilt-up-2") return "a";
@@ -124,4 +127,28 @@ void dumpData(bool useSerial, String scanType)
     yAccelVals = {};
     xAccelVals = {};
   }
+}
+
+void dumpImuData()
+{
+  for (auto it = motionImuTracking.cbegin(); it != motionImuTracking.cend(); ++it)
+  {
+    String strA = String(it->first);
+    Serial.println(strA);
+
+    for (int i = 0; i < 3; i++)
+    {
+      String strB = String(it->second[i]);
+      Serial.print(strB);
+
+      if (i < 2)
+      {
+        Serial.print(", ");
+      }
+    }
+    
+    Serial.println();
+  }
+
+  motionImuTracking = {};
 }

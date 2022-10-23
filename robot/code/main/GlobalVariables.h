@@ -7,6 +7,7 @@ bool motionInProgress = false;
 int servoMotionDelay = 4; // ms - the higher this number, the slower the robot moves, 4 is normal speed
 int stepDelay = 0; // ms usually a second or more
 float turnLeftAngle = 44.5;
+float forwardMotionIn = 1.75; // used to be 2
 
 // these positions are for a >= quad stance (top view)
 struct joint {
@@ -99,3 +100,6 @@ float u1Smallest = 0.0;
 float mSmallest = 0.0;
 float d1Smallest = 0.0;
 float d2Smallest = 0.0;
+
+bool trackImu = false;
+std::map<int, std::vector<float>> motionImuTracking = {}; // ms -> [xAccel, yAccel, zRotation]

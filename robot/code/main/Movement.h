@@ -65,8 +65,10 @@ void moveForward5()
   mf5MoveFrontRightLegDownFromUp();
 
   // sampleYAccel = true;
+  trackImu = true;
   mf5PullForwardRight();
   sampleYAccel = false;
+  trackImu = false;
 
   mf5MoveBackLeftLegUp();
   mf5MoveBackLeftLegForward();
@@ -77,8 +79,10 @@ void moveForward5()
   mf5MoveFrontLeftLegDownFromUp();
 
   // sampleYAccel = true;
+  trackImu = true;
   mf5PullForwardLeft();
   sampleYAccel = false;
+  trackImu = false;
 
   mf5MoveBackRightLegUp();
   mf5MoveBackRightLegForward();
