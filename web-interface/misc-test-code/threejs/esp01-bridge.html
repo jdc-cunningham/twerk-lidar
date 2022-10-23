@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body * {
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+    }
+
+    canvas {
+      display: block;
+    }
+
+    .menu {
+      display: flex;
+      align-items: center;
+      justify-content:flex-start;
+      flex-direction: row;
+      width: 100%;
+      height: 40px;
+      border-bottom: 1px solid #282828;
+    }
+    
+    #emergency-stop {
+      background-color: firebrick;
+      color: white;
+    }
+
+    #emergency-stop.clicked {
+      background-color: #ccc;
+      color: #282828;
+    }
+
+    .button {
+      border-radius: 8px;
+      padding: 4px 12px;
+      height: 30px;
+      font-size: 1rem;
+      margin-left: 5px;
+      border: 0;
+      cursor: pointer;
+      font-weight: bold;
+      background-color: #ccc;
+    }
+
+    .connected {
+      background-color: green;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="menu">
+    <button type="button" id="connect-to-robot" class="button">Connecting...</button>
+    <button type="button" id="emergency-stop" class="button">Stop</button>
+  </div>
+  <script src="js/three.js"></script>
+  <script src="js/OrbitControls.js"></script>
+  <script src="js/three.module.js"></script>
+  <script src="js/ConvexHull.js"></script>
+  <script src="js/ConvexGeometry.js"></script>
+  <script src="js/GetCoordinates.js"></script>
+  <script>
+    let stopClicked = false;
+    const connectBtn = document.getElementById('connect-to-robot');
+    const stopBtn = document.getElementById('emergency-stop');
+    const robotPos = new THREE.Vector3(0, 0, 3.5); // IMU is 3.5" from floor
+    let lastRobotPos = null;
+
+    // https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
+    THREE.Object3D.DefaultUp.set(0, 0, 1); // set Z as vertical axes
+    const scene = new THREE.Scene();
+    // 10 z distanece
+    const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+
+    scene.background = new THREE.Color( 0xffffff );
+    
+    renderer.setSize(window.innerWidth, (window.innerHeight - 40)); // add false for lower resolution after dividing x/y values
+    document.body.appendChild(renderer.domElement);
+
+    // add orbit controls
+    const controls = new THREE.OrbitControls( camera, renderer.domElement );
+    const axesHelper = new THREE.AxesHelper(70);
+    // const controls = new OrbitControls( camera, renderer.domElement );
+
+    // add axes helper
+    // x = red, y = green, z = blue
+    // east, north, down
+    scene.add(axesHelper);
+
+    // add grid overlay
+    const size = 100;
+    const divisions = 10;
+    const gridHelper = new THREE.GridHelper(size, divisions);
+    // const zVector = new THREE.Vector3(0, 0, 1);
+    gridHelper.rotateX(Math.PI / 2); // https://stackoverflow.com/a/58554774/2710227
+    // gridHelper.lookAt(zVector);
+    scene.add(gridHelper);
+
+    controls.update();
+
+    function animate() {
+      requestAnimationFrame( animate );
+
+      // required if controls.enableDamping or controls.autoRotate are set to true
+      controls.update();
+      renderer.render( scene, camera );
+    }
+
+
+    // camera
+    camera.position.set( 0, 0, 100 );
+    camera.lookAt( 0, 0, 0 );
+
+    // line material
+    let material = new THREE.LineBasicMaterial({ color: 0x00FF00 });
+    // material.lineWidth = 1; // no change
+
+    // working code
+    // vertices
+    const vectorSamples = [
+      [0,0,-9.92],
+      [116.369,181.319,-30.118],
+      [-1833.62,1177.27,2.81477]
+    ];
+
+    const blue = 0x0000FF;
+    const red = 0xFF0000;
+    const green = 0x00FF00;
+    const purple = 0x6A0DAD;
+
+    const plotVectors = (vectors) => {
+      let points = [];
+
+      // plot lines from points
+      vectors.map((row, index) => {
+        const startVector = new THREE.Vector3(0, 0, 0);
+        points.push(startVector);
+        const vector = new THREE.Vector3(row[0], row[1], row[2]);
+        points.push(vector);
+
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+        if (index === 0) {
+          material = new THREE.LineBasicMaterial({ color: red }); // north
+        } else if (index === 1) {
+          material = new THREE.LineBasicMaterial({ color: green }); // east
+        } else {
+          material = new THREE.LineBasicMaterial({ color: blue }); // down
+        }
+
+        const line = new THREE.Line( geometry, material );
+        scene.add(line);
+
+        points = [];
+      });
+    }
+
+    // plotVectors(vectorSamples);
+
+    // loop over physical coordinates globally accessed by previusly included script
+    // coordinates.map((row, index) => {
+    //   row.map((measurement, rowIndex) => {
+    //     if (!measurement.includes(NaN) && measurement.length === 3) {
+    //       // add value
+    //       console.log(measurement)
+    //       points.push(new THREE.Vector3( measurement[0], measurement[1], measurement[2] ));
+
+    //       if (rowIndex === 2) {
+    //         points.push(new THREE.Vector3( measurement[0], measurement[1], measurement[2] )); // close polygon
+    //       }
+    //     }
+    //   });
+    // });
+    
+    // const line = new THREE.Line(geometry, material);
+
+
+    // turn points into a mesh
+    // const meshGeometry = new THREE.ConvexGeometry( points ); // points = vertices array
+    // const meshMaterial = new THREE.MeshBasicMaterial({
+    //   color: 0xcccccc,
+    //   transparent: true,
+    //   opacity: 0.6,
+    //   vertexColors: THREE.VertexColors,
+    // });
+    // const mesh = new THREE.Mesh(meshGeometry, meshMaterial);
+    // const mesh = new THREE.LineSegments(geometry, meshMaterial);
+
+    // meshMaterial.transparent = true;
+    // meshMaterial.opacity = 0.5;
+
+    // scene.add(mesh);
+
+    // render scene
+    renderer.render(scene, camera);
+    animate();
+
+    const getRandomHex = (returnRandom = true) => {
+      if (!returnRandom) {
+        return '#B6B6B6';
+      }
+      // https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+      var result           = '';
+      var characters       = 'abcdef0123456789';
+      var charactersLength = characters.length;
+      for ( var i = 0; i < 6; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return parseInt(`0x${result}`, 16);
+    }
+
+    const plotPlane = (planePoints, color = false) => {
+      let points = [];
+      planePoints.forEach((panelPoint) => {
+        points.push(new THREE.Vector3(panelPoint[0], panelPoint[1], panelPoint[2]));
+      });
+      material = new THREE.LineBasicMaterial({ color: color || getRandomHex() });
+      material.opacity = 1;
+      meshGeometry = new THREE.ConvexGeometry( points ); // points = vertices array
+      mesh = new THREE.Mesh(meshGeometry, material);
+      scene.add(mesh);
+    }
+
+    const degreesToRadians = (degree) => degree * (Math.PI/180);
+
+    /**
+     * pos is based on the cube bottom x-y center point
+     * in this world there's no negative height eg. third coordinate
+     * these units are in inches
+     * 
+     * https://threejs.org/docs/#api/en/geometries/BoxGeometry
+     * https://stackoverflow.com/questions/11911065/three-js-move-geometrys-center
+     * https://discourse.threejs.org/t/rotate-and-scale-geometry/880
+     * 
+     */
+    const plotCube = (size = 1, sweepAngle = 0, dist = 0) => {
+      const cubeColor = '#DC143C';
+      const radians = degreesToRadians(sweepAngle);
+      const geometry = new THREE.BoxGeometry(size, size, size);
+      const material = new THREE.MeshBasicMaterial({color: cubeColor});
+      const cube = new THREE.Mesh(geometry, material);
+
+      if (sweepAngle !== 0) {
+        cube.rotateZ(radians);
+
+        cube.position.set(
+          ((dist + (size/2)) * Math.cos(radians)),
+          (sweepAngle === 45)
+            ? ((dist + (size/2)) * Math.cos(radians))
+            : ((dist + (size/2)) * Math.sin(radians)),
+          size/2
+        );
+      } else {
+        cube.position.set(
+          0,
+          (dist + (size/2)),
+          size/2
+        );
+      }
+
+      scene.add(cube);
+    }
+
+    const plotRobotPos = (robotMsg) => {
+      let points = [];
+
+      if (!lastRobotPos) {
+        points.push(robotPos);
+      } else {
+        points.push(lastRobotPos);
+      }
+
+      const newRobotPos = robotMsg.split('pos update, ')[1].split(',').map(point => parseFloat(point));
+      const newRobotPosVector = new THREE.Vector3(newRobotPos[0], newRobotPos[1], newRobotPos[2]);
+      lastRobotPos = newRobotPosVector;
+      points.push(newRobotPosVector);
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      const material = new THREE.LineBasicMaterial({ color: purple });
+      const line = new THREE.Line( geometry, material );
+      scene.add(line);
+      controls.update();
+    }
+
+    // socket feed
+    // Create WebSocket connection.
+    const socket = new WebSocket('ws://192.168.1.188:80');
+
+    // Connection opened
+    socket.addEventListener('open', function (event) {
+      connectBtn.innerText = 'Connected';
+      connectBtn.classList.add('connected');
+ 
+      console.log('connected');
+      socket.send('Hello Server!');
+
+      stopBtn.addEventListener('click', () => {
+        if (!stopClicked) {
+          socket.send('stop');
+          stopBtn.classList.add('clicked');
+        }
+      });
+
+      setInterval(() => {
+        socket.send('poll');
+      }, 1000);
+    });
+
+    const parseImuStream = (imuStream) => {
+      if (imuStream.indexOf(',') !== -1) {
+        const imuVals = imuStream.split(',');
+        return [
+          [imuVals[0], imuVals[1], imuVals[2]],
+          [imuVals[3], imuVals[4], imuVals[5]],
+          [imuVals[6], imuVals[7], imuVals[8]],
+        ];
+      } else {
+        return [];
+      }
+    }
+
+    // [a, b, c]
+    const getMaxValue = (vector) => {
+      const posVals = [];
+      
+      vector.forEach(val => {
+        if (val < 0) {
+          posVals.push(val * -1);
+        } else {
+          posVals.push(val);
+        }
+      });
+      
+      let largestVal = 0;
+      let largestValIndex = 0;
+      
+      posVals.forEach((val, index) => {
+        if (val > largestVal) {
+          largestVal = val;
+          largestValIndex = index;
+        }
+      });
+      
+      return vector[largestValIndex];
+    };
+
+    const getCrossProduct = (aX, aY, aZ, bX, bY, bZ) => {
+      const cX = aY * bZ - aZ * bY;
+      const cY = aZ * bX - aX * bZ;
+      const cZ = aX * bY - aY * bX;
+
+      return [cX, cY, cZ];
+    }
+
+    // accel, gyro, mag
+    const getNed = (imuVectors) => {
+      const down = getMaxValue(imuVectors[0]);
+
+      const east = getCrossProduct(
+        imuVectors[0][0], imuVectors[0][1], imuVectors[0][2],
+        imuVectors[2][0], imuVectors[2][1], imuVectors[2][2]
+      );
+
+      const north = getCrossProduct(
+        east[0], east[1], east[2],
+        imuVectors[0][0], imuVectors[0][1], imuVectors[0][2]
+      );
+
+      return [
+        [north[0], north[1], north[2]],
+        [east[0], east[1], east[2]],
+        [imuVectors[0][0], imuVectors[0][1], imuVectors[0][2]],
+      ];
+    }
+
+    // https://stackoverflow.com/a/30360368/2710227
+    const clearScreen = () => {
+      scene.remove.apply(scene, scene.children);
+      // re-add grid and axes
+      scene.add(axesHelper);
+      scene.add(gridHelper);
+    }
+
+    // Listen for messages
+    socket.addEventListener('message', function (event) {
+      const robotMsg = event.data;
+
+      if (robotMsg.indexOf('pos update,') !== -1) {
+        plotRobotPos(robotMsg);
+      }
+
+      if (robotMsg.indexOf('plot cube,') !== -1) {
+        console.log(robotMsg);
+        const cubeData = robotMsg.split('plot cube, ')[1].split(',');
+        plotCube(
+          parseFloat(cubeData[0]),
+          parseFloat(cubeData[1]),
+          parseFloat(cubeData[2])
+        );
+      }
+
+      // const imuStreamVectors = parseImuStream(event.data);
+
+      // if (imuStreamVectors.length) {
+      //   const ned = getNed(imuStreamVectors);
+      //   clearScreen();
+      //   plotVectors(ned);
+      //   controls.update();
+      // }
+    });
+
+    socket.addEventListener('error', function (event) {
+      console.log('error', event);
+    });
+  </script>
+</body>
+</html>

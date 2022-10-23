@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Socket Commands</title>
+</head>
+<body>
+  <h1>ToF sensor</h1>
+  <h2 id="disp">Distance:</h2>
+  <button type="button" id="tof-get-btn">Get distance</button>
+
+  <script>
+    // socket feed
+    // Create WebSocket connection.
+    const socket = new WebSocket('ws://192.168.1.187:80'); // esp01
+
+    const setupManualTofControl = (socket) => {
+      // bind inputs/run commands
+      const tofGetBtn = document.getElementById('tof-get-btn');
+
+      tofGetBtn.addEventListener('click', () => {
+        socket.send('sensor_d');
+      });
+    }
+
+    // connection opened, send messages to robot
+    socket.addEventListener('open', function (event) { 
+      console.log('connected');
+      socket.send('Hello Server!');
+
+      // keep connection to esp01 alive
+      setInterval(() => {
+        socket.send('poll');
+      }, 1000);
+
+      setupManualTofControl(socket);
+    });
+
+    // listen for messages from robot
+    socket.addEventListener('message', function (event) {
+      const robotMsg = event.data;
+
+      if (robotMsg.indexOf('tofd_') !== -1) {
+        const distanceDisplay = document.getElementById('disp');
+        distanceDisplay.innerText = robotMsg.split('tofd_')[1];
+      }
+    });
+  </script>
+</body>
+</html>

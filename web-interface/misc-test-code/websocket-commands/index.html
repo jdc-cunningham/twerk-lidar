@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Socket Commands</title>
+</head>
+<body>
+  <h2>Manual Servo Control</h2>
+  <input id="servo-pin" type="number" placeholder="servo pin"/>
+  <input id="servo-deg" type="number" placeholder="servo deg"/>
+  <button type="button" id="send-btn">Set</button>
+
+  <h2>Get battery voltage</h2>
+  <h3>Current voltage is: <span id="voltage-display"></span></h3>
+  <button type="button" id="voltage-btn">Get voltage</button>
+
+  <script>
+    // socket feed
+    // Create WebSocket connection.
+    const socket = new WebSocket('ws://192.168.1.187:80'); // esp01
+
+    const setupManualServoControl = (socket) => {
+      // bind inputs/run commands
+      const servoPinInput = document.getElementById('servo-pin');
+      const servoDegInput = document.getElementById('servo-deg');
+      const setBtn = document.getElementById('send-btn');
+
+      setBtn.addEventListener('click', () => {
+        const servoPinVal = servoPinInput.value;
+        const servoDegVal = servoDegInput.value;
+
+        if (!servoPinVal || !servoDegVal) {
+          return;
+        }
+
+        if (servoPinVal > 11) {
+          return;
+        }
+
+        if (servoDegVal < 0 || servoDegVal > 180) {
+          return;
+        }
+
+        socket.send(`msc_${servoPinVal}__${servoDegVal}`);
+      });
+    }
+
+    const setupBatteryVoltage = (socket) => {
+      const getVoltageBtn = document.getElementById('voltage-btn');
+
+      getVoltageBtn.addEventListener('click', () => {
+        socket.send('tel_bv');
+      });
+    }
+
+    // connection opened, send messages to robot
+    socket.addEventListener('open', function (event) { 
+      console.log('connected');
+      socket.send('Hello Server!');
+
+      // keep connection to esp01 alive
+      setInterval(() => {
+        socket.send('poll');
+      }, 1000);
+
+      setupManualServoControl(socket);
+      setupBatteryVoltage(socket);
+    });
+
+    // listen for messages from robot
+    socket.addEventListener('message', function (event) {
+      const robotMsg = event.data;
+
+      if (robotMsg.indexOf('bv_') !== -1) {
+        const voltageDisplay = document.getElementById('voltage-display');
+        voltageDisplay.innerText = robotMsg.split('bv_')[1];
+      }
+    });
+  </script>
+</body>
+</html>
