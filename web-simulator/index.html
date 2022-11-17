@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body { margin: 0; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <script src="../web-interface/misc-test-code/threejs/js/three.js"></script>
+  <script src="../web-interface/misc-test-code/threejs/js/OrbitControls.js"></script>
+  <script src="../web-interface/misc-test-code/threejs/js/GLTFLoader.js"></script>
+  <script src="../web-interface/misc-test-code/threejs/js/DracoLoader.js"></script>
+  <!-- <script src="js/three.module.js"></script> -->
+  <!-- <script src="js/ConvexHull.js"></script>
+  <script src="js/ConvexGeometry.js"></script>
+  <script src="js/GetCoordinates.js"></script> -->
+  <script>
+    // hacked together from
+    // https://threejs.org/docs/#examples/en/loaders/GLTFLoader
+    // https://stackoverflow.com/questions/69831083/unable-to-render-gltf-object-with-three-js
+    // https://sbcode.net/threejs/gltf-animations-drag/
+    THREE.Object3D.DefaultUp.set(0, 0, 1); // set Z as vertical axes
+    const scene = new THREE.Scene();
+    const ratio = window.innerWidth / window.innerHeight
+    // const camera = new THREE.PerspectiveCamera( 75, ratio, 0.1, 1000 );
+    const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    scene.background = new THREE.Color( 0xffffff );
+    
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.shadowMap.enabled = true
+    document.body.appendChild( renderer.domElement );
+
+    const controls = new THREE.OrbitControls( camera, renderer.domElement );
+    controls.target.set(0, 1, 0) // what fixed it
+    // const axesHelper = new THREE.AxesHelper(70);
+    // scene.add(axesHelper);
+
+    // add grid overlay
+    const size = 100;
+    const divisions = 10;
+    const gridHelper = new THREE.GridHelper(size, divisions);
+    gridHelper.rotateX(Math.PI / 2); // https://stackoverflow.com/a/58554774/2710227
+
+    camera.position.set(0, 0, 1)
+    camera.lookAt( 0, 0, 0 );
+    // renderer.render( scene, camera );
+
+    // controls.addEventListener( 'change', ()=>{renderer.render(scene, camera)} );
+    controls.update();
+
+    function animate() {
+      requestAnimationFrame( animate );
+
+      // required if controls.enableDamping or controls.autoRotate are set to true
+      controls.update();
+      renderer.render( scene, camera );
+    }
+
+    // Instantiate a loader
+    const loader = new THREE.GLTFLoader();
+    // const loader = new GLTFLoader();
+    // const DRACOLoader = new THREE.DRACOLoader();
+
+    // Optional: Provide a DRACOLoader instance to decode compressed mesh data
+    // const dracoLoader = new DRACOLoader();
+    // dracoLoader.setDecoderPath( '/examples/js/libs/draco/' );
+    // loader.setDRACOLoader( dracoLoader );
+
+    // Load a glTF resource
+    loader.load(
+      // resource URL
+      'http://192.168.1.144/3d-files/full-assembly.glb',
+      // called when the resource is loaded
+      function ( gltf ) {
+
+        scene.add(new THREE.AmbientLight());
+        // gltf.scene.position.x=10
+        scene.add( gltf.scene );
+
+        gltf.animations; // Array<THREE.AnimationClip>
+        gltf.scene; // THREE.Group
+        gltf.scenes; // Array<THREE.Group>
+        gltf.cameras; // Array<THREE.Camera>
+        gltf.asset; // Object
+
+        // renderer.render( scene, camera );
+        animate();
+      },
+      // called while loading is progressing
+      function ( xhr ) {
+
+        console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+      },
+      // called when loading has errors
+      function ( error ) {
+
+        console.log( 'An error happened' );
+
+      }
+    );
+  </script>
+</body>
+</html>
