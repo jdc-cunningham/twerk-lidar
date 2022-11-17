@@ -23,11 +23,11 @@
     // https://threejs.org/docs/#examples/en/loaders/GLTFLoader
     // https://stackoverflow.com/questions/69831083/unable-to-render-gltf-object-with-three-js
     // https://sbcode.net/threejs/gltf-animations-drag/
-    THREE.Object3D.DefaultUp.set(0, 0, 1); // set Z as vertical axes
+    // THREE.Object3D.DefaultUp.set(0, 0, 1); // set Z as vertical axes
     const scene = new THREE.Scene();
     const ratio = window.innerWidth / window.innerHeight
     // const camera = new THREE.PerspectiveCamera( 75, ratio, 0.1, 1000 );
-    const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.01, 1000);
     const renderer = new THREE.WebGLRenderer();
     scene.background = new THREE.Color( 0xffffff );
     
@@ -37,14 +37,17 @@
 
     const controls = new THREE.OrbitControls( camera, renderer.domElement );
     controls.target.set(0, 1, 0) // what fixed it
-    // const axesHelper = new THREE.AxesHelper(70);
-    // scene.add(axesHelper);
+    const axesHelper = new THREE.AxesHelper(70);
+    scene.add(axesHelper);
 
     // add grid overlay
     const size = 100;
     const divisions = 10;
     const gridHelper = new THREE.GridHelper(size, divisions);
     gridHelper.rotateX(Math.PI / 2); // https://stackoverflow.com/a/58554774/2710227
+    const zVector = new THREE.Vector3(0, 0, 1);
+    // gridHelper.lookAt(zVector);
+    // scene.add(gridHelper);
 
     camera.position.set(0, 0, 1)
     camera.lookAt( 0, 0, 0 );
@@ -71,39 +74,105 @@
     // dracoLoader.setDecoderPath( '/examples/js/libs/draco/' );
     // loader.setDRACOLoader( dracoLoader );
 
+    const basePath = 'http://192.168.1.144/3d-files';
+
+    const parts = {
+      chasis: 'chasis.glb',
+      frontRightLeg: 'front-right-leg-whole.glb',
+      backRightLeg: 'back-right-leg-whole.glb',
+      frontLeftLeg: 'front-left-leg-whole.glb',
+      backLeftLeg: 'back-left-leg-whole.glb'
+    };
+
+    const gltfs = {};
+
     // Load a glTF resource
-    loader.load(
-      // resource URL
-      'http://192.168.1.144/3d-files/full-assembly.glb',
-      // called when the resource is loaded
-      function ( gltf ) {
+    const loadFile = (filePath) => {
+      loader.load(
+        // resource URL
+        `${basePath}/${filePath}`,
+        // called when the resource is loaded
+        function ( gltf ) {
 
-        scene.add(new THREE.AmbientLight());
-        // gltf.scene.position.x=10
-        scene.add( gltf.scene );
+          gltfs[filePath.replace('.glb', '')] = {
+            handle: gltf,
+          };
 
-        gltf.animations; // Array<THREE.AnimationClip>
-        gltf.scene; // THREE.Group
-        gltf.scenes; // Array<THREE.Group>
-        gltf.cameras; // Array<THREE.Camera>
-        gltf.asset; // Object
+          scene.add(new THREE.AmbientLight(0xdddddd)); // controls brightness of colors
+          // gltf.scene.position.x=10
+          scene.add( gltf.scene );
 
-        // renderer.render( scene, camera );
-        animate();
-      },
-      // called while loading is progressing
-      function ( xhr ) {
+          gltf.animations; // Array<THREE.AnimationClip>
+          gltf.scene; // THREE.Group
+          gltf.scenes; // Array<THREE.Group>
+          gltf.cameras; // Array<THREE.Camera>
+          gltf.asset; // Object
 
-        console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+          // renderer.render( scene, camera );
+          // renderer.outputEncoding = THREE.sRGBEncoding;
+          // renderer.gammaOutput = true;
+          // animate();
+        },
+        // called while loading is progressing
+        function ( xhr ) {
 
-      },
-      // called when loading has errors
-      function ( error ) {
+          console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+          console.log(gltfs);
 
-        console.log( 'An error happened' );
+        },
+        // called when loading has errors
+        function ( error ) {
 
+          console.log( 'An error happened' );
+
+        }
+      );
+    }
+
+    // const texture = new THREE.TextureLoader();
+    // const maxAnisotropy = renderer.capabilities.getMaxAnisotropy();
+    // texture.anisotropy = maxAnisotropy;
+
+    Object.keys(parts).forEach(partName => {
+      loadFile(parts[partName]);
+    });
+
+    animate();
+
+    const degToRad = (deg) => deg * 0.0174533;
+
+    let walkSequenceStep = 0;
+
+    const steps = [
+      () => gltfs['front-right-leg-whole'].handle.scene.rotateY(degToRad(10)),
+      () => gltfs['front-right-leg-whole'].handle.scene.rotateY(degToRad(10)),
+      () => gltfs['front-right-leg-whole'].handle.scene.rotateY(degToRad(10)),
+      () => gltfs['front-right-leg-whole'].handle.scene.rotateY(degToRad(10)),
+      () => gltfs['front-right-leg-whole'].handle.scene.rotateY(degToRad(-10)),
+      () => gltfs['front-right-leg-whole'].handle.scene.rotateY(degToRad(-10)),
+      () => gltfs['front-right-leg-whole'].handle.scene.rotateY(degToRad(-10)),
+      () => gltfs['front-right-leg-whole'].handle.scene.rotateY(degToRad(-10)),
+    ];
+
+    const fakeWalkSequence = () => {
+      if (walkSequenceStep < 8) {
+        steps[walkSequenceStep]();
+        walkSequenceStep += 1;
+
+        setTimeout(() => {
+          fakeWalkSequence();
+        }, 500);
       }
-    );
+    }
+
+    setTimeout(() => {
+      // gltfs['front-right-leg-whole'].handle.scene.position.rotateOnAxis(new THREE.Vector3(0, 0, 0), degToRad(30)); // errors
+      // gltfs['front-right-leg-whole'].handle.scene.rotateY(degToRad(30));
+      // gltfs['front-right-leg-whole'].handle.scene.position.setX(1);
+      
+      // console.log(gltfs['chasis']);
+      fakeWalkSequence();
+    }, 10000);
   </script>
 </body>
 </html>
